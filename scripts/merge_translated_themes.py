@@ -118,59 +118,57 @@ def main():
         if translated_files:
             print(f"  Found {len(translated_files)} translated parts.")
             for file_path in translated_files:
-                # print(f"  Reading {os.path.basename(file_path)}...")
+                basename = os.path.basename(file_path)
+                orig_part_path = os.path.join(BASE_DIR, "parts_for_translation", basename)
+                if not os.path.exists(orig_part_path):
+                    print(f"    Warning: Original part file not found {orig_part_path}")
+                    continue
+                    
                 try:
                     with open(file_path, 'r', encoding='utf-8') as f:
-                        part_data = json.load(f)
+                        translated_data = json.load(f)
+                    with open(orig_part_path, 'r', encoding='utf-8') as f:
+                        orig_part_data = json.load(f)
+                        
+                    # Extract lists
+                    t_items = translated_data if isinstance(translated_data, list) else translated_data.get("topics", [])
+                    o_items = orig_part_data if isinstance(orig_part_data, list) else orig_part_data.get("topics", [])
                     
-                    # Determine items list based on JSON structure (List vs Dict)
-                    items = []
-                    if isinstance(part_data, list):
-                        items = part_data
-                    elif isinstance(part_data, dict):
-                        items = part_data.get("topics", [])
-                        if not items:
-                            print(f"    Warning: File is a dict but has no 'topics' list. Skipping.")
-                            continue
-                    else:
-                        print(f"    Warning: File content is not a list or dict. Skipping.")
-                        continue
+                    if len(t_items) != len(o_items):
+                        # Some files might have failed or mismatched. Skip or try best effort.
+                        print(f"    Warning: Mismatch in item count for {basename} ({len(t_items)} translated vs {len(o_items)} original)")
+                        # Best effort: use the minimum length
+                        min_len = min(len(t_items), len(o_items))
+                        t_items = t_items[:min_len]
+                        o_items = o_items[:min_len]
 
-                    for item in items:
-                        source_file = item.get("source_file", "")
-                        title_pt = item.get("title_ptbr", "")
-                        content_pt = item.get("content_ptbr", "")
-                        pub_title_pt = item.get("publication_title_ptbr", "")
+                    for o_item, t_item in zip(o_items, t_items):
+                        orig_title = o_item.get("title", "")
+                        title_pt = t_item.get("title_ptbr", t_item.get("title_pt", ""))
+                        content_pt = t_item.get("content_ptbr", t_item.get("content_pt", ""))
+                        pub_title_pt = t_item.get("publication_title_ptbr", "")
 
-                        if not source_file:
+                        if not orig_title or not content_pt:
                             continue
 
-                        # Search for the matching topic (scan all topics in theme)
+                        # Find matching topic in the main original theme by title
                         match_found = False
                         for i, topic in enumerate(topics):
-                            # processing optimization: skip if already translated (optional, but good for speed)
-                            # if topic.get("title_pt"): continue 
-
-                            original_filename = os.path.basename(topic.get("filename", ""))
-                            
-                            if original_filename == source_file:
-                                # Apply translation
+                            if topic.get("title") == orig_title:
                                 topic["title_pt"] = title_pt
                                 topic["content_pt"] = content_pt
                                 topic["publication_title_pt"] = pub_title_pt
-                                
                                 match_found = True
                                 merged_count += 1
-                                
-                                # Debug log for first few
                                 if merged_count <= 5:
                                     print(f"    Merged (Translated Part): {title_pt[:30]}... -> Topic {i}")
                                 elif merged_count == 6:
                                     print(f"    ... and more topics merged ...")
                                 break
-                        
+                                
                         if not match_found:
-                            pass 
+                            # Try matching by content length or content substring as fallback if title was somehow tweaked
+                            pass
 
                 except Exception as e:
                     print(f"    Error processing file {file_path}: {e}")

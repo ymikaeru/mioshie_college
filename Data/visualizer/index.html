@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizador - Ensinamentos Volume 2</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Noto+Serif+JP:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Meishu-Sama</h2>
+                <p>Volume 2 - Visualizador</p>
+                <div class="upload-container">
+                    <label for="file-upload" class="upload-btn">
+                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                        Carregar JSON
+                    </label>
+                    <input type="file" id="file-upload" accept=".json" multiple>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="Buscar ensinamento...">
+                </div>
+            </div>
+            <div class="sidebar-content" id="nav-tree">
+                <div class="empty-state-nav">
+                    Faça o upload de arquivos JSON das traduções para visualizar o conteúdo.
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <div id="content-display" class="content-display empty">
+                <div class="empty-state-main">
+                    <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1" fill="none"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20V2H6.5A2.5 2.5 0 0 0 4 4.5v15Z"/><path d="M8 7h6M8 11h8M8 15h4"/></svg>
+                    <h2>Traduções Prontas</h2>
+                    <p>Selecione um tópico na barra lateral para iniciar a leitura.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
