@@ -68,10 +68,13 @@ def main():
         translated_topics = theme_topics_map.get(i, [])
         total_translated_topics += len(translated_topics)
         
-        # We replace the original topics entirely with our translated ones
-        # since we maintained the order through numbering
         if translated_topics:
-            theme["topics"] = translated_topics
+            if len(original_topics) != len(translated_topics):
+                print(f"Warning: Count mismatch in Theme {i+1}: Original={len(original_topics)}, Translated={len(translated_topics)}")
+            
+            for orig, trans in zip(original_topics, translated_topics):
+                for key, value in trans.items():
+                    orig[key] = value
         else:
             print(f"Warning: No translations found for Theme {i+1}: {theme.get('theme_title')}")
 
