@@ -173,7 +173,7 @@ def get_header_html(level_up=""):
     return f"""
   <header class="header">
     <a href="{level_up}shumeic1/index.html" class="header__logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+
       Ensinamentos
     </a>
     <div class="header__nav">
@@ -349,7 +349,7 @@ def generate_all_topic_pages():
 <body>
   <header class="header">
     <a href="../shumeic1/index.html" class="header__logo">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+
       Ensinamentos
     </a>
     <div class="header__nav">
