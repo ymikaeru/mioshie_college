@@ -1,45 +1,34 @@
-
 import json
 import os
-import re
+from bs4 import BeautifulSoup
 
-BASE_DIR = "/Users/michael/Documents/Ensinamentos/Sites/BR/Shumei_Vol01/Data"
-MAIN_JSON = 'Data/shumeic1_part2_data_bilingual_repaired.json'
-
-def main():
-    if not os.path.exists(MAIN_JSON):
-        print("Error: Bilingual JSON not found.")
-        return
-
-    with open(MAIN_JSON, 'r', encoding='utf-8') as f:
+def analyze_all_files():
+    with open('Data/shumeic1_data_bilingual.json', 'r') as f:
         data = json.load(f)
 
-    truncated_candidates = []
-    
-    if "themes" in data:
-        for theme in data["themes"]:
-            for topic in theme.get("topics", []):
-                content_jp = topic.get("content", "")
-                filename = topic.get("filename", "")
-                title = topic.get("title", "")
+    for theme in data.get('themes', []):
+        for topic in theme.get('topics', []):
+            source_file = topic.get('source_file') or topic.get('filename')
+            if not source_file: continue
+            
+            filepath = os.path.join('OrigianlHTML', 'shumeic1', source_file.split('/')[-1])
+            if not os.path.exists(filepath): continue
+            
+            try:
+                with open(filepath, 'r', encoding='shift_jis') as f:
+                    html = f.read()
+            except UnicodeDecodeError:
+                with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                    html = f.read()
+                    
+            soup = BeautifulSoup(html, 'html.parser')
+            for a in soup.find_all('a'):
+                a.decompose()
                 
-                # Check for truncation (failure to reach <hr>)
-                # Note: The last topic in a file might not have an <hr> in the source, 
-                # but our extractor usually adds it or stops at </BLOCKQUOTE>.
-                if content_jp and "<hr" not in content_jp.lower():
-                    truncated_candidates.append({
-                        "filename": filename,
-                        "title": title,
-                        "issue": "Missing <hr/> tag"
-                    })
+            blocks = soup.find_all('blockquote')
+            if len(blocks) >= 3:
+                extracted = "".join(str(c) for c in blocks[2].contents).strip()
+                if len(extracted) > len(topic.get('content', '')) + 500:
+                    print(f"File {source_file} truncated! Extracted: {len(extracted)}, JSON: {len(topic.get('content', ''))}")
 
-    print(f"Extraction Audit: Found {len(truncated_candidates)} potentially truncated items (no <hr/>).")
-    print("-" * 50)
-    for item in truncated_candidates[:30]:
-        print(f"{item['filename']} | {item['title']}")
-    
-    if len(truncated_candidates) > 30:
-        print(f"... and {len(truncated_candidates) - 30} more.")
-
-if __name__ == "__main__":
-    main()
+analyze_all_files()
