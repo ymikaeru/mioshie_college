@@ -5,7 +5,7 @@
   <title>Ensinamentos - Biblioteca Sagrada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/toggle.js?v=1772112745"></script>
+  <script src="js/toggle.js?v=1772146893"></script>
   <script>
     // Reader handles its own initialization that differs from Home/Index
     if (!window.location.href.includes('reader.html')) {
@@ -2922,15 +2922,56 @@
     </div>
   </div>
 
-  <div class="search-modal-overlay" id="historyModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Histórico de Navegação</h2>
-        <button class="search-close" onclick="closeHistory()">&times;</button>
-      </div>
-      <ul class="search-results" id="historyResults"></ul>
     </div>
   </div>
+
+  <script>
+    
+(function() {
+    const checkAuth = () => {
+        if (localStorage.getItem('shumei_auth') === 'true') return;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'login-overlay';
+        overlay.innerHTML = `
+            <div class="login-card">
+                <h2>Biblioteca Sagrada</h2>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
+                <input type="password" id="login-pass" class="login-input" placeholder="Senha">
+                <button id="login-submit" class="login-button">Entrar</button>
+                <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const input = document.getElementById('login-pass');
+        const submit = document.getElementById('login-submit');
+        const error = document.getElementById('login-error');
+
+        const attempt = () => {
+            if (input.value === '567') {
+                localStorage.setItem('shumei_auth', 'true');
+                overlay.remove();
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        };
+
+        submit.onclick = attempt;
+        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
+        input.focus();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    } else {
+        checkAuth();
+    }
+})();
+
+  </script>
 
 </body>
 </html>

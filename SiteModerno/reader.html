@@ -5,6 +5,7 @@
   <title>Ensinamentos de Meishu-Sama - Leitura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <header class="header">
@@ -16,7 +17,7 @@
     </a>
     <div class="header__nav">
        <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
+       <a href="index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
        <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
        <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
        <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
@@ -37,6 +38,53 @@
         <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
     </div>
   </main>
+  <script>
+    
+(function() {
+    const checkAuth = () => {
+        if (localStorage.getItem('shumei_auth') === 'true') return;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'login-overlay';
+        overlay.innerHTML = `
+            <div class="login-card">
+                <h2>Biblioteca Sagrada</h2>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
+                <input type="password" id="login-pass" class="login-input" placeholder="Senha">
+                <button id="login-submit" class="login-button">Entrar</button>
+                <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const input = document.getElementById('login-pass');
+        const submit = document.getElementById('login-submit');
+        const error = document.getElementById('login-error');
+
+        const attempt = () => {
+            if (input.value === '567') {
+                localStorage.setItem('shumei_auth', 'true');
+                overlay.remove();
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        };
+
+        submit.onclick = attempt;
+        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
+        input.focus();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    } else {
+        checkAuth();
+    }
+})();
+
+  </script>
 
   <div class="search-modal-overlay" id="searchModal">
     <div class="search-modal">
@@ -65,7 +113,7 @@
     </div>
   </div>
 
-  <script src="js/toggle.js?v={CACHE_BUSTER}"></script>
-  <script src="js/reader.js?v={CACHE_BUSTER}"></script>
+  <script src="js/toggle.js?v=1772146893"></script>
+  <script src="js/reader.js?v=1772146893"></script>
 </body>
 </html>

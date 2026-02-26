@@ -199,6 +199,65 @@ body {
   animation: fadeIn 0.8s var(--ease);
 }
 
+/* --- Login Overlay --- */
+#login-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+  backdrop-filter: blur(40px);
+}
+
+.login-card {
+  background: var(--surface);
+  padding: 48px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-premium);
+  border: 1px solid var(--border);
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+}
+
+.login-card h2 {
+  font-family: var(--font-serif);
+  margin-bottom: 24px;
+}
+
+.login-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg-color);
+  color: var(--text-main);
+  font-size: 1rem;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.login-button:hover {
+  opacity: 0.9;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
@@ -604,6 +663,52 @@ select[data-tooltip]::before, select[data-tooltip]::after {
 }
 """
 
+JS_LOGIN_LOGIC = r"""
+(function() {
+    const checkAuth = () => {
+        if (localStorage.getItem('shumei_auth') === 'true') return;
+
+        const overlay = document.createElement('div');
+        overlay.id = 'login-overlay';
+        overlay.innerHTML = `
+            <div class="login-card">
+                <h2>Biblioteca Sagrada</h2>
+                <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
+                <input type="password" id="login-pass" class="login-input" placeholder="Senha">
+                <button id="login-submit" class="login-button">Entrar</button>
+                <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const input = document.getElementById('login-pass');
+        const submit = document.getElementById('login-submit');
+        const error = document.getElementById('login-error');
+
+        const attempt = () => {
+            if (input.value === '567') {
+                localStorage.setItem('shumei_auth', 'true');
+                overlay.remove();
+            } else {
+                error.style.display = 'block';
+                input.value = '';
+                input.focus();
+            }
+        };
+
+        submit.onclick = attempt;
+        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
+        input.focus();
+    };
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    } else {
+        checkAuth();
+    }
+})();
+"""
+
 JS_CONTENT = r"""
 document.addEventListener('DOMContentLoaded', () => {
   // Theme Toggle Logic
@@ -931,15 +1036,42 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         window.renderContent = (lang = 'pt') => {
             const isPt = lang === 'pt';
+            window._usedNavTitles = new Set();
             
+            let currentTopics = topicsFound;
+            if (isPt) {
+                currentTopics = topicsFound.filter(t => (t.content_ptbr && t.content_ptbr.trim() !== "") || (t.content_pt && t.content_pt.trim() !== ""));
+                if (currentTopics.length === 0) currentTopics = topicsFound;
+            }
+
             let indexTitles = {};
             try {
                 indexTitles = window.GLOBAL_INDEX_TITLES || {};
             } catch (e) {}
             
             const indexTitle = (indexTitles[volId] && indexTitles[volId][filename]) ? indexTitles[volId][filename] : null;
-            const fallbackTitle = isPt ? (topicsFound[0].title_ptbr || topicsFound[0].title_pt || topicsFound[0].title) : topicsFound[0].title;
-            const mainTitleToDisplay = (isPt && indexTitle) ? indexTitle : fallbackTitle;
+            const fallbackTitle = isPt ? (currentTopics[0].title_ptbr || currentTopics[0].title_pt || currentTopics[0].title) : currentTopics[0].title;
+            let mainTitleToDisplay = (isPt && indexTitle) ? indexTitle : fallbackTitle;
+
+            // If title is generic or missing, peek into topics for a better one
+            const genericRegex = /O Método do Johrei|Princípio do Johrei|Sobre a Verdade|Verdade \d|Ensinamento \d|Parte \d|JH\d|JH \d|Publicação \d/i;
+            let isGeneric = !mainTitleToDisplay || genericRegex.test(mainTitleToDisplay);
+            if (isGeneric) {
+                for (let t of currentTopics) {
+                    const raw = isPt ? (t.content_ptbr || t.content_pt || t.content) : t.content;
+                    if (!raw || raw.length < 20) continue;
+                    const doc = new DOMParser().parseFromString(raw, 'text/html');
+                    const span = doc.querySelector('span, b, font');
+                    if (span) {
+                        let extracted = span.textContent.trim().replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*|明主様御垂示\s*|明主様御講話\s*/gi, '');
+                        if (extracted.length > 5 && extracted.length < 150) {
+                            mainTitleToDisplay = extracted;
+                            isGeneric = false; // Successfully promoted a real title
+                            break;
+                        }
+                    }
+                }
+            }
 
             // --- History Saving Logic ---
             try {
@@ -967,7 +1099,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 navSelect.style.display = 'none';
             }
             
-            topicsFound.forEach((topicData, index) => {
+            currentTopics.forEach((topicData, index) => {
                 const topicId = `topic-${index}`;
                 
                 // Content cleanup and Markdown conversion
@@ -996,29 +1128,38 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return `src="assets/images/${src}"`;
                 });
 
-                let cleanedContent = formattedContent.replace(/color=["'][^"']+["']/g, '');
-                cleanedContent = cleanedContent.replace(/style=["'][^"']*color:[^"']+["']/g, '');
 
                 // DOM-based: remove leading element ONLY if its stripped text is an exact match
                 // to the main title (prevents removing teaching titles that just share a word)
-                let cleanedContent = formattedContent;
+                cleanedContent = formattedContent;
                 const _tmp = document.createElement('div');
                 _tmp.innerHTML = cleanedContent;
                 
                 // Enhanced title stripping to fix duplicate titles
-                // Check the first few blocks for title match
-                const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
-                const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-                
-                for (let i = 0; i < Math.min(firstBlocks.length, 3); i++) {
-                    const block = firstBlocks[i];
-                    // Don't strip if it contains substantial content or sub-elements
-                    if (block.querySelector('img, table, ul, ol')) continue;
+                // ONLY strip if we have a non-generic title promoted to the header
+                if (!isGeneric) {
+                    const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
+                    const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
                     
-                    const blockText = block.textContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-                    if (blockText.length > 0 && blockText.length < 150 && (blockText === titlePlain || titlePlain.includes(blockText) || blockText.includes(titlePlain))) {
-                        block.remove();
-                        break; // Only remove the first matching block
+                    for (let i = 0; i < Math.min(firstBlocks.length, 3); i++) {
+                        const block = firstBlocks[i];
+                        if (block.querySelector('img, table, ul, ol')) continue;
+                        
+                        const blockTextHtml = block.innerHTML;
+                        const blockTextContent = block.textContent;
+
+                        // CRITICAL: Never strip the publication title/date
+                        if (blockTextContent.includes("Publicado em") || blockTextContent.includes("発行）") || blockTextContent.includes("（昭和")) continue;
+
+                        const blockTextClean = blockTextContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
+                        
+                        if (blockTextClean.length > 0 && blockTextClean.length < 150) {
+                            // Only strip if it's an exact match or very close to the title we promoted
+                            if (blockTextClean === titlePlain || (titlePlain.length > 10 && blockTextClean.includes(titlePlain))) {
+                                block.remove();
+                                break;
+                            }
+                        }
                     }
                 }
                 cleanedContent = _tmp.innerHTML;
@@ -1028,11 +1169,26 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (displayDate === "Unknown") displayDate = "";
 
                 // Add topic to navigation select if multiple topics
-                if (navSelect && topicsFound.length > 1) {
-                    const topicTitle = (isPt ? (topicData.title_ptbr || topicData.title_pt || topicData.title) : topicData.title) || `Publicação ${index + 1}`;
+                if (navSelect && currentTopics.length > 1) {
+                    const doc = new DOMParser().parseFromString(formattedContent, 'text/html');
+                    const header = doc.querySelector('span');
+                    let extracted = header ? header.textContent.trim() : "";
+                    
+                    let pTitle = (extracted.length > 4 && extracted.length < 200) ? extracted : (isPt ? (topicData.publication_title_pt || topicData.title_ptbr) : topicData.title_ja);
+                    pTitle = pTitle || topicData.title || `Parte ${index + 1}`;
+                    
+                    // Clean up prefixes if they are too long or generic
+                    let finalTitle = pTitle.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*/gi, '').trim();
+                    
+                    if (!window._usedNavTitles) window._usedNavTitles = new Set();
+                    if (window._usedNavTitles.has(finalTitle)) {
+                        finalTitle = `${finalTitle} (${index + 1})`;
+                    }
+                    window._usedNavTitles.add(finalTitle);
+
                     const op = document.createElement('option');
                     op.value = `#${topicId}`;
-                    op.textContent = topicTitle.replace(/<[^>]+>/g, '');
+                    op.textContent = finalTitle;
                     navSelect.appendChild(op);
                 }
 
@@ -1045,7 +1201,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // Show select only if multiple topics (use already-declared outer variable)
-            if (navSelect) navSelect.style.display = topicsFound.length > 1 ? 'inline-block' : 'none';
+            if (navSelect) navSelect.style.display = currentTopics.length > 1 ? 'inline-block' : 'none';
 
             // Navigation Footer
             const navFooter = `
@@ -1055,10 +1211,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
 
+            const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
+
             container.innerHTML = `
                 <nav class="breadcrumbs">
                     <a href="index.html">Início</a> <span>/</span> 
-                    <a href="${volId}/index.html">Volume ${volId.slice(-1)}</a> <span>/</span>
+                    <a href="${volPath}">Volume ${volId.slice(-1)}</a> <span>/</span>
                     <span style="color:var(--text-main)">Leitura</span>
                 </nav>
                 <div class="reader-container">
@@ -1107,7 +1265,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
-        renderContent('pt');
+        const savedLang = localStorage.getItem('site_lang') || 'pt';
+        renderContent(savedLang);
 
     } catch (err) {
         container.innerHTML = `<div class="error">Erro ao carregar o ensinamento.</div>`;
@@ -1157,6 +1316,9 @@ READER_HTML = """<!DOCTYPE html>
         <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
     </div>
   </main>
+  <script>
+    {JS_LOGIN_LOGIC}
+  </script>
 
   <div class="search-modal-overlay" id="searchModal">
     <div class="search-modal">
@@ -1215,7 +1377,7 @@ def create_dirs():
     with open(f"{OUTPUT_DIR}/css/styles.css", "w", encoding="utf-8") as f:
         f.write(CSS_CONTENT)
     with open(f"{OUTPUT_DIR}/reader.html", "w", encoding="utf-8") as f:
-        f.write(READER_HTML)
+        f.write(READER_HTML.replace('{JS_LOGIN_LOGIC}', JS_LOGIN_LOGIC).replace('{CACHE_BUSTER}', str(CACHE_BUSTER)))
     with open(f"{OUTPUT_DIR}/js/reader.js", "w", encoding="utf-8") as f:
         f.write(READER_JS)
     with open(f"{OUTPUT_DIR}/js/toggle.js", "w", encoding="utf-8") as f:
@@ -1661,15 +1823,12 @@ def process_indexes():
     </div>
   </div>
 
-  <div class="search-modal-overlay" id="historyModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Histórico de Navegação</h2>
-        <button class="search-close" onclick="closeHistory()">&times;</button>
-      </div>
-      <ul class="search-results" id="historyResults"></ul>
     </div>
   </div>
+
+  <script>
+    {JS_LOGIN_LOGIC}
+  </script>
 
 </body>
 </html>"""

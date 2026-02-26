@@ -48,15 +48,42 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         window.renderContent = (lang = 'pt') => {
             const isPt = lang === 'pt';
+            window._usedNavTitles = new Set();
             
+            let currentTopics = topicsFound;
+            if (isPt) {
+                currentTopics = topicsFound.filter(t => (t.content_ptbr && t.content_ptbr.trim() !== "") || (t.content_pt && t.content_pt.trim() !== ""));
+                if (currentTopics.length === 0) currentTopics = topicsFound;
+            }
+
             let indexTitles = {};
             try {
                 indexTitles = window.GLOBAL_INDEX_TITLES || {};
             } catch (e) {}
             
             const indexTitle = (indexTitles[volId] && indexTitles[volId][filename]) ? indexTitles[volId][filename] : null;
-            const fallbackTitle = isPt ? (topicsFound[0].title_ptbr || topicsFound[0].title_pt || topicsFound[0].title) : topicsFound[0].title;
-            const mainTitleToDisplay = (isPt && indexTitle) ? indexTitle : fallbackTitle;
+            const fallbackTitle = isPt ? (currentTopics[0].title_ptbr || currentTopics[0].title_pt || currentTopics[0].title) : currentTopics[0].title;
+            let mainTitleToDisplay = (isPt && indexTitle) ? indexTitle : fallbackTitle;
+
+            // If title is generic or missing, peek into topics for a better one
+            const genericRegex = /O Método do Johrei|Princípio do Johrei|Sobre a Verdade|Verdade \d|Ensinamento \d|Parte \d|JH\d|JH \d|Publicação \d/i;
+            let isGeneric = !mainTitleToDisplay || genericRegex.test(mainTitleToDisplay);
+            if (isGeneric) {
+                for (let t of currentTopics) {
+                    const raw = isPt ? (t.content_ptbr || t.content_pt || t.content) : t.content;
+                    if (!raw || raw.length < 20) continue;
+                    const doc = new DOMParser().parseFromString(raw, 'text/html');
+                    const span = doc.querySelector('span, b, font');
+                    if (span) {
+                        let extracted = span.textContent.trim().replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*|明主様御垂示\s*|明主様御講話\s*/gi, '');
+                        if (extracted.length > 5 && extracted.length < 150) {
+                            mainTitleToDisplay = extracted;
+                            isGeneric = false; // Successfully promoted a real title
+                            break;
+                        }
+                    }
+                }
+            }
 
             // --- History Saving Logic ---
             try {
@@ -84,21 +111,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                 navSelect.style.display = 'none';
             }
             
-            topicsFound.forEach((topicData, index) => {
+            currentTopics.forEach((topicData, index) => {
                 const topicId = `topic-${index}`;
                 
-                // Content cleanup
-                let formattedContent = "";
+                // Content cleanup and Markdown conversion
+                let rawContent = "";
                 if (isPt) {
-                    formattedContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
+                    rawContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
                 } else {
-                    formattedContent = topicData.content || "";
+                    rawContent = topicData.content || "";
                 }
 
-                // Strip all <font> inline-style attributes except color (already stripped below)
-                // This prevents Japanese fonts from affecting rendering
+                // If content looks like Markdown (contains ** or # or [), use marked
+                let formattedContent = rawContent;
+                if (typeof marked !== 'undefined' && (/(\*\*|__|###|# |\[)/.test(rawContent))) {
+                    formattedContent = marked.parse(rawContent);
+                }
+
+                // Strip all <font> inline-style attributes except color
                 formattedContent = formattedContent.replace(/<font(\s[^>]*)>/gi, (m, attrs) => {
-                    // Keep only href-like content, discard face/size/etc
                     return '<span>';
                 }).replace(/<\/font>/gi, '</span>');
 
@@ -109,34 +140,67 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return `src="assets/images/${src}"`;
                 });
 
-                let cleanedContent = formattedContent.replace(/color=["'][^"']+["']/g, '');
-                cleanedContent = cleanedContent.replace(/style=["'][^"']*color:[^"']+["']/g, '');
 
                 // DOM-based: remove leading element ONLY if its stripped text is an exact match
                 // to the main title (prevents removing teaching titles that just share a word)
+                cleanedContent = formattedContent;
                 const _tmp = document.createElement('div');
                 _tmp.innerHTML = cleanedContent;
-                const _first = _tmp.firstElementChild;
-                if (_first && !_first.querySelector('blockquote, p, div, ul, ol, table')) {
-                    const elPlain = _first.textContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
+                
+                // Enhanced title stripping to fix duplicate titles
+                // ONLY strip if we have a non-generic title promoted to the header
+                if (!isGeneric) {
+                    const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
                     const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-                    // Only strip on EXACT match to avoid removing valid teaching titles
-                    if (elPlain.length > 0 && elPlain.length < 80 && elPlain === titlePlain) {
-                        _first.remove();
-                        cleanedContent = _tmp.innerHTML;
+                    
+                    for (let i = 0; i < Math.min(firstBlocks.length, 3); i++) {
+                        const block = firstBlocks[i];
+                        if (block.querySelector('img, table, ul, ol')) continue;
+                        
+                        const blockTextHtml = block.innerHTML;
+                        const blockTextContent = block.textContent;
+
+                        // CRITICAL: Never strip the publication title/date
+                        if (blockTextContent.includes("Publicado em") || blockTextContent.includes("発行）") || blockTextContent.includes("（昭和")) continue;
+
+                        const blockTextClean = blockTextContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
+                        
+                        if (blockTextClean.length > 0 && blockTextClean.length < 150) {
+                            // Only strip if it's an exact match or very close to the title we promoted
+                            if (blockTextClean === titlePlain || (titlePlain.length > 10 && blockTextClean.includes(titlePlain))) {
+                                block.remove();
+                                break;
+                            }
+                        }
                     }
                 }
+                cleanedContent = _tmp.innerHTML;
 
                 // Filter "Unknown" dates
                 let displayDate = topicData.date;
                 if (displayDate === "Unknown") displayDate = "";
 
                 // Add topic to navigation select if multiple topics
-                if (navSelect && topicsFound.length > 1) {
-                    const topicTitle = (isPt ? (topicData.title_ptbr || topicData.title_pt || topicData.title) : topicData.title) || `Publicação ${index + 1}`;
+                if (navSelect && currentTopics.length > 1) {
+                    const doc = new DOMParser().parseFromString(formattedContent, 'text/html');
+                    const header = doc.querySelector('span');
+                    let extracted = header ? header.textContent.trim() : "";
+                    
+                    let pTitle = (extracted.length > 4 && extracted.length < 200) ? extracted : (isPt ? (topicData.publication_title_pt || topicData.title_ptbr) : topicData.title_ja);
+                    pTitle = pTitle || topicData.title || `Parte ${index + 1}`;
+                    
+                    // Clean up prefixes if they are too long or generic
+                    let finalTitle = pTitle.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*/gi, '').trim();
+                    
+                    if (!window._usedNavTitles) window._usedNavTitles = new Set();
+                    if (window._usedNavTitles.has(finalTitle)) {
+                        finalTitle = `${finalTitle} (${index + 1})`;
+                    }
+                    window._usedNavTitles.add(finalTitle);
+
                     const op = document.createElement('option');
                     op.value = `#${topicId}`;
-                    op.textContent = topicTitle.replace(/<[^>]+>/g, '');
+                    op.textContent = finalTitle;
                     navSelect.appendChild(op);
                 }
 
@@ -149,7 +213,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // Show select only if multiple topics (use already-declared outer variable)
-            if (navSelect) navSelect.style.display = topicsFound.length > 1 ? 'inline-block' : 'none';
+            if (navSelect) navSelect.style.display = currentTopics.length > 1 ? 'inline-block' : 'none';
 
             // Navigation Footer
             const navFooter = `
@@ -159,10 +223,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                 </div>
             `;
 
+            const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
+
             container.innerHTML = `
                 <nav class="breadcrumbs">
                     <a href="index.html">Início</a> <span>/</span> 
-                    <a href="${volId}/index.html">Volume ${volId.slice(-1)}</a> <span>/</span>
+                    <a href="${volPath}">Volume ${volId.slice(-1)}</a> <span>/</span>
                     <span style="color:var(--text-main)">Leitura</span>
                 </nav>
                 <div class="reader-container">
@@ -211,7 +277,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         };
 
-        renderContent('pt');
+        const savedLang = localStorage.getItem('site_lang') || 'pt';
+        renderContent(savedLang);
 
     } catch (err) {
         container.innerHTML = `<div class="error">Erro ao carregar o ensinamento.</div>`;
