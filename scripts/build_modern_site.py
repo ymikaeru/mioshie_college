@@ -970,18 +970,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             topicsFound.forEach((topicData, index) => {
                 const topicId = `topic-${index}`;
                 
-                // Content cleanup
-                let formattedContent = "";
+                // Content cleanup and Markdown conversion
+                let rawContent = "";
                 if (isPt) {
-                    formattedContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
+                    rawContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
                 } else {
-                    formattedContent = topicData.content || "";
+                    rawContent = topicData.content || "";
                 }
 
-                // Strip all <font> inline-style attributes except color (already stripped below)
-                // This prevents Japanese fonts from affecting rendering
+                // If content looks like Markdown (contains ** or # or [), use marked
+                let formattedContent = rawContent;
+                if (typeof marked !== 'undefined' && (/(\*\*|__|###|# |\[)/.test(rawContent))) {
+                    formattedContent = marked.parse(rawContent);
+                }
+
+                // Strip all <font> inline-style attributes except color
                 formattedContent = formattedContent.replace(/<font(\s[^>]*)>/gi, (m, attrs) => {
-                    // Keep only href-like content, discard face/size/etc
                     return '<span>';
                 }).replace(/<\/font>/gi, '</span>');
 
@@ -997,18 +1001,27 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // DOM-based: remove leading element ONLY if its stripped text is an exact match
                 // to the main title (prevents removing teaching titles that just share a word)
+                let cleanedContent = formattedContent;
                 const _tmp = document.createElement('div');
                 _tmp.innerHTML = cleanedContent;
-                const _first = _tmp.firstElementChild;
-                if (_first && !_first.querySelector('blockquote, p, div, ul, ol, table')) {
-                    const elPlain = _first.textContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-                    const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-                    // Only strip on EXACT match to avoid removing valid teaching titles
-                    if (elPlain.length > 0 && elPlain.length < 80 && elPlain === titlePlain) {
-                        _first.remove();
-                        cleanedContent = _tmp.innerHTML;
+                
+                // Enhanced title stripping to fix duplicate titles
+                // Check the first few blocks for title match
+                const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
+                const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
+                
+                for (let i = 0; i < Math.min(firstBlocks.length, 3); i++) {
+                    const block = firstBlocks[i];
+                    // Don't strip if it contains substantial content or sub-elements
+                    if (block.querySelector('img, table, ul, ol')) continue;
+                    
+                    const blockText = block.textContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
+                    if (blockText.length > 0 && blockText.length < 150 && (blockText === titlePlain || titlePlain.includes(blockText) || blockText.includes(titlePlain))) {
+                        block.remove();
+                        break; // Only remove the first matching block
                     }
                 }
+                cleanedContent = _tmp.innerHTML;
 
                 // Filter "Unknown" dates
                 let displayDate = topicData.date;
@@ -1111,6 +1124,7 @@ READER_HTML = """<!DOCTYPE html>
   <title>Ensinamentos de Meishu-Sama - Leitura</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
   <header class="header">
@@ -1122,7 +1136,7 @@ READER_HTML = """<!DOCTYPE html>
     </a>
     <div class="header__nav">
        <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
+       <a href="index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
        <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
        <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
        <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
@@ -1266,13 +1280,14 @@ def process_indexes():
             return re.sub(r'\s+', ' ', text).strip()
 
         section_headers = []
-        def traverse_and_convert(element, vol_data_lookup=None, theme_lookup=None):
+        def traverse_and_convert(element, vol_data_lookup=None, theme_lookup=None, original_ja_index_lookup=None):
             nonlocal topic_count
             html_parts = []
             last_was_topic = False
             last_was_br = False
             
             theme_lookup = theme_lookup or {}
+            original_ja_index_lookup = original_ja_index_lookup or {}
             
             for child in element.children:
                 # Ignore comments and scripts
@@ -1290,10 +1305,17 @@ def process_indexes():
                     
                     # Lookup bilingual title
                     title_ja = title_pt
-                    if vol_data_lookup and filename in vol_data_lookup:
-                        title_ja = vol_data_lookup[filename].get('title_ja', title_pt)
-                        # We specifically DO NOT use the JSON title for title_pt, 
-                        # because translated_indexes is the source of truth for the Portuguese titles
+                    if original_ja_index_lookup and filename in original_ja_index_lookup:
+                        title_ja = original_ja_index_lookup[filename]
+                    elif vol_data_lookup:
+                        lookup_key = title_pt.strip()
+                        if lookup_key in vol_data_lookup:
+                            title_ja = vol_data_lookup[lookup_key].get('title_ja', title_pt)
+                        elif filename in vol_data_lookup:
+                            title_ja = vol_data_lookup[filename].get('title_ja', title_pt)
+                    
+                    if not title_ja:
+                        title_ja = title_pt
 
                     if vol_id in GLOBAL_INDEX_TITLES:
                         GLOBAL_INDEX_TITLES[vol_id][filename] = title_pt
@@ -1376,7 +1398,7 @@ def process_indexes():
                         last_was_topic = False
                         last_was_br = False
                     else:
-                        inner = traverse_and_convert(child, vol_data_lookup, theme_lookup)
+                        inner = traverse_and_convert(child, vol_data_lookup, theme_lookup, original_ja_index_lookup)
                         if inner:
                             html_parts.append(inner)
                             last_was_topic = False
@@ -1507,6 +1529,26 @@ def process_indexes():
             data_path = os.path.join(DATA_DIR, data_file)
             vol_data_lookup = {}
             theme_lookup = {}
+            
+            # Extract true Japanese chapter titles from the original HTML index
+            original_ja_index_lookup = {}
+            index_filename = 'index2.html' if vol_id == 'shumeic1' else 'index.html'
+            original_idx_path = os.path.join('OrigianlHTML', vol_id, index_filename)
+            if os.path.exists(original_idx_path):
+                try:
+                    with open(original_idx_path, 'r', encoding='shift_jis') as f:
+                        html_content = f.read()
+                except UnicodeDecodeError:
+                    with open(original_idx_path, 'r', encoding='utf-8', errors='ignore') as f:
+                        html_content = f.read()
+                ja_soup = BeautifulSoup(html_content, 'html.parser')
+                for a_tag in ja_soup.find_all('a'):
+                    href = a_tag.get('href', '')
+                    if href and not href.startswith('http') and not href.startswith('#'):
+                        fname = href.split('/')[-1]
+                        if fname:
+                            original_ja_index_lookup[fname] = clean_text(a_tag.get_text().replace('・', ''))
+                            
             if os.path.exists(data_path):
                 with open(data_path, 'r', encoding='utf-8') as f:
                     v_data = json.load(f)
@@ -1519,12 +1561,23 @@ def process_indexes():
                         for topic in theme.get('topics', []):
                             fname = topic.get('source_file', topic.get('filename', '')).split('/')[-1]
                             if fname:
-                                vol_data_lookup[fname] = {
-                                    'title_ja': topic.get('title', ''),
-                                    'title_pt': topic.get('title_ptbr', topic.get('title_pt', ''))
-                                }
+                                pt_title_key = topic.get('title_ptbr', topic.get('title_pt', ''))
+                                ja_title = topic.get('title_ja') or topic.get('title', '')
+                                
+                                if pt_title_key:
+                                    vol_data_lookup[pt_title_key.strip()] = {
+                                        'title_ja': ja_title,
+                                        'title_pt': pt_title_key
+                                    }
+                                    
+                                # Fallback by filename just in case
+                                if fname not in vol_data_lookup:
+                                    vol_data_lookup[fname] = {
+                                        'title_ja': ja_title,
+                                        'title_pt': pt_title_key
+                                    }
 
-            main_elements_html = traverse_and_convert(main_content, vol_data_lookup, theme_lookup)
+            main_elements_html = traverse_and_convert(main_content, vol_data_lookup, theme_lookup, original_ja_index_lookup)
             content_html = f"""
             <div class="index-header" style="text-align:center; margin-bottom: 64px;">
                 <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">{vol_label}</span>

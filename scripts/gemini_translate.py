@@ -66,7 +66,7 @@ def translate_directory(input_dir, output_dir, prompt_path, pattern="theme_05_*.
     
     api_key = os.environ.get("GEMINI_API_KEY")
     if not api_key:
-        print("ERRO: A variável de ambiente GEMINI_API_KEY conf não existe!")
+        print("ERRO: A variável de ambiente GEMINI_API_KEY não existe!")
         return
 
     genai.configure(api_key=api_key)
@@ -78,7 +78,7 @@ def translate_directory(input_dir, output_dir, prompt_path, pattern="theme_05_*.
         print(f"ERRO: Arquivo de prompt não encontrado: {prompt_path}")
         return
 
-    # Usaremos 3.1-pro-preview pra máxima qualidade
+    # Usaremos 3.1-pro-preview conforme solicitado
     model = genai.GenerativeModel(
         model_name="gemini-3.1-pro-preview",
         system_instruction=system_instruction,
