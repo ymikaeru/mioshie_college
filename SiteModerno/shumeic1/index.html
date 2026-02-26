@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ensinamentos - Biblioteca Sagrada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <a href="../shumeic1/index.html" class="header__logo">
+      <div class="logo-circle">
+        <div class="logo-dot"></div>
+      </div>
+      Biblioteca Sagrada
+    </a>
+    <div class="header__nav">
+       <a href="../shumeic1/index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
+       <a href="../shumeic2/index.html" data-tooltip="Johrei・Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
+       <a href="../shumeic3/index.html" data-tooltip="Seção da Fé"><span>Vol 3</span></a>
+       <a href="../shumeic4/index.html" data-tooltip="Outros Ensinamentos"><span>Vol 4</span></a>
+       
+    </div>
+    <div class="controls">
+       <button class="btn-zen active" id="btn-pt">PT-BR</button>
+       <button class="btn-zen" id="btn-ja">日本語</button>
+       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+    </div>
+  </header>
+  <main class="main">
+    <div class="content-wrapper">
+        <div class="glass-pane">
+            
+            <div class="home-hero">
+                
+                <h1 class="index-title" style="margin-bottom:16px">Ensinamentos de Meishu-Sama</h1>
+                <p style="text-align:center; color:var(--text-muted); margin-bottom:48px; max-width:600px; margin-inline:auto;">
+                    Tradução em português das obras de Meishu-Sama, organizadas em volumes temáticos para estudo e reflexão.
+                </p>
+                <div class="topic-list" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                    <a href="index2.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 1</span>
+                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">Mundo Espiritual</div>
+                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">Primazia do Espírito, Transição da Noite para o Dia e Culto aos Antepassados.</div>
+                    </a>
+                    <a href="../shumeic2/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 2</span>
+                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">Johrei</div>
+                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">Método de Saúde Divino e Agricultura Natural (Salvação pelo Belo e pelo Alimento).</div>
+                    </a>
+                    <a href="../shumeic3/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 3</span>
+                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">Seção da Fé</div>
+                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">A essência da verdadeira fé e o caminho para o paraíso terrestre.</div>
+                    </a>
+                    <a href="../shumeic4/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 4</span>
+                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">Outros Ensinamentos</div>
+                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">Coletânea de teses diversas e sermões complementares.</div>
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+  </main>
+  <script src="../js/toggle.js"></script>
+</body>
+</html>

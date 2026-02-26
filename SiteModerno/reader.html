@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ensinamentos de Meishu-Sama - Leitura</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <a href="shumeic1/index.html" class="header__logo">
+      <div class="logo-circle">
+        <div class="logo-dot"></div>
+      </div>
+      Biblioteca Sagrada
+    </a>
+    <div class="header__nav">
+       <a href="shumeic1/index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
+       <a href="shumeic2/index.html" data-tooltip="Johrei・Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
+       <a href="shumeic3/index.html" data-tooltip="Seção da Fé"><span>Vol 3</span></a>
+       <a href="shumeic4/index.html" data-tooltip="Outros Ensinamentos"><span>Vol 4</span></a>
+       <select id="readerTopicSelect" class="btn-zen" onchange="location.hash=this.value" style="max-width:250px; display:none;">
+            <option value="">Navegação por Publicações</option>
+       </select>
+    </div>
+    <div class="controls">
+      <button class="btn-zen active" id="btn-pt" onclick="setLanguage('pt')">PT-BR</button>
+      <button class="btn-zen" id="btn-ja" onclick="setLanguage('ja')">日本語</button>
+      <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+    </div>
+  </header>
+  <main class="main">
+    <div class="glass-pane" id="readerContainer">
+        <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
+    </div>
+  </main>
+  <script src="js/toggle.js"></script>
+  <script src="js/reader.js"></script>
+</body>
+</html>

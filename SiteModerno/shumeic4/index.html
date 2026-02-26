@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Ensinamentos - Biblioteca Sagrada</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <a href="../shumeic1/index.html" class="header__logo">
+      <div class="logo-circle">
+        <div class="logo-dot"></div>
+      </div>
+      Biblioteca Sagrada
+    </a>
+    <div class="header__nav">
+       <a href="../shumeic1/index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
+       <a href="../shumeic2/index.html" data-tooltip="Johrei・Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
+       <a href="../shumeic3/index.html" data-tooltip="Seção da Fé"><span>Vol 3</span></a>
+       <a href="../shumeic4/index.html" data-tooltip="Outros Ensinamentos"><span>Vol 4</span></a>
+       <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
+            <option value="">Navegação por Temas</option>
+            <option value="#section-0">Os Feitos de Meishu-Sama</option><option value="#section-1">Construção do Protótipo do Paraíso Terrestre</option><option value="#section-2">Incompreensão dos de fora</option><option value="#section-3">Coleção de Fragmentos Religiosos</option><option value="#section-4">Análise de Todas as Coisas da Natureza</option><option value="#section-5">Sobre a Arte</option><option value="#section-6">Sobre a Situação Atual</option>
+       </select>
+    </div>
+    <div class="controls">
+       <button class="btn-zen active" id="btn-pt">PT-BR</button>
+       <button class="btn-zen" id="btn-ja">日本語</button>
+       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+    </div>
+  </header>
+  <main class="main">
+    <div class="content-wrapper">
+        <div class="glass-pane">
+            
+            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">COLETÂNEA OFICIAL • VOLUME 4</span>
+                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">Outros Ensinamentos</h1>
+            </div>
+            <div class="topic-list">
+                <div style="height: 12px;"></div><div id="section-0" class="section-header">Os Feitos de Meishu-Sama</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=sinti.html" class="topic-card">
+                        <div class="topic-card__icon">1</div>
+                        <div class="topic-card__title">A Sabedoria Divina de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki1.html" class="topic-card">
+                        <div class="topic-card__icon">2</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki2.html" class="topic-card">
+                        <div class="topic-card__icon">3</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki3.html" class="topic-card">
+                        <div class="topic-card__icon">4</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki4.html" class="topic-card">
+                        <div class="topic-card__icon">5</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki5.html" class="topic-card">
+                        <div class="topic-card__icon">6</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki6.html" class="topic-card">
+                        <div class="topic-card__icon">7</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ６</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki7.html" class="topic-card">
+                        <div class="topic-card__icon">8</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ７</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sokuseki8.html" class="topic-card">
+                        <div class="topic-card__icon">9</div>
+                        <div class="topic-card__title">Os Passos da Obra Divina de Meishu-Sama ８</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide1.html" class="topic-card">
+                        <div class="topic-card__icon">10</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide2.html" class="topic-card">
+                        <div class="topic-card__icon">11</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide3.html" class="topic-card">
+                        <div class="topic-card__icon">12</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide4.html" class="topic-card">
+                        <div class="topic-card__icon">13</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide5.html" class="topic-card">
+                        <div class="topic-card__icon">14</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=omoide6.html" class="topic-card">
+                        <div class="topic-card__icon">15</div>
+                        <div class="topic-card__title">Memórias de Meishu-Sama ６</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=nitizyou1.html" class="topic-card">
+                        <div class="topic-card__icon">16</div>
+                        <div class="topic-card__title">O Cotidiano de Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=nitizyou2.html" class="topic-card">
+                        <div class="topic-card__icon">17</div>
+                        <div class="topic-card__title">O Cotidiano de Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=onkoto.html" class="topic-card">
+                        <div class="topic-card__icon">18</div>
+                        <div class="topic-card__title">Relatos sobre Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sixtupitu.html" class="topic-card">
+                        <div class="topic-card__icon">19</div>
+                        <div class="topic-card__title">Os Escritos de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=waka.html" class="topic-card">
+                        <div class="topic-card__icon">20</div>
+                        <div class="topic-card__title">Os Waka de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=syuxtupan1.html" class="topic-card">
+                        <div class="topic-card__icon">21</div>
+                        <div class="topic-card__title">As Publicações de Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=syuxtupan2.html" class="topic-card">
+                        <div class="topic-card__icon">22</div>
+                        <div class="topic-card__title">As Publicações de Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=syuxtupan3.html" class="topic-card">
+                        <div class="topic-card__icon">23</div>
+                        <div class="topic-card__title">As Publicações de Meishu-Sama ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=radio.html" class="topic-card">
+                        <div class="topic-card__icon">24</div>
+                        <div class="topic-card__title">Aparições de Meishu-Sama no Rádio</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=taidan.html" class="topic-card">
+                        <div class="topic-card__icon">25</div>
+                        <div class="topic-card__title">Os Diálogos de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kouzan.html" class="topic-card">
+                        <div class="topic-card__icon">26</div>
+                        <div class="topic-card__title">A Administração de Minas por Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tozan.html" class="topic-card">
+                        <div class="topic-card__icon">27</div>
+                        <div class="topic-card__title">As Escaladas de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hounan1.html" class="topic-card">
+                        <div class="topic-card__icon">28</div>
+                        <div class="topic-card__title">As Perseguições a Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hounan2.html" class="topic-card">
+                        <div class="topic-card__icon">29</div>
+                        <div class="topic-card__title">As Perseguições a Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hounan3.html" class="topic-card">
+                        <div class="topic-card__icon">30</div>
+                        <div class="topic-card__title">As Perseguições a Meishu-Sama ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hounan4.html" class="topic-card">
+                        <div class="topic-card__icon">31</div>
+                        <div class="topic-card__title">As Perseguições a Meishu-Sama ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hounan5.html" class="topic-card">
+                        <div class="topic-card__icon">32</div>
+                        <div class="topic-card__title">As Perseguições a Meishu-Sama ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=haxtuten.html" class="topic-card">
+                        <div class="topic-card__icon">33</div>
+                        <div class="topic-card__title">A Grande Expansão da Igreja Messiânica</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hawaii1.html" class="topic-card">
+                        <div class="topic-card__icon">34</div>
+                        <div class="topic-card__title">A Difusão no Havaí durante a vida de Meishu-Sama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hawaii2.html" class="topic-card">
+                        <div class="topic-card__icon">35</div>
+                        <div class="topic-card__title">A Difusão no Havaí durante a vida de Meishu-Sama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=USAhukyou.html" class="topic-card">
+                        <div class="topic-card__icon">36</div>
+                        <div class="topic-card__title">A Difusão nos EUA durante a vida de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=saika.html" class="topic-card">
+                        <div class="topic-card__icon">37</div>
+                        <div class="topic-card__title">A Viagem de Meishu-Sama para o Oeste</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=saigo.html" class="topic-card">
+                        <div class="topic-card__icon">38</div>
+                        <div class="topic-card__title">A Última Obra Divina de Meishu-Sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=shouten.html" class="topic-card">
+                        <div class="topic-card__icon">39</div>
+                        <div class="topic-card__title">A Ascensão de Meishu-Sama e o Johrei</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-1" class="section-header">Construção do Protótipo do Paraíso Terrestre</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=gyokusen.html" class="topic-card">
+                        <div class="topic-card__icon">40</div>
+                        <div class="topic-card__title">Tamagawa-go</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sinsen1.html" class="topic-card">
+                        <div class="topic-card__icon">41</div>
+                        <div class="topic-card__title">Hakone Shinsen-kyo １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sinsen2.html" class="topic-card">
+                        <div class="topic-card__icon">42</div>
+                        <div class="topic-card__title">Hakone Shinsen-kyo ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zuiun.html" class="topic-card">
+                        <div class="topic-card__icon">43</div>
+                        <div class="topic-card__title">Atami Zuiun-kyo</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sakimi.html" class="topic-card">
+                        <div class="topic-card__icon">44</div>
+                        <div class="topic-card__title">Sede Provisória de Sakimi-cho</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=heian1.html" class="topic-card">
+                        <div class="topic-card__icon">45</div>
+                        <div class="topic-card__title">Kyoto Heian-kyo １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=heian2.html" class="topic-card">
+                        <div class="topic-card__icon">46</div>
+                        <div class="topic-card__title">Quioto Heian-kyo ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mesiya1.html" class="topic-card">
+                        <div class="topic-card__icon">47</div>
+                        <div class="topic-card__title">Salão Messias １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mesiya2.html" class="topic-card">
+                        <div class="topic-card__icon">48</div>
+                        <div class="topic-card__title">Salão Messias ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mesiya3.html" class="topic-card">
+                        <div class="topic-card__icon">49</div>
+                        <div class="topic-card__title">Salão Messias ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suishou.html" class="topic-card">
+                        <div class="topic-card__icon">50</div>
+                        <div class="topic-card__title">Palácio de Cristal</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=koumyou.html" class="topic-card">
+                        <div class="topic-card__icon">51</div>
+                        <div class="topic-card__title">Palácio da Luz</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hakoneB1.html" class="topic-card">
+                        <div class="topic-card__icon">52</div>
+                        <div class="topic-card__title">Museu de Arte de Hakone １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hakoneB2.html" class="topic-card">
+                        <div class="topic-card__icon">53</div>
+                        <div class="topic-card__title">Museu de Arte de Hakone ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hakoneB3.html" class="topic-card">
+                        <div class="topic-card__icon">54</div>
+                        <div class="topic-card__title">Museu de Arte de Hakone ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hakoneB4.html" class="topic-card">
+                        <div class="topic-card__icon">55</div>
+                        <div class="topic-card__title">Museu de Arte de Hakone ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=atamiB.html" class="topic-card">
+                        <div class="topic-card__icon">56</div>
+                        <div class="topic-card__title">Museu de Arte de Atami</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=buxtukyouB.html" class="topic-card">
+                        <div class="topic-card__icon">57</div>
+                        <div class="topic-card__title">Museu de Arte Budista</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=bizyutuhin.html" class="topic-card">
+                        <div class="topic-card__icon">58</div>
+                        <div class="topic-card__title">O milagre da coleção de obras de arte</div>
+                    </a><div class="group-spacer"></div>
+                    <a href="../reader.html?vol=shumeic4&file=kensetuKEIRIN1.html" class="topic-card">
+                        <div class="topic-card__icon">59</div>
+                        <div class="topic-card__title">Construção e Plano Divino １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kensetuKEIRIN2.html" class="topic-card">
+                        <div class="topic-card__icon">60</div>
+                        <div class="topic-card__title">Construção e Plano Divino ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kensetuKYOUSEN.html" class="topic-card">
+                        <div class="topic-card__icon">61</div>
+                        <div class="topic-card__title">O progresso da construção e a expansão da doutrina</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kata1.html" class="topic-card">
+                        <div class="topic-card__icon">62</div>
+                        <div class="topic-card__title">O significado do modelo do Paraíso na Terra １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kata2.html" class="topic-card">
+                        <div class="topic-card__icon">63</div>
+                        <div class="topic-card__title">O significado do modelo do Paraíso na Terra ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kata3.html" class="topic-card">
+                        <div class="topic-card__icon">64</div>
+                        <div class="topic-card__title">O significado do modelo do Paraíso na Terra ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kata4.html" class="topic-card">
+                        <div class="topic-card__icon">65</div>
+                        <div class="topic-card__title">O significado do modelo do Paraíso na Terra ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hakoneSENDEN.html" class="topic-card">
+                        <div class="topic-card__icon">66</div>
+                        <div class="topic-card__title">O efeito publicitário do Museu de Arte de Hakone</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=TTsenden1.html" class="topic-card">
+                        <div class="topic-card__icon">67</div>
+                        <div class="topic-card__title">O efeito publicitário do Paraíso na Terra １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=TTsenden2.html" class="topic-card">
+                        <div class="topic-card__icon">68</div>
+                        <div class="topic-card__title">O efeito publicitário do Paraíso na Terra ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=TTtamasii.html" class="topic-card">
+                        <div class="topic-card__icon">69</div>
+                        <div class="topic-card__title">O Paraíso na Terra eleva a alma</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sidou.html" class="topic-card">
+                        <div class="topic-card__icon">70</div>
+                        <div class="topic-card__title">A salvação da classe dirigente</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-2" class="section-header">Incompreensão dos de fora</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI1.html" class="topic-card">
+                        <div class="topic-card__icon">71</div>
+                        <div class="topic-card__title">Ataques da mídia １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI2.html" class="topic-card">
+                        <div class="topic-card__icon">72</div>
+                        <div class="topic-card__title">Ataques da mídia ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI3.html" class="topic-card">
+                        <div class="topic-card__icon">73</div>
+                        <div class="topic-card__title">Ataques da mídia ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI4.html" class="topic-card">
+                        <div class="topic-card__icon">74</div>
+                        <div class="topic-card__title">Ataques da mídia ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI5.html" class="topic-card">
+                        <div class="topic-card__icon">75</div>
+                        <div class="topic-card__title">Ataques da mídia ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiHIKYOURYOKU.html" class="topic-card">
+                        <div class="topic-card__icon">76</div>
+                        <div class="topic-card__title">A postura não cooperativa da mídia</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=masukomiKYOURYOKU.html" class="topic-card">
+                        <div class="topic-card__icon">77</div>
+                        <div class="topic-card__title">A cooperação da mídia</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yusuri.html" class="topic-card">
+                        <div class="topic-card__icon">78</div>
+                        <div class="topic-card__title">Ameaças de extorsão</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sonotaBOUGAI.html" class="topic-card">
+                        <div class="topic-card__icon">79</div>
+                        <div class="topic-card__title">Outras obstruções</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sisan.html" class="topic-card">
+                        <div class="topic-card__icon">80</div>
+                        <div class="topic-card__title">A situação financeira da organização religiosa</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-3" class="section-header">Coleção de Fragmentos Religiosos</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=norito.html" class="topic-card">
+                        <div class="topic-card__icon">81</div>
+                        <div class="topic-card__title">Oração Norito</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=noritoMONGON.html" class="topic-card">
+                        <div class="topic-card__icon">82</div>
+                        <div class="topic-card__title">As palavras da oração Norito</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zengensanzi.html" class="topic-card">
+                        <div class="topic-card__icon">83</div>
+                        <div class="topic-card__title">Zengen Sanshi</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zengensanziMONGON.html" class="topic-card">
+                        <div class="topic-card__icon">84</div>
+                        <div class="topic-card__title">As palavras da Zengen Sanshi</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kamunagara.html" class="topic-card">
+                        <div class="topic-card__icon">85</div>
+                        <div class="topic-card__title">Kannagara Tamachi Haemase</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=amanokazuuta.html" class="topic-card">
+                        <div class="topic-card__icon">86</div>
+                        <div class="topic-card__title">Amatsu Kazoeuta</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=amatukanagi.html" class="topic-card">
+                        <div class="topic-card__icon">87</div>
+                        <div class="topic-card__title">Amatsu Kanagi</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kannonriki.html" class="topic-card">
+                        <div class="topic-card__icon">88</div>
+                        <div class="topic-card__title">O poder de Kannon</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=guseKANNON.html" class="topic-card">
+                        <div class="topic-card__icon">89</div>
+                        <div class="topic-card__title">Kannon, a Salvadora do Mundo</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=asakusa.html" class="topic-card">
+                        <div class="topic-card__icon">90</div>
+                        <div class="topic-card__title">A Kannon-sama de Asakusa</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kannonSAMA.html" class="topic-card">
+                        <div class="topic-card__icon">91</div>
+                        <div class="topic-card__title">Kannon-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kannonZOU.html" class="topic-card">
+                        <div class="topic-card__icon">92</div>
+                        <div class="topic-card__title">Estátua de Kannon</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=567daikoku.html" class="topic-card">
+                        <div class="topic-card__icon">93</div>
+                        <div class="topic-card__title">Miroku Daikokuten</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daikoku.html" class="topic-card">
+                        <div class="topic-card__icon">94</div>
+                        <div class="topic-card__title">Daikoku-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daikokuEBISU.html" class="topic-card">
+                        <div class="topic-card__icon">95</div>
+                        <div class="topic-card__title">Daikoku-sama e Ebisu-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daikokuHOUSAI.html" class="topic-card">
+                        <div class="topic-card__icon">96</div>
+                        <div class="topic-card__title">A Consagração de Daikoku-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daikokuREIHAI.html" class="topic-card">
+                        <div class="topic-card__icon">97</div>
+                        <div class="topic-card__title">A Adoração a Daikoku-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daikokuSAHOU.html" class="topic-card">
+                        <div class="topic-card__icon">98</div>
+                        <div class="topic-card__title">A Etiqueta para Daikoku-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sintou.html" class="topic-card">
+                        <div class="topic-card__icon">99</div>
+                        <div class="topic-card__title">Xinto ísmo</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zinzya.html" class="topic-card">
+                        <div class="topic-card__icon">100</div>
+                        <div class="topic-card__title">Santu ário</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kamidana.html" class="topic-card">
+                        <div class="topic-card__icon">101</div>
+                        <div class="topic-card__title">Kamida na</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=uzigami.html" class="topic-card">
+                        <div class="topic-card__icon">102</div>
+                        <div class="topic-card__title">Ujigami-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zizou.html" class="topic-card">
+                        <div class="topic-card__icon">103</div>
+                        <div class="topic-card__title">Ojizō-sama</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=gosintaiSHOBUN1.html" class="topic-card">
+                        <div class="topic-card__icon">104</div>
+                        <div class="topic-card__title">Método de descarte de objetos sagrados de outras religiões １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=gosintaiSHOBUN2.html" class="topic-card">
+                        <div class="topic-card__icon">105</div>
+                        <div class="topic-card__title">Método de descarte de objetos sagrados de outras religiões ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=gosintaiSHOBUN3.html" class="topic-card">
+                        <div class="topic-card__icon">106</div>
+                        <div class="topic-card__title">Método de descarte de objetos sagrados de outras religiões ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ohudaSHOBUN.html" class="topic-card">
+                        <div class="topic-card__icon">107</div>
+                        <div class="topic-card__title">Método de descarte de ofuda, shinpu, omamori e gohei</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ryuuzinSHOBUN.html" class="topic-card">
+                        <div class="topic-card__icon">108</div>
+                        <div class="topic-card__title">Método de descarte de Ryūjin, etc.</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=toukenSHOBUN.html" class="topic-card">
+                        <div class="topic-card__icon">109</div>
+                        <div class="topic-card__title">Método de descarte de espadas</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=sonotaSHOBUN.html" class="topic-card">
+                        <div class="topic-card__icon">110</div>
+                        <div class="topic-card__title">Método de descarte de outros objetos possuídos, etc.</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Sdanpen1.html" class="topic-card">
+                        <div class="topic-card__icon">111</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos Religiosos １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Sdanpen2.html" class="topic-card">
+                        <div class="topic-card__icon">112</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos Religiosos ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Sdanpen3.html" class="topic-card">
+                        <div class="topic-card__icon">113</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos Religiosos ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Sdanpen4.html" class="topic-card">
+                        <div class="topic-card__icon">114</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos Religiosos ４ (Cristianismo)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Sdanpen5.html" class="topic-card">
+                        <div class="topic-card__icon">115</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos Religiosos ５ (Budismo)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zabieru.html" class="topic-card">
+                        <div class="topic-card__icon">116</div>
+                        <div class="topic-card__title">Xavier</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reisi1.html" class="topic-card">
+                        <div class="topic-card__icon">117</div>
+                        <div class="topic-card__title">Visão Espiritual １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reisi2.html" class="topic-card">
+                        <div class="topic-card__icon">118</div>
+                        <div class="topic-card__title">Visão Espiritual ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reisi3.html" class="topic-card">
+                        <div class="topic-card__icon">119</div>
+                        <div class="topic-card__title">Visão Espiritual ３ (Visão Espiritual e Espíritos de Raposa)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reiSHASIN.html" class="topic-card">
+                        <div class="topic-card__icon">120</div>
+                        <div class="topic-card__title">Fotografia Espírita</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kourei.html" class="topic-card">
+                        <div class="topic-card__icon">121</div>
+                        <div class="topic-card__title">Fenômenos de Comunicação Espiritual</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=hikiyose.html" class="topic-card">
+                        <div class="topic-card__icon">122</div>
+                        <div class="topic-card__title">Fenômeno de Aporte de Objetos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reibai.html" class="topic-card">
+                        <div class="topic-card__icon">123</div>
+                        <div class="topic-card__title">Médi um</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Rdanpen1.html" class="topic-card">
+                        <div class="topic-card__icon">124</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos de Espiritologia １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Rdanpen2.html" class="topic-card">
+                        <div class="topic-card__icon">125</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos de Espiritologia ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=Rdanpen3.html" class="topic-card">
+                        <div class="topic-card__icon">126</div>
+                        <div class="topic-card__title">Coletânea de Fragmentos de Espiritologia ３</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-4" class="section-header">Análise de Todas as Coisas da Natureza</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=genrei.html" class="topic-card">
+                        <div class="topic-card__icon">127</div>
+                        <div class="topic-card__title">Análise de Kotodama e Caracteres</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suuzi.html" class="topic-card">
+                        <div class="topic-card__icon">128</div>
+                        <div class="topic-card__title">Análise dos Números</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=iro.html" class="topic-card">
+                        <div class="topic-card__icon">129</div>
+                        <div class="topic-card__title">Sobre as Cores</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kasou1.html" class="topic-card">
+                        <div class="topic-card__icon">130</div>
+                        <div class="topic-card__title">Geomancia e Direções １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kasou2.html" class="topic-card">
+                        <div class="topic-card__icon">131</div>
+                        <div class="topic-card__title">Geomancia e Direções ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ninsou.html" class="topic-card">
+                        <div class="topic-card__icon">132</div>
+                        <div class="topic-card__title">Fisiono mia</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ningenseiHANDAN.html" class="topic-card">
+                        <div class="topic-card__icon">133</div>
+                        <div class="topic-card__title">Método para Julgar a Natureza Humana</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=seimeigaku1.html" class="topic-card">
+                        <div class="topic-card__icon">134</div>
+                        <div class="topic-card__title">Onomancia １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=seimeigaku2.html" class="topic-card">
+                        <div class="topic-card__icon">135</div>
+                        <div class="topic-card__title">Onomancia ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=seimeigaku3.html" class="topic-card">
+                        <div class="topic-card__icon">136</div>
+                        <div class="topic-card__title">Onomancia ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yume.html" class="topic-card">
+                        <div class="topic-card__icon">137</div>
+                        <div class="topic-card__title">Sobre Sonhos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeKAIKOU.html" class="topic-card">
+                        <div class="topic-card__icon">138</div>
+                        <div class="topic-card__title">Encontro em Sonhos (kaikou)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHURIKAE.html" class="topic-card">
+                        <div class="topic-card__icon">139</div>
+                        <div class="topic-card__title">Substituição através de Sonhos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN1.html" class="topic-card">
+                        <div class="topic-card__icon">140</div>
+                        <div class="topic-card__title">Interpretação de Sonhos １ (Bons Presságios / Maus Presságios)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN2.html" class="topic-card">
+                        <div class="topic-card__icon">141</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ２ (Fé)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN3.html" class="topic-card">
+                        <div class="topic-card__icon">142</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ３ (O Juízo Final)</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN4.html" class="topic-card">
+                        <div class="topic-card__icon">143</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ４（Espíritos Ancestrais）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN5.html" class="topic-card">
+                        <div class="topic-card__icon">144</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ５（Deuses DragõesEspíritos de Serpente）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN6.html" class="topic-card">
+                        <div class="topic-card__icon">145</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ６（Animais）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeHANDAN7.html" class="topic-card">
+                        <div class="topic-card__icon">146</div>
+                        <div class="topic-card__title">Interpretação de Sonhos ７（Outros）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yumeAKURYOU.html" class="topic-card">
+                        <div class="topic-card__icon">147</div>
+                        <div class="topic-card__title">Sonhos e Espíritos Malignos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kixtuchou.html" class="topic-card">
+                        <div class="topic-card__icon">148</div>
+                        <div class="topic-card__title">Bons Presságios</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kyouchou.html" class="topic-card">
+                        <div class="topic-card__icon">149</div>
+                        <div class="topic-card__title">Maus Presságios</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=udonge.html" class="topic-card">
+                        <div class="topic-card__icon">150</div>
+                        <div class="topic-card__title">A Flor de Udonge</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=shuuzoku.html" class="topic-card">
+                        <div class="topic-card__icon">151</div>
+                        <div class="topic-card__title">Costumes</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=setubun.html" class="topic-card">
+                        <div class="topic-card__icon">152</div>
+                        <div class="topic-card__title">Setsubun e Risshun</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=denshou.html" class="topic-card">
+                        <div class="topic-card__icon">153</div>
+                        <div class="topic-card__title">Lendas</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yogen.html" class="topic-card">
+                        <div class="topic-card__icon">154</div>
+                        <div class="topic-card__title">Profecias</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=uchuu.html" class="topic-card">
+                        <div class="topic-card__icon">155</div>
+                        <div class="topic-card__title">Universo</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=uchuuZIN.html" class="topic-card">
+                        <div class="topic-card__icon">156</div>
+                        <div class="topic-card__title">Extraterrestres</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zisin.html" class="topic-card">
+                        <div class="topic-card__icon">157</div>
+                        <div class="topic-card__title">Terremotos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=huusuigai.html" class="topic-card">
+                        <div class="topic-card__icon">158</div>
+                        <div class="topic-card__title">Danos por Vento e Água</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=rakurai.html" class="topic-card">
+                        <div class="topic-card__icon">159</div>
+                        <div class="topic-card__title">Queda de Raios</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=reigai.html" class="topic-card">
+                        <div class="topic-card__icon">160</div>
+                        <div class="topic-card__title">Danos por Frio</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kasai.html" class="topic-card">
+                        <div class="topic-card__icon">161</div>
+                        <div class="topic-card__title">Incêndios</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kasaiRYUUZIN.html" class="topic-card">
+                        <div class="topic-card__icon">162</div>
+                        <div class="topic-card__title">Incêndios e Deuses Dragões</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=atamiTAIKA.html" class="topic-card">
+                        <div class="topic-card__icon">163</div>
+                        <div class="topic-card__title">O Grande Incêndio de Atami</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tigaku.html" class="topic-card">
+                        <div class="topic-card__icon">164</div>
+                        <div class="topic-card__title">Geologia</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kishou.html" class="topic-card">
+                        <div class="topic-card__icon">165</div>
+                        <div class="topic-card__title">Fenômenos Estranhos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=siranui.html" class="topic-card">
+                        <div class="topic-card__icon">166</div>
+                        <div class="topic-card__title">Shiranui</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zinruiREKISI.html" class="topic-card">
+                        <div class="topic-card__icon">167</div>
+                        <div class="topic-card__title">A História da Humanidade</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=nihonZENSEIKI.html" class="topic-card">
+                        <div class="topic-card__icon">168</div>
+                        <div class="topic-card__title">O Século Anterior do Japão</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zintai1.html" class="topic-card">
+                        <div class="topic-card__icon">169</div>
+                        <div class="topic-card__title">Corpo Humano １（O Ser Humano é um Microcosmo）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zintai2.html" class="topic-card">
+                        <div class="topic-card__icon">170</div>
+                        <div class="topic-card__title">Corpo Humano ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ningen.html" class="topic-card">
+                        <div class="topic-card__icon">171</div>
+                        <div class="topic-card__title">Seres Humanos</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=kinzyuu.html" class="topic-card">
+                        <div class="topic-card__icon">172</div>
+                        <div class="topic-card__title">Aves, Feras, Insetos e Peixes</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=shokubutu.html" class="topic-card">
+                        <div class="topic-card__icon">173</div>
+                        <div class="topic-card__title">Plantas</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=youkai.html" class="topic-card">
+                        <div class="topic-card__icon">174</div>
+                        <div class="topic-card__title">Yōkai</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=yousei.html" class="topic-card">
+                        <div class="topic-card__icon">175</div>
+                        <div class="topic-card__title">Fadas</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tatari1.html" class="topic-card">
+                        <div class="topic-card__icon">176</div>
+                        <div class="topic-card__title">Maldição １（Maldição de Espíritos Humanos）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tatari2.html" class="topic-card">
+                        <div class="topic-card__icon">177</div>
+                        <div class="topic-card__title">Maldição ２（Maldição de Espíritos de Animais）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tatari3.html" class="topic-card">
+                        <div class="topic-card__icon">178</div>
+                        <div class="topic-card__title">Maldição ３（Maldição da Terra）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=tatari4.html" class="topic-card">
+                        <div class="topic-card__icon">179</div>
+                        <div class="topic-card__title">Maldição ４（Outras Maldições）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zyuso.html" class="topic-card">
+                        <div class="topic-card__icon">180</div>
+                        <div class="topic-card__title">Feitiços</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-5" class="section-header">Sobre a Arte</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=geizyutuSIMEI.html" class="topic-card">
+                        <div class="topic-card__icon">181</div>
+                        <div class="topic-card__title">A Missão da Arte</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=geizyutuZINKAKU.html" class="topic-card">
+                        <div class="topic-card__icon">182</div>
+                        <div class="topic-card__title">Arte e Personalidade</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BH1.html" class="topic-card">
+                        <div class="topic-card__icon">183</div>
+                        <div class="topic-card__title">Ensaio de Crítica de Arte １（A Arte Japonesa e seu Futuro）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BH2.html" class="topic-card">
+                        <div class="topic-card__icon">184</div>
+                        <div class="topic-card__title">Ensaio de Crítica de Arte ２（Reflexões sobre a Arte Oriental）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BH3.html" class="topic-card">
+                        <div class="topic-card__icon">185</div>
+                        <div class="topic-card__title">Ensaio de Crítica de Arte ３（A Razão do Desaparecimento dos Mestres）</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BH4.html" class="topic-card">
+                        <div class="topic-card__icon">186</div>
+                        <div class="topic-card__title">Ensaio de Crítica de Arte ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BH5.html" class="topic-card">
+                        <div class="topic-card__icon">187</div>
+                        <div class="topic-card__title">Ensaio de Crítica de Arte ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK1.html" class="topic-card">
+                        <div class="topic-card__icon">188</div>
+                        <div class="topic-card__title">Discurso sobre Arte １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK2.html" class="topic-card">
+                        <div class="topic-card__icon">189</div>
+                        <div class="topic-card__title">Discurso sobre Arte ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK3.html" class="topic-card">
+                        <div class="topic-card__icon">190</div>
+                        <div class="topic-card__title">Discurso sobre Arte ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK4.html" class="topic-card">
+                        <div class="topic-card__icon">191</div>
+                        <div class="topic-card__title">Discurso sobre Arte ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK5.html" class="topic-card">
+                        <div class="topic-card__icon">192</div>
+                        <div class="topic-card__title">Sermões sobre Arte ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK6.html" class="topic-card">
+                        <div class="topic-card__icon">193</div>
+                        <div class="topic-card__title">Sermões sobre Arte ６</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK7.html" class="topic-card">
+                        <div class="topic-card__icon">194</div>
+                        <div class="topic-card__title">Sermões sobre Arte ７</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK8.html" class="topic-card">
+                        <div class="topic-card__icon">195</div>
+                        <div class="topic-card__title">Sermões sobre Arte ８</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK9.html" class="topic-card">
+                        <div class="topic-card__icon">196</div>
+                        <div class="topic-card__title">Sermões sobre Arte ９</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK10.html" class="topic-card">
+                        <div class="topic-card__icon">197</div>
+                        <div class="topic-card__title">Sermões sobre Arte 10</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BK11.html" class="topic-card">
+                        <div class="topic-card__icon">198</div>
+                        <div class="topic-card__title">Sermões sobre Arte 11</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BS1.html" class="topic-card">
+                        <div class="topic-card__icon">199</div>
+                        <div class="topic-card__title">Orientações sobre Arte １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BS2.html" class="topic-card">
+                        <div class="topic-card__icon">200</div>
+                        <div class="topic-card__title">Orientações sobre Arte ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BS3.html" class="topic-card">
+                        <div class="topic-card__icon">201</div>
+                        <div class="topic-card__title">Orientações sobre Arte ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=BS4.html" class="topic-card">
+                        <div class="topic-card__icon">202</div>
+                        <div class="topic-card__title">Orientações sobre Arte ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=geizyutuKA1.html" class="topic-card">
+                        <div class="topic-card__icon">203</div>
+                        <div class="topic-card__title">Artistas, Entertainers, Escritores １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=geizyutuKA2.html" class="topic-card">
+                        <div class="topic-card__icon">204</div>
+                        <div class="topic-card__title">Artistas, Entertainers, Escritores ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=picaso1.html" class="topic-card">
+                        <div class="topic-card__icon">205</div>
+                        <div class="topic-card__title">Picasso １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=picaso2.html" class="topic-card">
+                        <div class="topic-card__icon">206</div>
+                        <div class="topic-card__title">Picasso ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=ongaku.html" class="topic-card">
+                        <div class="topic-card__icon">207</div>
+                        <div class="topic-card__title">Mú sica</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=eiga.html" class="topic-card">
+                        <div class="topic-card__icon">208</div>
+                        <div class="topic-card__title">Fil me</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div id="section-6" class="section-header">Sobre a Situação Atual</div><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku1.html" class="topic-card">
+                        <div class="topic-card__icon">209</div>
+                        <div class="topic-card__title">Atu alidades １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku2.html" class="topic-card">
+                        <div class="topic-card__icon">210</div>
+                        <div class="topic-card__title">Atu alidades ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku3.html" class="topic-card">
+                        <div class="topic-card__icon">211</div>
+                        <div class="topic-card__title">Atu alidades ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku4.html" class="topic-card">
+                        <div class="topic-card__icon">212</div>
+                        <div class="topic-card__title">Atu alidades ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku5.html" class="topic-card">
+                        <div class="topic-card__icon">213</div>
+                        <div class="topic-card__title">Atu alidades ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku6.html" class="topic-card">
+                        <div class="topic-card__icon">214</div>
+                        <div class="topic-card__title">Atu alidades ６</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=zikyoku7.html" class="topic-card">
+                        <div class="topic-card__icon">215</div>
+                        <div class="topic-card__title">Atu alidades ７</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mirai1.html" class="topic-card">
+                        <div class="topic-card__icon">216</div>
+                        <div class="topic-card__title">Previsões do Futuro １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mirai2.html" class="topic-card">
+                        <div class="topic-card__icon">217</div>
+                        <div class="topic-card__title">Previsões do Futuro ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mirai3.html" class="topic-card">
+                        <div class="topic-card__icon">218</div>
+                        <div class="topic-card__title">Previsões do Futuro ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=mirai4.html" class="topic-card">
+                        <div class="topic-card__icon">219</div>
+                        <div class="topic-card__title">Previsões do Futuro ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daitoua1.html" class="topic-card">
+                        <div class="topic-card__icon">220</div>
+                        <div class="topic-card__title">Estratégia da Guerra da Grande Ásia Oriental １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=daitoua2.html" class="topic-card">
+                        <div class="topic-card__icon">221</div>
+                        <div class="topic-card__title">Estratégia da Guerra da Grande Ásia Oriental ２</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div style="height: 12px;"></div>
+                    <a href="../reader.html?vol=shumeic4&file=aho1.html" class="topic-card">
+                        <div class="topic-card__icon">222</div>
+                        <div class="topic-card__title">Literatura Tola １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=aho2.html" class="topic-card">
+                        <div class="topic-card__icon">223</div>
+                        <div class="topic-card__title">Literatura Tola ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=aho3.html" class="topic-card">
+                        <div class="topic-card__icon">224</div>
+                        <div class="topic-card__title">Literatura Tola ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu1.html" class="topic-card">
+                        <div class="topic-card__icon">225</div>
+                        <div class="topic-card__title">Epi grama １</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu2.html" class="topic-card">
+                        <div class="topic-card__icon">226</div>
+                        <div class="topic-card__title">Epi grama ２</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu3.html" class="topic-card">
+                        <div class="topic-card__icon">227</div>
+                        <div class="topic-card__title">Epi grama ３</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu4.html" class="topic-card">
+                        <div class="topic-card__icon">228</div>
+                        <div class="topic-card__title">Epi grama ４</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu5.html" class="topic-card">
+                        <div class="topic-card__icon">229</div>
+                        <div class="topic-card__title">Epi grama ５</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu6.html" class="topic-card">
+                        <div class="topic-card__icon">230</div>
+                        <div class="topic-card__title">Epi grama ６</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu7.html" class="topic-card">
+                        <div class="topic-card__icon">231</div>
+                        <div class="topic-card__title">Epi grama ７</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu8.html" class="topic-card">
+                        <div class="topic-card__icon">232</div>
+                        <div class="topic-card__title">Epi grama ８</div>
+                    </a>
+                    <a href="../reader.html?vol=shumeic4&file=suntetu9.html" class="topic-card">
+                        <div class="topic-card__icon">233</div>
+                        <div class="topic-card__title">Epi grama ９</div>
+                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <a href="../reader.html?vol=shumeic4&file=link.html" class="topic-card">
+                        <div class="topic-card__icon">234</div>
+                        <div class="topic-card__title">Link</div>
+                    </a><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+            </div>
+            
+        </div>
+    </div>
+  </main>
+  <script src="../js/toggle.js"></script>
+</body>
+</html>
