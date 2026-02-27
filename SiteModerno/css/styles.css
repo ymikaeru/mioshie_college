@@ -904,3 +904,20 @@ kbd {
 [data-theme="dark"] .highlight-cyan {
   color: #40E0D0; /* Turquoise mais claro no escuro */
 }
+
+/* Red highlights added */
+.highlight-red-dark {
+  color: #990000; /* Dark red for "Pergunta do fiel", etc */
+  font-weight: 600;
+}
+.highlight-red {
+  color: #cc0000; /* Standard red (original #ff0000) adjusted for better readability */
+  font-weight: 500;
+}
+
+[data-theme="dark"] .highlight-red-dark {
+  color: #ff6b6b; /* Lighter soft red for dark mode readability */
+}
+[data-theme="dark"] .highlight-red {
+  color: #ff8787; /* Even lighter salmon-red for generic red in dark mode */
+}

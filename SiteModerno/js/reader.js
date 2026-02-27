@@ -151,19 +151,41 @@ document.addEventListener('DOMContentLoaded', async () => {
                     formattedContent = marked.parse(rawContent);
                 }
 
-                // Convert <font color="..."> to spans with CSS classes
-                formattedContent = formattedContent.replace(/<font\b[^>]*?\bcolor=["']?([^"'>\s]+)["']?[^>]*>/gi, (match, color) => {
-                    let className = 'highlight-text';
-                    let c = color.toLowerCase();
-                    if (c === '#0000ff' || c === 'blue') className = 'highlight-blue';
-                    else if (c === '#00cccc') className = 'highlight-cyan';
-                    else if (c === '#000000' || c === 'black') className = 'highlight-black';
-                    else className = 'highlight-custom'; // Fallback
+                // Convert <font ...> to spans with styles/classes based on all attributes
+                formattedContent = formattedContent.replace(/<font\b([^>]+)>/gi, (match, attrs) => {
+                    let classes = [];
+                    let inlineStyle = '';
                     
-                    return `<span class="${className}">`;
+                    // Match color
+                    const colorMatch = attrs.match(/color=\\?["']?([^\\"'>\s]+)\\?["']?/i);
+                    if (colorMatch) {
+                        let c = colorMatch[1].toLowerCase();
+                        if (c === '#0000ff' || c === '#0000cc' || c === 'blue') classes.push('highlight-blue');
+                        else if (c === '#990000' || c === '#660000') classes.push('highlight-red-dark');
+                        else if (c === '#ff0000' || c === 'red') classes.push('highlight-red');
+                        else if (c === '#00cccc') classes.push('highlight-cyan');
+                        else if (c === '#000000' || c === 'black') classes.push('highlight-black');
+                        else inlineStyle += `color: ${c}; `;
+                    }
+                    
+                    // Match size
+                    const sizeMatch = attrs.match(/size=\\?["']?([+\-]?\d+)\\?["']?/i);
+                    if (sizeMatch) {
+                        let size = sizeMatch[1];
+                        if (size === '+1') inlineStyle += `font-size: 1.15em; line-height: 1.5; `;
+                        else if (size === '+2') inlineStyle += `font-size: 1.35em; font-weight: 600; line-height: 1.4; `;
+                        else if (size === '-1' || size === '-2') inlineStyle += `font-size: 0.9em; `;
+                    }
+                    
+                    let styleAttr = inlineStyle ? ` style="${inlineStyle.trim()}"` : '';
+                    let classAttr = classes.length > 0 ? ` class="${classes.join(' ')}"` : '';
+                    
+                    // If no color and no size was matched, just return a span
+                    return `<span${classAttr}${styleAttr}>`;
                 }).replace(/<\/font>/gi, '</span>');
 
-                // Strip remaining <font> tags but keep their content
+                // Remove the second generic replace, as the regex above handles ALL <font> tags with attributes.
+                // Catch any stray <font> tag (with no attributes or unparsed ones)
                 formattedContent = formattedContent.replace(/<font[^>]*>/gi, '<span>');
 
                 formattedContent = formattedContent.replace(/\\n\\n/g, '</p><p>');
