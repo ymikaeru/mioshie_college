@@ -204,9 +204,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     navSelect.appendChild(op);
                 }
 
+                // Check if the topic needs its title injected (if it's missing from the translation)
+                let injectedTitleHtml = "";
+                let specificTitle = isPt ? (topicData.title_ptbr || topicData.title_pt) : (topicData.title_ja || topicData.title);
+                if (index > 0 && specificTitle && specificTitle !== mainTitleToDisplay) {
+                    let plainContent = cleanedContent.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d\-]/g, '').toLowerCase();
+                    let plainSearchTitle = specificTitle.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*/gi, '').replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d\-]/g, '').toLowerCase();
+                    if (plainSearchTitle.length > 5 && !plainContent.includes(plainSearchTitle)) {
+                        injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 1.5rem; font-weight: 600;">${specificTitle}</h2>`;
+                    }
+                }
+
                 fullHtml += `
                     <div id="${topicId}" class="topic-content" style="margin-top: ${index > 0 ? '40px' : '0'};">
                         ${displayDate ? `<div class="topic-meta" style="margin-bottom: 16px;">${displayDate}</div>` : ''}
+                        ${injectedTitleHtml}
                         ${cleanedContent}
                     </div>
                 `;
