@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                                         const title = fileTitleMap[f] || f;
                                         const isActive = f === filename;
                                         const activeStyle = isActive ? 'font-weight:bold; color:var(--accent);' : 'color:var(--text-main);';
-                                        return \`<li style="margin-bottom:10px; line-height:1.4;">
-                                            \${isActive ? '👉 ' : ''}<a href="?vol=\${volId}&file=\${f}" style="text-decoration:none; \${activeStyle} transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='\${isActive ? 'var(--accent)' : 'var(--text-main)'}'">\${title}</a>
-                                        </li>\`;
+                                        return `<li style="margin-bottom:10px; line-height:1.4;">
+                                            ${isActive ? '👉 ' : ''}<a href="?vol=${volId}&file=${f}" style="text-decoration:none; ${activeStyle} transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='${isActive ? 'var(--accent)' : 'var(--text-main)'}'">${title}</a>
+                                        </li>`;
                                     }).join('');
                                 })()}
                             </ul>
