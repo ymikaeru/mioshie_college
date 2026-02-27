@@ -275,3 +275,84 @@ function closeHistory() {
     modal.classList.remove('active');
   }
 }
+
+// --- Mobile Hamburger Menu ---
+document.addEventListener('DOMContentLoaded', () => {
+  const nav = document.querySelector('.header__nav');
+  if (!nav) return;
+
+  // Create hamburger button
+  const hamburger = document.createElement('button');
+  hamburger.className = 'hamburger';
+  hamburger.setAttribute('aria-label', 'Menu');
+  hamburger.innerHTML = '<span></span><span></span><span></span>';
+
+  // Insert before nav in header
+  const header = document.querySelector('.header');
+  if (header) {
+    // Insert between logo and nav
+    const logo = header.querySelector('.header__logo');
+    if (logo && logo.nextSibling) {
+      header.insertBefore(hamburger, logo.nextSibling);
+    }
+  }
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    nav.classList.toggle('open');
+  });
+
+  // Close nav when clicking a link
+  nav.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      nav.classList.remove('open');
+    });
+  });
+
+  // Close nav when clicking outside
+  document.addEventListener('click', (e) => {
+    if (!header.contains(e.target)) {
+      hamburger.classList.remove('open');
+      nav.classList.remove('open');
+    }
+  });
+});
+
+// --- Back to Top Button ---
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.createElement('button');
+  btn.className = 'back-to-top';
+  btn.setAttribute('aria-label', 'Voltar ao topo');
+  btn.innerHTML = '↑';
+  document.body.appendChild(btn);
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) {
+      btn.classList.add('visible');
+    } else {
+      btn.classList.remove('visible');
+    }
+  }, { passive: true });
+});
+
+// --- Reading Progress Bar ---
+document.addEventListener('DOMContentLoaded', () => {
+  // Only show on reader pages (has topic-content)
+  const content = document.querySelector('.topic-content');
+  if (!content) return;
+
+  const bar = document.createElement('div');
+  bar.className = 'reading-progress';
+  document.body.prepend(bar);
+
+  window.addEventListener('scroll', () => {
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+    bar.style.width = Math.min(100, scrolled) + '%';
+  }, { passive: true });
+});
