@@ -28,6 +28,10 @@
        </select>
     </div>
     <div class="controls">
+      <button class="btn-zen" id="btn-index" onclick="toggleIndexDrawer()" title="Índice do Volume">📚</button>
+      <button class="btn-zen" id="btn-share" onclick="shareTopic()" title="Compartilhar Ensinamento">📤</button>
+      <button class="btn-zen" id="btn-tts" onclick="toggleTTS()" title="Ouvir Ensinamento">🎧</button>
+      <button class="btn-zen" id="btn-bookmark" onclick="toggleBookmark()" title="Salvar Favorito">☆</button>
       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt'); else { location.href='../index.html'; }">PT-BR</button>

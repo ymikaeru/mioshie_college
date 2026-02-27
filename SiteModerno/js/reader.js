@@ -17,6 +17,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch(`${basePath}${window.DATA_OUTPUT_DIR || 'site_data'}/${volId}_data_bilingual.json`);
         const json = await response.json();
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        
         let topicsFound = [];
 
         // Flatten all unique files for navigation, build title & theme lookup
@@ -36,6 +38,64 @@ document.addEventListener('DOMContentLoaded', async () => {
                 }
             });
         });
+
+        // --- Index Drawer Logic ---
+        if (!document.getElementById('indexDrawerOverlay')) {
+            const drawerBg = document.createElement('div');
+            drawerBg.className = 'search-modal-overlay';
+            drawerBg.id = 'indexDrawerOverlay';
+            
+            const drawer = document.createElement('div');
+            drawer.className = 'search-modal';
+            drawer.style.maxWidth = '600px';
+            drawer.innerHTML = `
+                <div class="search-header" style="justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 15px;">
+                    <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Índice - Vol ${volId.slice(-1)}</h2>
+                    <button class="search-close" onclick="toggleIndexDrawer()">&times;</button>
+                </div>
+                <div class="drawer-content" style="overflow-y: auto; height: calc(100% - 60px); padding-right: 10px;">
+                    ${json.themes.map(theme => `
+                        <div style="margin-bottom: 25px;">
+                            <h3 style="font-size: 1.1rem; color: var(--text-main); margin-bottom: 12px; border-bottom: 1px solid var(--border-color); padding-bottom:5px;">${theme.name_pt || theme.name || 'Ensinamentos'}</h3>
+                            <ul style="list-style:none; padding:0; margin:0;">
+                                ${(() => {
+                                    const uniqueMap = {};
+                                    theme.topics.forEach(t => {
+                                        const f = t.source_file || t.filename || "";
+                                        if (f && !uniqueMap[f]) { uniqueMap[f] = t; }
+                                    });
+                                    return Object.values(uniqueMap).map(t => {
+                                        const f = t.source_file || t.filename || "";
+                                        const title = fileTitleMap[f] || f;
+                                        const isActive = f === filename;
+                                        const activeStyle = isActive ? 'font-weight:bold; color:var(--accent);' : 'color:var(--text-main);';
+                                        return \`<li style="margin-bottom:10px; line-height:1.4;">
+                                            \${isActive ? '👉 ' : ''}<a href="?vol=\${volId}&file=\${f}" style="text-decoration:none; \${activeStyle} transition:color 0.2s;" onmouseover="this.style.color='var(--accent)'" onmouseout="this.style.color='\${isActive ? 'var(--accent)' : 'var(--text-main)'}'">\${title}</a>
+                                        </li>\`;
+                                    }).join('');
+                                })()}
+                            </ul>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            drawerBg.appendChild(drawer);
+            document.body.appendChild(drawerBg);
+            
+            drawerBg.addEventListener('click', (e) => {
+                if (e.target.id === 'indexDrawerOverlay') toggleIndexDrawer();
+            });
+            
+            window.toggleIndexDrawer = function() {
+                drawerBg.classList.toggle('active');
+                if (drawerBg.classList.contains('active')) {
+                   const activeEl = drawerBg.querySelector('a[style*="font-weight:bold"]');
+                   if (activeEl) {
+                       setTimeout(() => activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                   }
+                }
+            };
+        }
 
         const currentIndex = allFiles.indexOf(filename);
         const prevFile = currentIndex > 0 ? allFiles[currentIndex - 1] : null;
@@ -302,6 +362,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
             const currentTheme = fileThemeMap[filename] || '';
+            window._currentReaderTitle = fileTitleMap[filename] || filename;
+            window._currentReaderTheme = currentTheme;
+            if (typeof window.checkBookmarkState === 'function') window.checkBookmarkState();
 
             container.innerHTML = `
                 <nav class="breadcrumbs">
@@ -383,3 +446,121 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // setLanguage is now defined globally in toggle.js
+
+// --- Bookmarks Logic ---
+window.toggleBookmark = function() {
+    const params = new URLSearchParams(window.location.search);
+    const volId = params.get('vol');
+    const filename = params.get('file');
+    if (!volId || !filename) return;
+
+    let bTitle = window._currentReaderTitle || filename;
+    let bTheme = window._currentReaderTheme || '';
+
+    let bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
+    const existingIndex = bookmarks.findIndex(b => b.vol === volId && b.file === filename);
+    const btn = document.getElementById('btn-bookmark');
+
+    if (existingIndex >= 0) {
+        bookmarks.splice(existingIndex, 1);
+        if (btn) {
+            btn.classList.remove('active');
+            btn.textContent = '☆';
+        }
+    } else {
+        bookmarks.push({ vol: volId, file: filename, title: bTitle, theme: bTheme, date: new Date().toISOString() });
+        if (btn) {
+            btn.classList.add('active');
+            btn.textContent = '★';
+        }
+    }
+    localStorage.setItem('shumei_bookmarks', JSON.stringify(bookmarks));
+};
+
+window.checkBookmarkState = function() {
+    const params = new URLSearchParams(window.location.search);
+    const volId = params.get('vol');
+    const filename = params.get('file');
+    let bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
+    const btn = document.getElementById('btn-bookmark');
+    
+    if (btn) {
+        if (bookmarks.some(b => b.vol === volId && b.file === filename)) {
+            btn.classList.add('active');
+            btn.textContent = '★';
+        } else {
+            btn.classList.remove('active');
+            btn.textContent = '☆';
+        }
+    }
+};
+
+// --- TTS Logic ---
+window.toggleTTS = function() {
+    const btn = document.getElementById('btn-tts');
+    
+    // Stop reading if it's already speaking or paused
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        if (btn) btn.classList.remove('active');
+        return;
+    }
+    
+    const contents = Array.from(document.querySelectorAll('.topic-content')).map(el => el.innerText).join('\\n\\n');
+    if (!contents.trim()) return;
+    
+    const utterance = new SpeechSynthesisUtterance(contents);
+    const currentLang = localStorage.getItem('site_lang') || 'pt';
+    utterance.lang = currentLang === 'ja' ? 'ja-JP' : 'pt-BR';
+    // Slightly faster and lower pitch for natural reading on some OS
+    utterance.rate = 1.0;
+    utterance.pitch = 1.0;
+    
+    // Try to pick a natural voice if available
+    const voices = window.speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v => v.lang.startsWith(utterance.lang) && (v.name.includes('Google') || v.name.includes('Luciana') || v.name.includes('Daniel')));
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.onend = () => {
+        if (btn) btn.classList.remove('active');
+    };
+    utterance.onerror = () => {
+        if (btn) btn.classList.remove('active');
+    };
+    
+    window.speechSynthesis.speak(utterance);
+    if (btn) btn.classList.add('active');
+};
+
+// Stop TTS if user leaves page
+window.addEventListener('beforeunload', () => {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+});
+
+// --- Share Logic ---
+window.shareTopic = async function() {
+    const url = window.location.href;
+    const title = window._currentReaderTitle ? `Ensinamento: ${window._currentReaderTitle}` : 'Ensinamento de Meishu-Sama';
+    const text = 'Leia este ensinamento de Meishu-Sama na Biblioteca Sagrada:';
+
+    if (navigator.share) {
+        try {
+            await navigator.share({ title, text, url });
+        } catch (err) {
+            console.log('Compartilhamento cancelado', err);
+        }
+    } else {
+        try {
+            await navigator.clipboard.writeText(`${text}\\n${title}\\n${url}`);
+            const btn = document.getElementById('btn-share');
+            if (btn) {
+                const oldContent = btn.innerHTML;
+                btn.innerHTML = '✅';
+                setTimeout(() => btn.innerHTML = oldContent, 2000);
+            }
+            alert('Link copiado para a área de transferência!');
+        } catch (err) {
+            alert('Não foi possível copiar o link.');
+        }
+    }
+};

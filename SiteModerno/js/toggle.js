@@ -235,6 +235,39 @@ document.addEventListener('DOMContentLoaded', () => {
   if (historyModalBtn) historyModalBtn.addEventListener('click', (e) => {
     if (e.target.id === 'historyModal') closeHistory();
   });
+
+  // Dynamically add Bookmarks Modal and Button to all pages
+  const controlsDiv = document.querySelector('.controls');
+  if (controlsDiv && !document.getElementById('btn-bookmarks-list')) {
+      const btn = document.createElement('button');
+      btn.className = 'btn-zen';
+      btn.id = 'btn-bookmarks-list';
+      btn.title = 'Meus Favoritos';
+      btn.innerHTML = '⭐';
+      btn.onclick = openBookmarks;
+      // Insert right before history (first or second position)
+      controlsDiv.insertBefore(btn, controlsDiv.firstChild);
+  }
+
+  // Create Bookmarks Modal if it doesn't exist
+  if (!document.getElementById('bookmarksModal')) {
+      const bModal = document.createElement('div');
+      bModal.className = 'search-modal-overlay';
+      bModal.id = 'bookmarksModal';
+      bModal.innerHTML = `
+        <div class="search-modal">
+          <div class="search-header">
+            <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Meus Favoritos</h2>
+            <button class="search-close" onclick="closeBookmarks()">&times;</button>
+          </div>
+          <ul class="search-results" id="bookmarksResults"></ul>
+        </div>
+      `;
+      bModal.addEventListener('click', (e) => {
+          if (e.target.id === 'bookmarksModal') closeBookmarks();
+      });
+      document.body.appendChild(bModal);
+  }
 });
 
 // --- Navigation History Logic ---
@@ -271,6 +304,63 @@ function openHistory() {
 
 function closeHistory() {
   const modal = document.getElementById('historyModal');
+  if (modal) {
+    modal.classList.remove('active');
+  }
+}
+
+// --- Bookmarks List Logic ---
+function openBookmarks() {
+  const modal = document.getElementById('bookmarksModal');
+  const resultsEl = document.getElementById('bookmarksResults');
+  if (modal && resultsEl) {
+    modal.classList.add('active');
+    
+    const basePath = window.location.href.includes('/shumeic') ? '../' : './';
+    const bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
+    
+    if (bookmarks.length === 0) {
+      resultsEl.innerHTML = '<li class="search-empty">Você ainda não tem ensinamentos favoritos.</li>';
+      return;
+    }
+    
+    // Reverse array to show newest first
+    const reversed = [...bookmarks].reverse();
+    
+    resultsEl.innerHTML = reversed.map(r => {
+      const href = `${basePath}reader.html?vol=${r.vol}&file=${r.file}`;
+      return `
+        <li style="position:relative;">
+          <a href="${href}" class="search-result-item" style="padding-right: 40px;">
+            <div class="search-result-title">${r.title} <span style="font-size:0.8rem; color:var(--text-muted); font-weight:normal;">(Vol ${r.vol.slice(-1)})</span></div>
+            <div class="search-result-context">${r.theme || 'Ensinamento'}</div>
+          </a>
+          <button onclick="removeBookmarkItem('${r.vol}', '${r.file}'); event.stopPropagation();" 
+            style="position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; font-size:1.2rem; cursor:pointer; color:var(--text-muted);"
+            title="Remover Favorito">×</button>
+        </li>
+      `;
+    }).join('');
+  }
+}
+
+function removeBookmarkItem(volId, filename) {
+    let bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
+    const existingIndex = bookmarks.findIndex(b => b.vol === volId && b.file === filename);
+    if (existingIndex >= 0) {
+        bookmarks.splice(existingIndex, 1);
+        localStorage.setItem('shumei_bookmarks', JSON.stringify(bookmarks));
+        // Refresh the list immediately
+        openBookmarks(); 
+        // If on reader page, update the star
+        if (typeof window.checkBookmarkState === 'function') {
+            window.checkBookmarkState();
+        }
+    }
+}
+
+function closeBookmarks() {
+  const modal = document.getElementById('bookmarksModal');
   if (modal) {
     modal.classList.remove('active');
   }
@@ -460,3 +550,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, { passive: true, once: false });
 });
+
+// --- Service Worker Registration ---
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    // Relative path needs to be correct depending on if we are in shumeic2/ etc.
+    const basePath = window.location.href.includes('/shumeic') ? '../' : './';
+    navigator.serviceWorker.register(basePath + 'sw.js')
+      .then(reg => console.log('Service Worker Registrado!', reg.scope))
+      .catch(err => console.error('Erro ao registrar Service Worker:', err));
+  });
+}
