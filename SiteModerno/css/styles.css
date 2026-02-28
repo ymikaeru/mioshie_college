@@ -408,12 +408,26 @@ body {
   overflow-wrap: anywhere;
 }
 
-.topic-content * {
-  color: inherit;
-}
+
 
 .topic-content b {
   font-weight: 700;
+}
+
+/* Force legacy font colors to override any global resets */
+.topic-content font[color="#990000"],
+.topic-content font[color="#990000"] * {
+  color: #990000 !important;
+}
+
+.topic-content font[color="#0000ff"],
+.topic-content font[color="#0000ff"] * {
+  color: #0000ff !important;
+}
+
+.topic-content font[color="#ff0000"],
+.topic-content font[color="#ff0000"] * {
+  color: #ff0000 !important;
 }
 
 .topic-content p {

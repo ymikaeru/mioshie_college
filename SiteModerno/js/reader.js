@@ -128,21 +128,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     formattedContent = marked.parse(rawContent);
                 }
 
-                // Strip all <font> tags and convert to plain <span> (removes color attributes)
-                formattedContent = formattedContent.replace(/<font(\s[^>]*)>/gi, () => {
-                    return '<span>';
-                }).replace(/<\/font>/gi, '</span>');
-
-                // Also strip inline color styles from <span> elements to remove red/blue text
-                formattedContent = formattedContent.replace(/<span([^>]*)\sstyle="([^"]*)"([^>]*)>/gi, (match, before, style, after) => {
-                    // Remove color property from style
-                    const cleanStyle = style.replace(/\bcolor\s*:[^;]+;?/gi, '').trim().replace(/;$/, '');
-                    if (cleanStyle) {
-                        return `<span${before} style="${cleanStyle}"${after}>`;
-                    }
-                    return `<span${before}${after}>`;
-                });
-
+                // Removing global font/color strip to restore Pergunta/Resposta colors
 
                 formattedContent = formattedContent.replace(/\\n\\n/g, '</p><p>');
 
