@@ -345,6 +345,9 @@ body {
 .reader-container {
   max-width: var(--max-width-content);
   margin: 0 auto;
+  overflow-x: hidden;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .breadcrumbs {
@@ -401,6 +404,8 @@ body {
   line-height: 2.1;
   color: var(--text-main);
   font-weight: 400;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .topic-content * {
@@ -734,6 +739,121 @@ select[data-tooltip]::after {
   display: block;
 }
 
+/* Search button — shown in header left of hamburger on mobile */
+.mobile-search-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-main);
+  border-radius: 8px;
+  transition: background 0.2s var(--ease);
+  flex-shrink: 0;
+}
+
+.mobile-search-btn:hover {
+  background: var(--accent-soft);
+}
+
+/* Theme/topic accordion in mobile nav panel */
+.mobile-theme-vol {
+  border-bottom: 1px solid var(--border);
+}
+
+.mobile-theme-vol-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 11px 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: left;
+  transition: background 0.2s var(--ease);
+}
+
+.mobile-theme-vol-btn:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.mobile-theme-vol-body {
+  display: none;
+}
+
+.mobile-theme-vol.open .mobile-theme-vol-body {
+  display: block;
+}
+
+.mobile-theme-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s var(--ease);
+  stroke: currentColor;
+  fill: none;
+}
+
+.mobile-theme-vol.open>.mobile-theme-vol-btn .mobile-theme-chevron,
+.mobile-theme-group.open>.mobile-theme-name .mobile-theme-chevron {
+  transform: rotate(180deg);
+}
+
+.mobile-theme-group {
+  border-top: 1px solid var(--border);
+}
+
+.mobile-theme-name {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 9px 24px 9px 36px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-align: left;
+  transition: background 0.2s var(--ease);
+}
+
+.mobile-theme-name:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.mobile-theme-topics {
+  display: none;
+}
+
+.mobile-theme-group.open .mobile-theme-topics {
+  display: block;
+}
+
+.mobile-topic-link {
+  display: block;
+  padding: 7px 16px 7px 48px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-family: var(--font-ui);
+  transition: background 0.15s, color 0.15s;
+  line-height: 1.4;
+}
+
+.mobile-topic-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+
 /* Mobile Nav Overlay */
 .mobile-nav-overlay {
   display: none;
@@ -922,9 +1042,28 @@ select[data-tooltip]::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    grid-column: 3 / 4;
-    /* Always right-aligned */
   }
+
+  /* Show search button left of hamburger */
+  .mobile-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Group search + hamburger on right side */
+  .header {
+    padding: 0 16px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .header__logo {
+    flex: 1;
+  }
+
 
   /* --- Main layout --- */
   .main {
@@ -939,6 +1078,9 @@ select[data-tooltip]::after {
     border: none;
     box-shadow: none;
     border-radius: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
   }
 
   /* --- Index page --- */
@@ -961,12 +1103,19 @@ select[data-tooltip]::after {
     padding: 14px 16px;
   }
 
-  /* Volume index: hide select dropdown in nav (it's accessible via hamburger) */
+  /* Volume index: hide select dropdown in nav */
   .header__nav select {
     display: none !important;
   }
 
+
   /* --- Reader --- */
+  .reader-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+
   .topic-title-large {
     font-size: 26px;
   }
@@ -974,6 +1123,8 @@ select[data-tooltip]::after {
   .topic-content {
     font-size: 18px;
     line-height: 1.95;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 
   .topic-header {
@@ -1207,6 +1358,18 @@ select[data-tooltip]::after {
   margin-bottom: 16px;
   padding-bottom: 8px;
   border-bottom: 1px solid var(--accent-soft);
+}
+
+font.section-header,
+.section-header {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 32px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--accent-soft);
 }
 
 .drawer-item {

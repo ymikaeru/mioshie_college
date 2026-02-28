@@ -14,7 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
   _initMobileNav();
 });
 
+
 function _initMobileNav() {
+
   const header = document.querySelector('.header');
   if (!header) return;
 
@@ -80,23 +82,9 @@ function _initMobileNav() {
 
         <div class="mobile-nav-section-label">Navegação</div>
         ${linksHtml}
-        ${topicsHtml}
-
-        <div class="mobile-nav-divider"></div>
-        <div class="mobile-nav-section-label">Idioma</div>
-        <div class="mobile-lang-row">
-          <button class="mobile-lang-btn${currentLang === 'pt' ? ' active' : ''}" id="mobileLangPt"
-            onclick="_mobileSwitchLang('pt')">PT-BR</button>
-          <button class="mobile-lang-btn${currentLang === 'ja' ? ' active' : ''}" id="mobileLangJa"
-            onclick="_mobileSwitchLang('ja')">日本語</button>
-        </div>
 
         <div class="mobile-nav-divider"></div>
         <div class="mobile-nav-section-label">Ações</div>
-        <button class="mobile-nav-link" onclick="openSearch(); closeMobileNav();">
-          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          Buscar
-        </button>
         <button class="mobile-nav-link" onclick="openHistory(); closeMobileNav();">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Histórico
@@ -109,6 +97,18 @@ function _initMobileNav() {
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           Mudar Tema
         </button>
+
+        <div class="mobile-nav-divider"></div>
+        <div class="mobile-nav-section-label">Idioma</div>
+        <div class="mobile-lang-row">
+          <button class="mobile-lang-btn${currentLang === 'pt' ? ' active' : ''}" id="mobileLangPt"
+            onclick="_mobileSwitchLang('pt')">PT-BR</button>
+          <button class="mobile-lang-btn${currentLang === 'ja' ? ' active' : ''}" id="mobileLangJa"
+            onclick="_mobileSwitchLang('ja')">日本語</button>
+        </div>
+
+        <div id="mobileDynamicTopics"></div>
+
       </div>
     </div>`;
 
@@ -123,6 +123,27 @@ function _initMobileNav() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') closeMobileNav();
   });
+
+  // --- 5. Inject search button to the LEFT of the hamburger ---
+  const searchBtn = document.createElement('button');
+  searchBtn.className = 'mobile-search-btn';
+  searchBtn.setAttribute('aria-label', 'Buscar');
+  searchBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+  </svg>`;
+  searchBtn.addEventListener('click', () => openSearch());
+  header.insertBefore(searchBtn, hamburgerBtn);
+
+  // --- 6. Initialize context-aware topics in the mobile nav ---
+  const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
+  // Only auto-populate if it's an index page select (not readerTopicSelect)
+  if (headerNavSelect && headerNavSelect.id !== 'readerTopicSelect') {
+    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => ({ value: o.value, text: o.textContent }));
+    if (opts.length > 0) {
+      window._updateMobileNavTopics('Temas do Volume', opts);
+    }
+  }
 }
 
 window.openMobileNav = function () {
@@ -136,6 +157,28 @@ window.closeMobileNav = function () {
   if (overlay) overlay.classList.remove('open');
   document.body.style.overflow = '';
 };
+
+// --- Update the Mobile Nav Topics Section Dynamically ---
+window._updateMobileNavTopics = function (label, optionsList) {
+  const container = document.getElementById('mobileDynamicTopics');
+  if (!container) return;
+  if (!optionsList || optionsList.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+  let html = `
+    <div class="mobile-nav-divider"></div>
+    <div class="mobile-nav-section-label">${label}</div>
+  `;
+  optionsList.forEach(o => {
+    html += `<a href="${o.value}" class="mobile-nav-link" onclick="closeMobileNav()">
+      <svg class="nav-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      ${o.text}
+    </a>`;
+  });
+  container.innerHTML = html;
+};
+
 
 window._mobileSwitchLang = function (lang) {
   if (typeof setLanguage === 'function') setLanguage(lang);

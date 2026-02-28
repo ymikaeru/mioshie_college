@@ -128,12 +128,27 @@ document.addEventListener('DOMContentLoaded', async () => {
                     formattedContent = marked.parse(rawContent);
                 }
 
-                // Strip all <font> inline-style attributes except color
-                formattedContent = formattedContent.replace(/<font(\s[^>]*)>/gi, (m, attrs) => {
+                // Strip all <font> tags and convert to plain <span> (removes color attributes)
+                formattedContent = formattedContent.replace(/<font(\s[^>]*)>/gi, () => {
                     return '<span>';
                 }).replace(/<\/font>/gi, '</span>');
 
+                // Also strip inline color styles from <span> elements to remove red/blue text
+                formattedContent = formattedContent.replace(/<span([^>]*)\sstyle="([^"]*)"([^>]*)>/gi, (match, before, style, after) => {
+                    // Remove color property from style
+                    const cleanStyle = style.replace(/\bcolor\s*:[^;]+;?/gi, '').trim().replace(/;$/, '');
+                    if (cleanStyle) {
+                        return `<span${before} style="${cleanStyle}"${after}>`;
+                    }
+                    return `<span${before}${after}>`;
+                });
+
+
                 formattedContent = formattedContent.replace(/\\n\\n/g, '</p><p>');
+
+                // Sanitize Japanese ideographic spaces (U+3000) that cause horizontal overflow
+                // on mobile — each U+3000 is ~1 em wide and causes long lines in diagram sections
+                formattedContent = formattedContent.replace(/\u3000+/g, (m) => ' '.repeat(Math.min(m.length, 4)));
 
                 formattedContent = formattedContent.replace(/src=["']([^"']+)["']/g, (match, src) => {
                     if (src.startsWith('http') || src.startsWith('data:') || src.startsWith('assets/')) return match;
@@ -204,12 +219,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // Check if the topic needs its title injected (if it's missing from the translation)
                 let injectedTitleHtml = "";
-                let specificTitle = isPt ? (topicData.title_ptbr || topicData.title_pt) : (topicData.title_ja || topicData.title);
-                if (index > 0 && specificTitle && specificTitle !== mainTitleToDisplay) {
-                    let plainContent = cleanedContent.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d\-]/g, '').toLowerCase();
-                    let plainSearchTitle = specificTitle.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*/gi, '').replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d\-]/g, '').toLowerCase();
+                let specificTitle = isPt
+                    ? (topicData.title_ptbr || topicData.title_pt || null)
+                    : (topicData.title_ja || topicData.title || null);
+
+                if (specificTitle && specificTitle !== mainTitleToDisplay) {
+                    let plainContent = cleanedContent.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '').toLowerCase();
+                    let plainSearchTitle = specificTitle
+                        .replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*/gi, '')
+                        .replace(/<[^>]+>/g, '')
+                        .replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '')
+                        .toLowerCase();
                     if (plainSearchTitle.length > 5 && !plainContent.includes(plainSearchTitle)) {
-                        injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 1.5rem; font-weight: 600;">${specificTitle}</h2>`;
+                        // For first topic: use h2 only if main header title is different (multi-part files)
+                        // For subsequent topics: always inject
+                        const shouldInject = index > 0 || specificTitle !== mainTitleToDisplay;
+                        if (shouldInject) {
+                            injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 1.5rem; font-weight: 600;">${specificTitle}</h2>`;
+                        }
                     }
                 }
 
@@ -223,7 +250,21 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
 
             // Show select only if multiple topics (use already-declared outer variable)
-            if (navSelect) navSelect.style.display = currentTopics.length > 1 ? 'inline-block' : 'none';
+            if (navSelect) {
+                navSelect.style.display = currentTopics.length > 1 ? 'inline-block' : 'none';
+
+                // Update mobile hamburger nav with these topics if the function exists
+                if (typeof window._updateMobileNavTopics === 'function') {
+                    const opts = Array.from(navSelect.options)
+                        .filter(o => o.value)
+                        .map(o => ({ value: o.value, text: o.textContent }));
+                    if (opts.length > 0) {
+                        window._updateMobileNavTopics('Tópicos deste ensinamento', opts);
+                    } else {
+                        window._updateMobileNavTopics('', []);
+                    }
+                }
+            }
 
             // Navigation Footer
             const navFooter = `
