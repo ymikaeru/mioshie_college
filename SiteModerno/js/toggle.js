@@ -83,11 +83,19 @@ function _initMobileNav() {
         <div class="mobile-nav-section-label">Navegação</div>
         ${linksHtml}
 
+        <div id="mobileDynamicTopics"></div>
+
         <div class="mobile-nav-divider"></div>
         <div class="mobile-nav-section-label">Ações</div>
+        
         <button class="mobile-nav-link" onclick="openHistory(); closeMobileNav();">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Histórico
+        </button>
+
+        <button class="mobile-nav-link" onclick="toggleLanguage(); closeMobileNav();">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 12h7m-5-5 5 5-5 5m11-9c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2Z"/><path d="M22 6h-6m6 6h-6m6 6h-6"/></svg>
+          Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})
         </button>
 
         <button class="mobile-nav-link" onclick="toggleTheme(); closeMobileNav();">
@@ -96,15 +104,11 @@ function _initMobileNav() {
         </button>
 
         <div class="mobile-nav-divider"></div>
-        <div class="mobile-nav-section-label">Idioma</div>
-        <div class="mobile-lang-row">
-          <button class="mobile-lang-btn${currentLang === 'pt' ? ' active' : ''}" id="mobileLangPt"
-            onclick="_mobileSwitchLang('pt')">PT-BR</button>
-          <button class="mobile-lang-btn${currentLang === 'ja' ? ' active' : ''}" id="mobileLangJa"
-            onclick="_mobileSwitchLang('ja')">日本語</button>
+        <div class="mobile-nav-section-label">Tamanho da Fonte</div>
+        <div class="mobile-font-row">
+          <button class="mobile-font-btn" id="mobileFontDown" onclick="changeFontSize(-1)">A-</button>
+          <button class="mobile-font-btn" id="mobileFontUp" onclick="changeFontSize(1)">A+</button>
         </div>
-
-        <div id="mobileDynamicTopics"></div>
 
       </div>
     </div>`;
@@ -163,9 +167,10 @@ window._updateMobileNavTopics = function (label, optionsList) {
     container.innerHTML = '';
     return;
   }
+  const label_to_use = 'Tópicos deste ensinamento';
   let html = `
     <div class="mobile-nav-divider"></div>
-    <div class="mobile-nav-section-label">${label}</div>
+    <div class="mobile-nav-section-label">${label_to_use}</div>
   `;
   optionsList.forEach(o => {
     html += `<a href="${o.value}" class="mobile-nav-link" onclick="closeMobileNav()">
@@ -206,6 +211,22 @@ function setLanguage(lang, triggerRender = true) {
     } else {
       toggleBtn.innerText = 'PT';
       toggleBtn.title = 'Mudar para Português';
+    }
+  }
+
+  // Refresh mobile nav if it's open or exists
+  const mobileNav = document.getElementById('mobileNavOverlay');
+  if (mobileNav) {
+    // We could re-init or just re-run the part that builds it, 
+    // but for simplicity we'll just let the user re-open it 
+    // or we'd need to update the text specifically.
+    // Actually, let's update the mobile link text if it's there.
+    const mobileLangLink = mobileNav.querySelector('button[onclick*="toggleLanguage"]');
+    if (mobileLangLink) {
+      mobileLangLink.innerHTML = `
+        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 12h7m-5-5 5 5-5 5m11-9c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2Z"/><path d="M22 6h-6m6 6h-6m6 6h-6"/></svg>
+        Mudar Idioma (${lang === 'pt' ? 'Português' : '日本語'})
+      `;
     }
   }
 
@@ -375,13 +396,13 @@ function renderHistory() {
 }
 
 // --- Font Size Control ---
-const FONT_SIZES = [14, 16, 18, 21, 24];
+const FONT_SIZES = [14, 16, 18, 21, 24, 28, 32];
 let _currentFontSizeIdx = null;
 
 window.initFontSize = function () {
-  const saved = parseInt(localStorage.getItem('reader_font_size') || '16');
+  const saved = parseInt(localStorage.getItem('reader_font_size') || '21');
   const idx = FONT_SIZES.indexOf(saved);
-  _currentFontSizeIdx = idx >= 0 ? idx : 1;
+  _currentFontSizeIdx = idx >= 0 ? idx : 3; // 21 is default
   _applyFontSize();
 };
 
@@ -394,13 +415,18 @@ window.changeFontSize = function (delta) {
 
 function _applyFontSize() {
   const size = FONT_SIZES[_currentFontSizeIdx];
-  const readerEl = document.querySelector('.reader-container, #readerContainer');
-  if (readerEl) readerEl.style.fontSize = size + 'px';
+  document.documentElement.style.setProperty('--reader-font-size', size + 'px');
+
   // Update button states
   const btnMinus = document.getElementById('fontDecrease');
   const btnPlus = document.getElementById('fontIncrease');
+  const mBtnMinus = document.getElementById('mobileFontDown');
+  const mBtnPlus = document.getElementById('mobileFontUp');
+
   if (btnMinus) btnMinus.disabled = (_currentFontSizeIdx === 0);
   if (btnPlus) btnPlus.disabled = (_currentFontSizeIdx === FONT_SIZES.length - 1);
+  if (mBtnMinus) mBtnMinus.disabled = (_currentFontSizeIdx === 0);
+  if (mBtnPlus) mBtnPlus.disabled = (_currentFontSizeIdx === FONT_SIZES.length - 1);
 }
 
 // --- DOM Initialization and Shared Listeners ---

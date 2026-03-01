@@ -14,16 +14,15 @@
   --shadow-premium: 0 20px 50px rgba(0, 0, 0, 0.05);
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
 
-  /* Typography */
-  --font-ui: 'Outfit', -apple-system, sans-serif;
-  --font-serif: 'Crimson Pro', serif;
-
   /* Layout */
   --max-width-content: 720px;
   --container-width: 1040px;
   --nav-height: 80px;
   --radius: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Reader Scaling */
+  --reader-font-size: 21px;
 }
 
 [data-theme="dark"] {
@@ -342,12 +341,16 @@ body {
 }
 
 /* --- Reader View --- */
-.reader-container {
+#readerContainer {
   max-width: var(--max-width-content);
   margin: 0 auto;
   overflow-x: hidden;
   word-break: break-word;
   overflow-wrap: anywhere;
+}
+
+.reader-container {
+  font-size: var(--reader-font-size);
 }
 
 .breadcrumbs {
@@ -385,7 +388,7 @@ body {
 
 .topic-title-large {
   font-family: var(--font-serif);
-  font-size: 42px;
+  font-size: calc(var(--reader-font-size) * 2);
   font-weight: 700;
   color: var(--text-main) !important;
   margin-bottom: 16px;
@@ -400,7 +403,7 @@ body {
 
 .topic-content {
   font-family: var(--font-serif);
-  font-size: 21px;
+  font-size: var(--reader-font-size);
   line-height: 2.1;
   color: var(--text-main);
   font-weight: 400;
@@ -450,12 +453,10 @@ body {
   color: var(--accent);
   cursor: pointer;
   font-family: var(--font-sans);
-  font-size: 14px;
-  transition: all 0.3s ease;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
   display: flex;
   /* Added from original, assuming it was intended to be kept */
   align-items: center;
@@ -1024,6 +1025,42 @@ select[data-tooltip]::after {
   color: var(--accent);
 }
 
+.mobile-font-row,
+.mobile-lang-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  padding: 0 16px;
+}
+
+.mobile-font-btn {
+  flex: 1;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-main);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s var(--ease);
+}
+
+.mobile-font-btn:hover:not(:disabled) {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.mobile-font-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
 /* ============================================================
    BREAKPOINT: ≤ 1024px (Mobile & Tablet)
    ============================================================ */
@@ -1135,7 +1172,7 @@ select[data-tooltip]::after {
   }
 
   .topic-content {
-    font-size: 18px;
+    font-size: inherit;
     line-height: 1.95;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -1212,7 +1249,7 @@ select[data-tooltip]::after {
   }
 
   .topic-content {
-    font-size: 17px;
+    font-size: inherit;
   }
 
   .glass-pane {
