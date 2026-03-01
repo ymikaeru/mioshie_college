@@ -1,76 +1,93 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
-            <option value="">Navegação por Temas</option>
-            <option value="#section-0">Prefácio</option><option value="#section-1">Deus e o Plano Divino</option><option value="#section-2">Espírito Precede a Matéria</option><option value="#section-3">A Composição do Mundo Espiritual</option><option value="#section-4">As Atividades dos Espíritos</option><option value="#section-5">Reversão Noite-Dia e o Juízo Final</option><option value="#section-6">A Divindade</option><option value="#section-7">Deuses Verdadeiros e Deuses Malignos</option><option value="#section-8">Culto aos Antepassados</option>
-       </select>
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else window.location.href='index2.html';">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
-                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 1</span>
-                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-                    <span class="lang-pt">Mundo Espiritual</span>
-                    <span class="lang-ja" style="display:none">霊界編</span>
-                </h1>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
             </div>
-            <div class="topic-list">
-                <div style="height: 12px;"></div>
-                        <font id="section-0" class="section-header">
-                            <span class="lang-pt">Prefácio</span>
-                            <span class="lang-ja" style="display:none">序 文</span>
-                        </font><div style="height: 12px;"></div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
+                <option value="">Temas</option>
+                <option value="#section-0">Prefácio</option>
+                <option value="#section-1">Deus e o Plano Divino</option>
+                <option value="#section-2">Espírito Precede a Matéria</option>
+                <option value="#section-3">A Composição do Mundo Espiritual</option>
+                <option value="#section-4">As Atividades dos Espíritos</option>
+                <option value="#section-5">Reversão Noite-Dia e o Juízo Final</option>
+                <option value="#section-6">A Divindade</option>
+                <option value="#section-7">Deuses Verdadeiros e Deuses Malignos</option>
+                <option value="#section-8">Culto aos Antepassados</option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 1</span>
+                    <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
+                        <span class="lang-pt">Mundo Espiritual</span>
+                        <span class="lang-ja" style="display:none">霊界編</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+                    <div style="height: 12px;"></div>
+                    <font id="section-0" class="section-header">
+                        <span class="lang-pt">Prefácio</span>
+                        <span class="lang-ja" style="display:none">序 文</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=zyobun.html" class="topic-card">
                         <div class="topic-card__icon">1</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">O Objetivo da Fundação da Igreja por Meishu-Sama</span>
                             <span class="lang-ja" style="display:none">明主様御立教の御目的</span>
                         </div>
-                    </a><div style="height: 12px;"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-1" class="section-header">
-                            <span class="lang-pt">Deus e o Plano Divino</span>
-                            <span class="lang-ja" style="display:none">神と経綸</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div style="height: 12px;"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-1" class="section-header">
+                        <span class="lang-pt">Deus e o Plano Divino</span>
+                        <span class="lang-ja" style="display:none">神と経綸</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=keirin1.html" class="topic-card">
                         <div class="topic-card__icon">2</div>
                         <div class="topic-card__title">
@@ -287,7 +304,8 @@
                             <span class="lang-pt">As Três Assembleias de Miroku 2</span>
                             <span class="lang-ja" style="display:none">弥勒三会 2</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=nihon1REI.html" class="topic-card">
                         <div class="topic-card__icon">33</div>
                         <div class="topic-card__title">
@@ -357,11 +375,14 @@
                             <span class="lang-pt">O Segredo da Família Imperial</span>
                             <span class="lang-ja" style="display:none">皇室の秘密</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-2" class="section-header">
-                            <span class="lang-pt">Espírito Precede a Matéria</span>
-                            <span class="lang-ja" style="display:none">霊主体従</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-2" class="section-header">
+                        <span class="lang-pt">Espírito Precede a Matéria</span>
+                        <span class="lang-ja" style="display:none">霊主体従</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=sinra1.html" class="topic-card">
                         <div class="topic-card__icon">43</div>
                         <div class="topic-card__title">
@@ -442,14 +463,16 @@
                     <a href="reader.html?vol=shumeic1&file=reisen2.html" class="topic-card">
                         <div class="topic-card__icon">54</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Linha Espiritual 2（A ligação dos Planos Espirituais pela Linha Espiritual）</span>
+                            <span class="lang-pt">Linha Espiritual 2（A ligação dos Planos Espirituais pela Linha
+                                Espiritual）</span>
                             <span class="lang-ja" style="display:none">霊 線 2（霊線による霊層界の連動性）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=reisen3.html" class="topic-card">
                         <div class="topic-card__icon">55</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Linha Espiritual 3（A Linha Espiritual dos Corpos Celestes e dos Seres Humanos）</span>
+                            <span class="lang-pt">Linha Espiritual 3（A Linha Espiritual dos Corpos Celestes e dos Seres
+                                Humanos）</span>
                             <span class="lang-ja" style="display:none">霊 線 3（天体と人間の霊線）</span>
                         </div>
                     </a>
@@ -508,11 +531,14 @@
                             <span class="lang-pt">Mundo do Pensamento e Mundo do Espírito da Palavra 2</span>
                             <span class="lang-ja" style="display:none">想念界と言霊界 2</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-3" class="section-header">
-                            <span class="lang-pt">A Composição do Mundo Espiritual</span>
-                            <span class="lang-ja" style="display:none">霊界の構成</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-3" class="section-header">
+                        <span class="lang-pt">A Composição do Mundo Espiritual</span>
+                        <span class="lang-ja" style="display:none">霊界の構成</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=reikaiSONZAI.html" class="topic-card">
                         <div class="topic-card__icon">64</div>
                         <div class="topic-card__title">
@@ -551,14 +577,16 @@
                     <a href="reader.html?vol=shumeic1&file=reikai2SOUNEN.html" class="topic-card">
                         <div class="topic-card__icon">69</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Mundo Espiritual como Mundo do Pensamento 2（A fisionomia e o pensamento do espírito coincidem）</span>
+                            <span class="lang-pt">O Mundo Espiritual como Mundo do Pensamento 2（A fisionomia e o
+                                pensamento do espírito coincidem）</span>
                             <span class="lang-ja" style="display:none">霊界は想念の世界 2（霊界人は人相と想念が一致する）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=reikai3SOUNEN.html" class="topic-card">
                         <div class="topic-card__icon">70</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Mundo Espiritual como Mundo do Pensamento 3（O pensamento de rancor cria demônios）</span>
+                            <span class="lang-pt">O Mundo Espiritual como Mundo do Pensamento 3（O pensamento de rancor
+                                cria demônios）</span>
                             <span class="lang-ja" style="display:none">霊界は想念の世界 3（怨みの想念が悪魔を作る）</span>
                         </div>
                     </a>
@@ -719,14 +747,16 @@
                     <a href="reader.html?vol=shumeic1&file=rinne3TIKU.html" class="topic-card">
                         <div class="topic-card__icon">93</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Reencarnação e o Caminho dos Animais 3（A Queda do Espírito Ancestral ao Estado Animal）</span>
+                            <span class="lang-pt">Reencarnação e o Caminho dos Animais 3（A Queda do Espírito Ancestral
+                                ao Estado Animal）</span>
                             <span class="lang-ja" style="display:none">輪廻転生と畜生道 3（祖霊の堕畜）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=rinne4TIKU.html" class="topic-card">
                         <div class="topic-card__icon">94</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Reencarnação e o Mundo Animal 4（A Queda dos Ancestrais em Animais）</span>
+                            <span class="lang-pt">Reencarnação e o Mundo Animal 4（A Queda dos Ancestrais em
+                                Animais）</span>
                             <span class="lang-ja" style="display:none">輪廻転生と畜生道 4（祖霊の堕畜）</span>
                         </div>
                     </a>
@@ -771,11 +801,14 @@
                             <span class="lang-pt">A União de Espíritos</span>
                             <span class="lang-ja" style="display:none">霊の合体</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-4" class="section-header">
-                            <span class="lang-pt">As Atividades dos Espíritos</span>
-                            <span class="lang-ja" style="display:none">諸霊の活動</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-4" class="section-header">
+                        <span class="lang-pt">As Atividades dos Espíritos</span>
+                        <span class="lang-ja" style="display:none">諸霊の活動</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=shugosin1.html" class="topic-card">
                         <div class="topic-card__icon">101</div>
                         <div class="topic-card__title">
@@ -842,7 +875,8 @@
                     <a href="reader.html?vol=shumeic1&file=huku4SHUGOSIN.html" class="topic-card">
                         <div class="topic-card__icon">110</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Deus Guardião Secundário 4（O Deus Guardião Secundário e a Fé em Meishu-Sama）</span>
+                            <span class="lang-pt">Deus Guardião Secundário 4（O Deus Guardião Secundário e a Fé em
+                                Meishu-Sama）</span>
                             <span class="lang-ja" style="display:none">副守護神 4（副守護神と明主様信仰）</span>
                         </div>
                     </a>
@@ -1024,14 +1058,16 @@
                     <a href="reader.html?vol=shumeic1&file=korei6.html" class="topic-card">
                         <div class="topic-card__icon">136</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Espírito de Raposa 6（Não Acredite nas Ameaças dos Espíritos de Raposa）</span>
+                            <span class="lang-pt">Espírito de Raposa 6（Não Acredite nas Ameaças dos Espíritos de
+                                Raposa）</span>
                             <span class="lang-ja" style="display:none">狐 霊 6（狐霊の脅しは信じるな）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=korei7.html" class="topic-card">
                         <div class="topic-card__icon">137</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Espírito de Raposa 7（Os Espíritos de Raposa Detestam a Fé em Meishu-Sama）</span>
+                            <span class="lang-pt">Espírito de Raposa 7（Os Espíritos de Raposa Detestam a Fé em
+                                Meishu-Sama）</span>
                             <span class="lang-ja" style="display:none">狐 霊 7（狐霊は明主様信仰を嫌がる）</span>
                         </div>
                     </a>
@@ -1136,77 +1172,88 @@
                     <a href="reader.html?vol=shumeic1&file=hyourei3.html" class="topic-card">
                         <div class="topic-card__icon">152</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 3（Possessão por espírito elevado）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 3（Possessão por espírito
+                                elevado）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 3（高級霊の憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei4.html" class="topic-card">
                         <div class="topic-card__icon">153</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 4（Possessão por espírito humano）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 4（Possessão por espírito
+                                humano）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 4（人霊の憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei5.html" class="topic-card">
                         <div class="topic-card__icon">154</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 5（Possessão por espírito suicida）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 5（Possessão por espírito
+                                suicida）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 5（自殺霊の憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei6.html" class="topic-card">
                         <div class="topic-card__icon">155</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 6（Possessão por espírito do inferno）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 6（Possessão por espírito do
+                                inferno）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 6（地獄霊の憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei7.html" class="topic-card">
                         <div class="topic-card__icon">156</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 7（Possessão por espírito animal）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 7（Possessão por espírito
+                                animal）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 7（動物霊の憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei8.html" class="topic-card">
                         <div class="topic-card__icon">157</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 8（Possessão conjunta por espíritos humanos）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 8（Possessão conjunta por espíritos
+                                humanos）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 8（人霊の共同憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei9.html" class="topic-card">
                         <div class="topic-card__icon">158</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 9（Possessão conjunta por espíritos humanos e animais）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 9（Possessão conjunta por espíritos
+                                humanos e animais）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 9（人霊と動物霊の共同憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei10.html" class="topic-card">
                         <div class="topic-card__icon">159</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 10（Possessão conjunta por espíritos animais）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 10（Possessão conjunta por espíritos
+                                animais）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 10（動物霊の共同憑依）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei11.html" class="topic-card">
                         <div class="topic-card__icon">160</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 11（Fenômeno de possessão em objetos）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 11（Fenômeno de possessão em
+                                objetos）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 11（物に対する憑霊現象）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei12.html" class="topic-card">
                         <div class="topic-card__icon">161</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 12（Fenômeno de possessão em objetos）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 12（Fenômeno de possessão em
+                                objetos）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 12（物に対する憑霊現象）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=hyourei13.html" class="topic-card">
                         <div class="topic-card__icon">162</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Fenômeno de possessão espiritual 13（Fenômeno de possessão por espírito animal em objetos）</span>
+                            <span class="lang-pt">Fenômeno de possessão espiritual 13（Fenômeno de possessão por espírito
+                                animal em objetos）</span>
                             <span class="lang-ja" style="display:none">憑霊現象 13（物に対する動物霊の憑霊現象）</span>
                         </div>
                     </a>
@@ -1220,7 +1267,8 @@
                     <a href="reader.html?vol=shumeic1&file=rei2GAKARI.html" class="topic-card">
                         <div class="topic-card__icon">164</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O perigo da possessão espiritual 2（Sermão SagradoInstrução Divina）</span>
+                            <span class="lang-pt">O perigo da possessão espiritual 2（Sermão SagradoInstrução
+                                Divina）</span>
                             <span class="lang-ja" style="display:none">霊憑りの危険性 2（御講話御垂示）</span>
                         </div>
                     </a>
@@ -1314,11 +1362,14 @@
                             <span class="lang-pt">Al ma Humana</span>
                             <span class="lang-ja" style="display:none">人 魂</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-5" class="section-header">
-                            <span class="lang-pt">Reversão Noite-Dia e o Juízo Final</span>
-                            <span class="lang-ja" style="display:none">夜昼転換と最後の審判</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-5" class="section-header">
+                        <span class="lang-pt">Reversão Noite-Dia e o Juízo Final</span>
+                        <span class="lang-ja" style="display:none">夜昼転換と最後の審判</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=touhou1HIKARI.html" class="topic-card">
                         <div class="topic-card__icon">178</div>
                         <div class="topic-card__title">
@@ -1399,21 +1450,24 @@
                     <a href="reader.html?vol=shumeic1&file=yoruhiruSOKUZIKA.html" class="topic-card">
                         <div class="topic-card__icon">189</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Imediatização da causa e efeito negativos pela Reversão Noite-Dia</span>
+                            <span class="lang-pt">Imediatização da causa e efeito negativos pela Reversão
+                                Noite-Dia</span>
                             <span class="lang-ja" style="display:none">夜昼転換による悪因悪果の即時化</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=kasozouka1HUNOU.html" class="topic-card">
                         <div class="topic-card__icon">190</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A ineficácia da cura de doenças de outras religiões pelo aumento do elemento fogo 1</span>
+                            <span class="lang-pt">A ineficácia da cura de doenças de outras religiões pelo aumento do
+                                elemento fogo 1</span>
                             <span class="lang-ja" style="display:none">火素の増加による他宗教の病気治しの不能化 1</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=kasozouka2HUNOU.html" class="topic-card">
                         <div class="topic-card__icon">191</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A ineficácia da cura de doenças de outras religiões pelo aumento do elemento fogo 2</span>
+                            <span class="lang-pt">A ineficácia da cura de doenças de outras religiões pelo aumento do
+                                elemento fogo 2</span>
                             <span class="lang-ja" style="display:none">火素の増加による他宗教の病気治しの不能化 2</span>
                         </div>
                     </a>
@@ -1441,7 +1495,8 @@
                     <a href="reader.html?vol=shumeic1&file=kasozouka4DAI.html" class="topic-card">
                         <div class="topic-card__icon">195</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Aumento do Elemento Fogo e a Era da Grande Purificação 4（A Grande Purificação do Japão）</span>
+                            <span class="lang-pt">O Aumento do Elemento Fogo e a Era da Grande Purificação 4（A Grande
+                                Purificação do Japão）</span>
                             <span class="lang-ja" style="display:none">火素の増加と大浄化時代 4（日本の大浄化）</span>
                         </div>
                     </a>
@@ -1486,11 +1541,14 @@
                             <span class="lang-pt">Paraíso Terrestre 2</span>
                             <span class="lang-ja" style="display:none">地上天国 2</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-6" class="section-header">
-                            <span class="lang-pt">A Divindade</span>
-                            <span class="lang-ja" style="display:none">御神格</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-6" class="section-header">
+                        <span class="lang-pt">A Divindade</span>
+                        <span class="lang-ja" style="display:none">御神格</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=kyuuseishu1.html" class="topic-card">
                         <div class="topic-card__icon">202</div>
                         <div class="topic-card__title">
@@ -1595,11 +1653,14 @@
                             <span class="lang-pt">Salvar a Deus</span>
                             <span class="lang-ja" style="display:none">神様を救う</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-7" class="section-header">
-                            <span class="lang-pt">Deuses Verdadeiros e Deuses Malignos</span>
-                            <span class="lang-ja" style="display:none">正神と邪神</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-7" class="section-header">
+                        <span class="lang-pt">Deuses Verdadeiros e Deuses Malignos</span>
+                        <span class="lang-ja" style="display:none">正神と邪神</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=zyasin1KAI.html" class="topic-card">
                         <div class="topic-card__icon">217</div>
                         <div class="topic-card__title">
@@ -1648,7 +1709,8 @@
                             <span class="lang-pt">A Conversão dos Deuses Malignos</span>
                             <span class="lang-ja" style="display:none">邪神の改心</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=kami1AKUMA.html" class="topic-card">
                         <div class="topic-card__icon">224</div>
                         <div class="topic-card__title">
@@ -1690,11 +1752,14 @@
                             <span class="lang-pt">O Mal e o Desenvolvimento da Cultura Material 4</span>
                             <span class="lang-ja" style="display:none">悪と物質文化の発展 4</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-8" class="section-header">
-                            <span class="lang-pt">Culto aos Antepassados</span>
-                            <span class="lang-ja" style="display:none">祖霊祭祀</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-8" class="section-header">
+                        <span class="lang-pt">Culto aos Antepassados</span>
+                        <span class="lang-ja" style="display:none">祖霊祭祀</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="reader.html?vol=shumeic1&file=Sigi.html" class="topic-card">
                         <div class="topic-card__icon">230</div>
                         <div class="topic-card__title">
@@ -1705,84 +1770,96 @@
                     <a href="reader.html?vol=shumeic1&file=Skudoku.html" class="topic-card">
                         <div class="topic-card__icon">231</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（Mérito dos Ofícios Memoriais）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（Mérito dos Ofícios
+                                Memoriais）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養の功徳）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Stasi.html" class="topic-card">
                         <div class="topic-card__icon">232</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（Louvor ao Culto de Muitos）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（Louvor ao Culto de
+                                Muitos）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（多祀礼賛）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Smisai.html" class="topic-card">
                         <div class="topic-card__icon">233</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（Investigação dos que não tiveram ofícios）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（Investigação dos que não
+                                tiveram ofícios）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養未済者の調査）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Skonnan.html" class="topic-card">
                         <div class="topic-card__icon">234</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Dificuldade da Salvação das Almas）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Dificuldade da Salvação das
+                                Almas）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（救霊の困難性）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=StamasiiEIEN.html" class="topic-card">
                         <div class="topic-card__icon">235</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Eternidade da Alma e os Ofícios Memoriais）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Eternidade da Alma e os
+                                Ofícios Memoriais）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（魂の永遠性と供養）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Sb1.html" class="topic-card">
                         <div class="topic-card__icon">236</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos Ofícios Memoriais 1）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos
+                                Ofícios Memoriais 1）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養による病気治し 1）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Sb2.html" class="topic-card">
                         <div class="topic-card__icon">237</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos Ofícios Memoriais 2）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos
+                                Ofícios Memoriais 2）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養による病気治し 2）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Sb3.html" class="topic-card">
                         <div class="topic-card__icon">238</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos Ofícios Memoriais 3）</span>
+                            <span class="lang-pt">O Significado do Culto aos Antepassados（A Cura de Doenças pelos
+                                Ofícios Memoriais 3）</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養による病気治し 3）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Sb4.html" class="topic-card">
                         <div class="topic-card__icon">239</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Significado do culto aos antepassados (Cura de doenças pelos serviços memoriais 4)</span>
+                            <span class="lang-pt">Significado do culto aos antepassados (Cura de doenças pelos serviços
+                                memoriais 4)</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（供養による病気治し 4）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Ssison1SINKOU.html" class="topic-card">
                         <div class="topic-card__icon">240</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os antepassados 1)</span>
+                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os
+                                antepassados 1)</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（子孫の信仰が祖霊を救う 1）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Ssison2SINKOU.html" class="topic-card">
                         <div class="topic-card__icon">241</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os antepassados 2)</span>
+                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os
+                                antepassados 2)</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（子孫の信仰が祖霊を救う 2）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Ssison3SINKOU.html" class="topic-card">
                         <div class="topic-card__icon">242</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os antepassados 3)</span>
+                            <span class="lang-pt">Significado do culto aos antepassados (A fé dos descendentes salva os
+                                antepassados 3)</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀の意義（子孫の信仰が祖霊を救う 3）</span>
                         </div>
                     </a>
@@ -1792,7 +1869,8 @@
                             <span class="lang-pt">A relação entre antepassados e descendentes</span>
                             <span class="lang-ja" style="display:none">先祖と子孫の関係</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=Ssinzoku.html" class="topic-card">
                         <div class="topic-card__icon">244</div>
                         <div class="topic-card__title">
@@ -1978,10 +2056,12 @@
                     <a href="reader.html?vol=shumeic1&file=SshuuchakuREI.html" class="topic-card">
                         <div class="topic-card__icon">270</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Serviço memorial para espíritos apegados (Serviço para espíritos que possuem objetos materiais)</span>
+                            <span class="lang-pt">Serviço memorial para espíritos apegados (Serviço para espíritos que
+                                possuem objetos materiais)</span>
                             <span class="lang-ja" style="display:none">執着霊の供養（物質に憑依する霊の供養）</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=Skakuriyo.html" class="topic-card">
                         <div class="topic-card__icon">271</div>
                         <div class="topic-card__title">
@@ -2051,7 +2131,8 @@
                             <span class="lang-pt">A Senhora Kannon do Biombo e os não crentes</span>
                             <span class="lang-ja" style="display:none">お屏風観音様と未信者</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=SZ.html" class="topic-card">
                         <div class="topic-card__icon">281</div>
                         <div class="topic-card__title">
@@ -2076,28 +2157,32 @@
                     <a href="reader.html?vol=shumeic1&file=SZ2kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">284</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 2 (Salvação de espíritos presos à terra e de mortos em guerra)</span>
+                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 2
+                                (Salvação de espíritos presos à terra e de mortos em guerra)</span>
                             <span class="lang-ja" style="display:none">善言讃詞による救霊 2（地縛霊戦死霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SZ3kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">285</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 3 (Salvação de deuses-dragão e espíritos de serpentes)</span>
+                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 3
+                                (Salvação de deuses-dragão e espíritos de serpentes)</span>
                             <span class="lang-ja" style="display:none">善言讃詞による救霊 3（龍神蛇霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SZ4kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">286</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 4 (Salvação de espíritos de animais)</span>
+                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 4
+                                (Salvação de espíritos de animais)</span>
                             <span class="lang-ja" style="display:none">善言讃詞による救霊 4（動物霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SZ5kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">287</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 5 (Espíritos de raposa e o Hino de Louvor das Boas Palavras)</span>
+                            <span class="lang-pt">Salvação de espíritos pelo Hino de Louvor das Boas Palavras 5
+                                (Espíritos de raposa e o Hino de Louvor das Boas Palavras)</span>
                             <span class="lang-ja" style="display:none">善言讃詞による救霊 5（狐霊と善言讃詞）</span>
                         </div>
                     </a>
@@ -2146,49 +2231,56 @@
                     <a href="reader.html?vol=shumeic1&file=SN5kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">294</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 5（Salvação de espíritos vingativos）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 5（Salvação de espíritos
+                                vingativos）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 5（怨霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN6kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">295</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 6（Salvação de espíritos presos à terra e de mortos em batalha）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 6（Salvação de espíritos presos à
+                                terra e de mortos em batalha）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 6（地縛霊戦死霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN7kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">296</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 7（Salvação em cemitérios, campos de batalha e ruínas de castelos）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 7（Salvação em cemitérios, campos de
+                                batalha e ruínas de castelos）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 7（墓地古戦場城跡での救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN8kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">297</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 8（Norito para objetos possuídos）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 8（Norito para objetos
+                                possuídos）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 8（憑霊物に対する祝詞）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN9kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">298</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 9（Salvação de deuses-dragão e espíritos de serpente）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 9（Salvação de deuses-dragão e
+                                espíritos de serpente）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 9（龍神蛇霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN10kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">299</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 10（Salvação de espíritos de animais）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 10（Salvação de espíritos de
+                                animais）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 10（動物霊の救霊）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=SN11kyuurei.html" class="topic-card">
                         <div class="topic-card__icon">300</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Salvação de espíritos pela Norito 11（Espíritos de raposa e a Norito）</span>
+                            <span class="lang-pt">Salvação de espíritos pela Norito 11（Espíritos de raposa e a
+                                Norito）</span>
                             <span class="lang-ja" style="display:none">祝詞による救霊 11（狐霊と祝詞）</span>
                         </div>
                     </a>
@@ -2240,7 +2332,8 @@
                             <span class="lang-pt">Salvação de espíritos pelo Goshintai</span>
                             <span class="lang-ja" style="display:none">御神体による救霊</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=SB.html" class="topic-card">
                         <div class="topic-card__icon">308</div>
                         <div class="topic-card__title">
@@ -2380,7 +2473,8 @@
                             <span class="lang-pt">Cristianismo e a veneração ancestral</span>
                             <span class="lang-ja" style="display:none">キリスト教と祖霊祭祀</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=Ssougi.html" class="topic-card">
                         <div class="topic-card__icon">328</div>
                         <div class="topic-card__title">
@@ -2548,7 +2642,8 @@
                             <span class="lang-pt">Obon, Ohigan</span>
                             <span class="lang-ja" style="display:none">お盆、お彼岸</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=Skaishuu.html" class="topic-card">
                         <div class="topic-card__icon">352</div>
                         <div class="topic-card__title">
@@ -2587,35 +2682,40 @@
                     <a href="reader.html?vol=shumeic1&file=Skaikoku1.html" class="topic-card">
                         <div class="topic-card__icon">357</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Advertência dos espíritos ancestrais 1 (Advertência pedindo ofícios memoriais)</span>
+                            <span class="lang-pt">Advertência dos espíritos ancestrais 1 (Advertência pedindo ofícios
+                                memoriais)</span>
                             <span class="lang-ja" style="display:none">祖霊の戒告 1（供養を求める戒告）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Skaikoku2.html" class="topic-card">
                         <div class="topic-card__icon">358</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Advertência dos espíritos ancestrais 2 (Advertência pedindo a melhora da fé dos descendentes)</span>
+                            <span class="lang-pt">Advertência dos espíritos ancestrais 2 (Advertência pedindo a melhora
+                                da fé dos descendentes)</span>
                             <span class="lang-ja" style="display:none">祖霊の戒告 2（子孫の信仰向上を求める戒告）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Skaikoku3.html" class="topic-card">
                         <div class="topic-card__icon">359</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Advertência dos espíritos ancestrais 3 (Advertência pedindo a dedicação exclusiva dos descendentes)</span>
+                            <span class="lang-pt">Advertência dos espíritos ancestrais 3 (Advertência pedindo a
+                                dedicação exclusiva dos descendentes)</span>
                             <span class="lang-ja" style="display:none">祖霊の戒告 3（子孫の専従を求める戒告）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Skaikoku4.html" class="topic-card">
                         <div class="topic-card__icon">360</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Advertência dos espíritos ancestrais 4 (Advertência repreendendo os erros de fé dos descendentes)</span>
+                            <span class="lang-pt">Advertência dos espíritos ancestrais 4 (Advertência repreendendo os
+                                erros de fé dos descendentes)</span>
                             <span class="lang-ja" style="display:none">祖霊の戒告 4（子孫の信仰上の誤りを咎める戒告）</span>
                         </div>
                     </a>
                     <a href="reader.html?vol=shumeic1&file=Skaikoku5.html" class="topic-card">
                         <div class="topic-card__icon">361</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Advertência dos espíritos ancestrais 5 (Advertência repreendendo os pecados dos descendentes)</span>
+                            <span class="lang-pt">Advertência dos espíritos ancestrais 5 (Advertência repreendendo os
+                                pecados dos descendentes)</span>
                             <span class="lang-ja" style="display:none">祖霊の戒告 5（子孫の罪を咎める戒告）</span>
                         </div>
                     </a>
@@ -2639,7 +2739,8 @@
                             <span class="lang-pt">Obstrução da fé pelos espíritos ancestrais</span>
                             <span class="lang-ja" style="display:none">祖霊による信仰妨害</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=SreikaizinJ.html" class="topic-card">
                         <div class="topic-card__icon">365</div>
                         <div class="topic-card__title">
@@ -2671,7 +2772,8 @@
                     <a href="reader.html?vol=shumeic1&file=Shaidoku4.html" class="topic-card">
                         <div class="topic-card__icon">369</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Ofício memorial pela leitura respeitosa 4 (Ofício para aves, feras, insetos e peixes)</span>
+                            <span class="lang-pt">Ofício memorial pela leitura respeitosa 4 (Ofício para aves, feras,
+                                insetos e peixes)</span>
                             <span class="lang-ja" style="display:none">拝読による供養 4（禽獣虫魚の供養）</span>
                         </div>
                     </a>
@@ -2734,7 +2836,8 @@
                     <a href="reader.html?vol=shumeic1&file=SreikaiIKENAI.html" class="topic-card">
                         <div class="topic-card__icon">378</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Espíritos ancestrais que não conseguem ir para o mundo espiritual</span>
+                            <span class="lang-pt">Espíritos ancestrais que não conseguem ir para o mundo
+                                espiritual</span>
                             <span class="lang-ja" style="display:none">霊界に行けない祖霊</span>
                         </div>
                     </a>
@@ -2828,7 +2931,8 @@
                             <span class="lang-pt">Culto aos Ancestrais Outros</span>
                             <span class="lang-ja" style="display:none">祖霊祭祀 その他</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="reader.html?vol=shumeic1&file=Sdoubutu1.html" class="topic-card">
                         <div class="topic-card__icon">392</div>
                         <div class="topic-card__title">
@@ -2888,7 +2992,8 @@
                     <a href="reader.html?vol=shumeic1&file=Shebi3.html" class="topic-card">
                         <div class="topic-card__icon">400</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Memorial para Serpentes 3 (Memorial para Serpentes e Orações Rituais, Outros)</span>
+                            <span class="lang-pt">Memorial para Serpentes 3 (Memorial para Serpentes e Orações Rituais,
+                                Outros)</span>
                             <span class="lang-ja" style="display:none">蛇供養 3（蛇供養と祝詞、その他）</span>
                         </div>
                     </a>
@@ -2898,42 +3003,57 @@
                             <span class="lang-pt">Purificação Espiritual de Espíritos Animais</span>
                             <span class="lang-ja" style="display:none">動物霊に対する浄霊</span>
                         </div>
-                    </a><div style="height: 12px;"></div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+                    </a>
+                    <div style="height: 12px;"></div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                </div>
+
             </div>
-            
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -2942,36 +3062,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>

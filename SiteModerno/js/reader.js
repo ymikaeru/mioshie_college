@@ -107,7 +107,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const navSelect = document.getElementById('readerTopicSelect');
             if (navSelect) {
-                navSelect.innerHTML = '<option value="">Lista de Tópicos</option>';
+                navSelect.innerHTML = '<option value="">Tópicos</option>';
                 navSelect.style.display = 'none';
             }
 
@@ -276,6 +276,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             if (searchQuery) {
                 const q = searchQuery.toLowerCase();
+                // Escape regex special chars (e.g. hyphens in "7-5-3")
+                const escapedQ = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const contentBlocks = container.querySelectorAll('.topic-content, .topic-title-large');
                 let firstMatch = null;
 
@@ -289,7 +291,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         if (textNode.parentNode && textNode.parentNode.nodeName === 'MARK') return;
                         const val = textNode.nodeValue;
                         if (val.toLowerCase().includes(q) && val.trim().length > 0) {
-                            const regex = new RegExp(`(${searchQuery})`, 'gi');
+                            const regex = new RegExp(`(${escapedQ})`, 'gi');
                             const fragment = document.createDocumentFragment();
                             const div = document.createElement('div');
                             div.innerHTML = val.replace(regex, '<mark class="search-highlight">$1</mark>');
@@ -305,11 +307,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 if (firstMatch) {
                     setTimeout(() => {
-                        window.scrollTo({
-                            top: firstMatch.getBoundingClientRect().top + window.scrollY - 100,
-                            behavior: 'smooth'
-                        });
-                    }, 500);
+                        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }, 400);
                 }
             }
         };

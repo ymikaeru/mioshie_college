@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <title>Ensinamentos de Meishu-Sama - Leitura</title>
@@ -7,6 +8,7 @@
   <link rel="stylesheet" href="css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
   <header class="header">
     <a href="index.html" class="header__logo">
@@ -16,30 +18,35 @@
       Biblioteca Sagrada
     </a>
     <div class="header__nav">
-       <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="index.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-       <select id="readerTopicSelect" class="btn-zen" onchange="location.hash=this.value" style="max-width:200px; display:none;">
-            <option value="">Tópicos</option>
-       </select>
+      <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+      <a href="index.html"
+        data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+          1</span></a>
+      <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
+      <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+      <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+      <select id="readerTopicSelect" class="btn-zen" onchange="location.hash=this.value"
+        style="max-width:200px; display:none;">
+        <option value="">Tópicos</option>
+      </select>
     </div>
     <div class="controls">
       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-      <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt'); else { location.href='../index.html'; }">PT-BR</button>
-      <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else { location.href='../index2.html'; }">日本語</button>
+      <button class="btn-zen font-ctrl" id="fontDecrease" onclick="changeFontSize(-1)"
+        title="Diminuir fonte">A−</button>
+      <button class="btn-zen font-ctrl" id="fontIncrease" onclick="changeFontSize(1)" title="Aumentar fonte">A+</button>
+      <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
     </div>
   </header>
   <main class="main">
     <div class="glass-pane" id="readerContainer">
-        <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
+      <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
     </div>
   </main>
   <script>
-    
+
 (function() {
     const checkAuth = () => {
         if (localStorage.getItem('shumei_auth') === 'true') return;
@@ -90,7 +97,8 @@
     <div class="search-modal">
       <div class="search-header">
         <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
+          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+            autocomplete="off">
           <button class="search-close" id="searchClose">&times;</button>
         </div>
         <div class="search-filters">
@@ -115,5 +123,7 @@
 
   <script src="js/toggle.js?v=1772246362"></script>
   <script src="js/reader.js?v=1772246362"></script>
+  <script>document.addEventListener('DOMContentLoaded', () => { if (typeof initFontSize === 'function') initFontSize(); });</script>
 </body>
+
 </html>

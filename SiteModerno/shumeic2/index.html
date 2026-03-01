@@ -1,65 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <script src="../js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="../index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="../index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
-            <option value="">Navegação por Temas</option>
-            <option value="#section-0">Princípio do Johrei</option><option value="#section-1">O Método do Johrei</option><option value="#section-2">Processo de Purificação</option><option value="#section-3">Três Venenos</option><option value="#section-4">Análise Corporal da Doença</option><option value="#section-5">Análise Espiritual das Doenças</option><option value="#section-6">Crítica à Medicina Moderna</option><option value="#section-7">Método de Saúde Divino</option><option value="#section-8">Agricultura Natural</option>
-       </select>
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja');">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
-                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 2</span>
-                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-                    <span class="lang-pt">Método Divino de Saúde ・ Agricultura Natural</span>
-                    <span class="lang-ja" style="display:none">浄霊・自然農法</span>
-                </h1>
+    <header class="header">
+        <a href="../index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
             </div>
-            <div class="topic-list">
-                
-                        <font id="section-0" class="section-header">
-                            <span class="lang-pt">Princípio do Johrei</span>
-                            <span class="lang-ja" style="display:none">浄霊の原理</span>
-                        </font><div style="height: 12px;"></div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="../index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
+                <option value="">Temas</option>
+                <option value="#section-0">Princípio do Johrei</option>
+                <option value="#section-1">O Método do Johrei</option>
+                <option value="#section-2">Processo de Purificação</option>
+                <option value="#section-3">Três Venenos</option>
+                <option value="#section-4">Análise Corporal da Doença</option>
+                <option value="#section-5">Análise Espiritual das Doenças</option>
+                <option value="#section-6">Crítica à Medicina Moderna</option>
+                <option value="#section-7">Método de Saúde Divino</option>
+                <option value="#section-8">Agricultura Natural</option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 2</span>
+                    <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
+                        <span class="lang-pt">Método Divino de Saúde ・ Agricultura Natural</span>
+                        <span class="lang-ja" style="display:none">浄霊・自然農法</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+
+                    <font id="section-0" class="section-header">
+                        <span class="lang-pt">Princípio do Johrei</span>
+                        <span class="lang-ja" style="display:none">浄霊の原理</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=konpon1.html" class="topic-card">
                         <div class="topic-card__icon">1</div>
                         <div class="topic-card__title">
@@ -84,14 +98,16 @@
                     <a href="../reader.html?vol=shumeic2&file=JG2.html" class="topic-card">
                         <div class="topic-card__icon">4</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Princípio do Johrei 2 （Origem da Doença e o Princípio do Johrei）</span>
+                            <span class="lang-pt">Princípio do Johrei 2 （Origem da Doença e o Princípio do
+                                Johrei）</span>
                             <span class="lang-ja" style="display:none">浄霊の原理 2 （病源と浄霊の原理）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=JG3.html" class="topic-card">
                         <div class="topic-card__icon">5</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Princípio do Johrei 3 （A Trindade dos Órgãos Internos e o Johrei, etc.）</span>
+                            <span class="lang-pt">Princípio do Johrei 3 （A Trindade dos Órgãos Internos e o Johrei,
+                                etc.）</span>
                             <span class="lang-ja" style="display:none">浄霊の原理 3 （内臓の三位一体と浄霊等）</span>
                         </div>
                     </a>
@@ -189,14 +205,16 @@
                     <a href="../reader.html?vol=shumeic2&file=JKG1.html" class="topic-card">
                         <div class="topic-card__icon">19</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Princípio Científico do Johrei 1（Teoria Monista de Todas as Doenças）</span>
+                            <span class="lang-pt">O Princípio Científico do Johrei 1（Teoria Monista de Todas as
+                                Doenças）</span>
                             <span class="lang-ja" style="display:none">浄霊の科学的原理 1（万病一元論）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=JKG2.html" class="topic-card">
                         <div class="topic-card__icon">20</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Princípio Científico do Johrei 2（A Ciência Não Cura as Doenças）</span>
+                            <span class="lang-pt">O Princípio Científico do Johrei 2（A Ciência Não Cura as
+                                Doenças）</span>
                             <span class="lang-ja" style="display:none">浄霊の科学的原理 2（科学で病気は治らない）</span>
                         </div>
                     </a>
@@ -210,14 +228,16 @@
                     <a href="../reader.html?vol=shumeic2&file=JKG4.html" class="topic-card">
                         <div class="topic-card__icon">22</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Princípio Científico do Johrei 4（O Johrei é a Primeira Partícula Espiritual）</span>
+                            <span class="lang-pt">O Princípio Científico do Johrei 4（O Johrei é a Primeira Partícula
+                                Espiritual）</span>
                             <span class="lang-ja" style="display:none">浄霊の科学的原理 4（浄霊は第一霊子）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=JKG5.html" class="topic-card">
                         <div class="topic-card__icon">23</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Princípio Científico do Johrei 5（Comparação entre o Johrei e o Raio-X）</span>
+                            <span class="lang-pt">O Princípio Científico do Johrei 5（Comparação entre o Johrei e o
+                                Raio-X）</span>
                             <span class="lang-ja" style="display:none">浄霊の科学的原理 5（浄霊とレントゲンの比較）</span>
                         </div>
                     </a>
@@ -311,11 +331,14 @@
                             <span class="lang-pt">O Significado do Johrei</span>
                             <span class="lang-ja" style="display:none">浄霊の意義</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-1" class="section-header">
-                            <span class="lang-pt">O Método do Johrei</span>
-                            <span class="lang-ja" style="display:none">浄霊の方法</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-1" class="section-header">
+                        <span class="lang-pt">O Método do Johrei</span>
+                        <span class="lang-ja" style="display:none">浄霊の方法</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=JH1.html" class="topic-card">
                         <div class="topic-card__icon">37</div>
                         <div class="topic-card__title">
@@ -347,14 +370,16 @@
                     <a href="../reader.html?vol=shumeic2&file=JH5.html" class="topic-card">
                         <div class="topic-card__icon">41</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Método do Johrei 5（O uso concomitante de Johrei e medicina moderna é proibido）</span>
+                            <span class="lang-pt">O Método do Johrei 5（O uso concomitante de Johrei e medicina moderna é
+                                proibido）</span>
                             <span class="lang-ja" style="display:none">浄霊の方法 5（浄霊と現代医学の併用は不可）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=JH6.html" class="topic-card">
                         <div class="topic-card__icon">42</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">O Método do Johrei 6（O uso concomitante de Johrei e medicina moderna é proibido）</span>
+                            <span class="lang-pt">O Método do Johrei 6（O uso concomitante de Johrei e medicina moderna é
+                                proibido）</span>
                             <span class="lang-ja" style="display:none">浄霊の方法 6（浄霊と現代医学の併用は不可）</span>
                         </div>
                     </a>
@@ -413,7 +438,8 @@
                             <span class="lang-pt">Auto-Johrei</span>
                             <span class="lang-ja" style="display:none">自己浄霊</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=Jga.html" class="topic-card">
                         <div class="topic-card__icon">51</div>
                         <div class="topic-card__title">
@@ -511,7 +537,8 @@
                             <span class="lang-pt">A Dignidade do Johrei</span>
                             <span class="lang-ja" style="display:none">浄霊の尊厳</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=Jdoubutu.html" class="topic-card">
                         <div class="topic-card__icon">65</div>
                         <div class="topic-card__title">
@@ -553,7 +580,8 @@
                             <span class="lang-pt">Johrei é transfusão de sangue</span>
                             <span class="lang-ja" style="display:none">浄霊は輸血</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=Jgakuya.html" class="topic-card">
                         <div class="topic-card__icon">71</div>
                         <div class="topic-card__title">
@@ -749,7 +777,8 @@
                             <span class="lang-pt">Ordem dos Pontos Vitais do Johrei</span>
                             <span class="lang-ja" style="display:none">浄霊の急所の順序</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=zinzou.html" class="topic-card">
                         <div class="topic-card__icon">99</div>
                         <div class="topic-card__title">
@@ -819,11 +848,14 @@
                             <span class="lang-pt">Johrei e a Movimentação das Toxinas</span>
                             <span class="lang-ja" style="display:none">浄霊と毒素の移動</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-2" class="section-header">
-                            <span class="lang-pt">Processo de Purificação</span>
-                            <span class="lang-ja" style="display:none">浄化作用</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-2" class="section-header">
+                        <span class="lang-pt">Processo de Purificação</span>
+                        <span class="lang-ja" style="display:none">浄化作用</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=JS1.html" class="topic-card">
                         <div class="topic-card__icon">109</div>
                         <div class="topic-card__title">
@@ -841,7 +873,8 @@
                     <a href="../reader.html?vol=shumeic2&file=JS3.html" class="topic-card">
                         <div class="topic-card__icon">111</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Processo de Purificação 3 (Primeiro e Segundo Processos de Purificação)</span>
+                            <span class="lang-pt">Processo de Purificação 3 (Primeiro e Segundo Processos de
+                                Purificação)</span>
                             <span class="lang-ja" style="display:none">浄化作用 3（第一浄化作用と第二浄化作用）</span>
                         </div>
                     </a>
@@ -862,7 +895,8 @@
                     <a href="../reader.html?vol=shumeic2&file=JS6.html" class="topic-card">
                         <div class="topic-card__icon">114</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Processo de Purificação 6 (Encefalite Japonesa, Sarampo, Doenças Tropicais)</span>
+                            <span class="lang-pt">Processo de Purificação 6 (Encefalite Japonesa, Sarampo, Doenças
+                                Tropicais)</span>
                             <span class="lang-ja" style="display:none">浄化作用 6（日本脳炎、はしか、熱帯病）</span>
                         </div>
                     </a>
@@ -942,11 +976,13 @@
                             <span class="lang-pt">Agradeça pela Doença</span>
                             <span class="lang-ja" style="display:none">病気に感謝せよ</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-3" class="section-header">
-                            <span class="lang-pt">Três Venenos</span>
-                            <span class="lang-ja" style="display:none">三 毒</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-3" class="section-header">
+                        <span class="lang-pt">Três Venenos</span>
+                        <span class="lang-ja" style="display:none">三 毒</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=3doku.html" class="topic-card">
                         <div class="topic-card__icon">126</div>
                         <div class="topic-card__title">
@@ -1184,11 +1220,14 @@
                             <span class="lang-pt">A Causa da Infelicidade é a Toxina Medicamentosa</span>
                             <span class="lang-ja" style="display:none">不幸の原因は薬毒</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-4" class="section-header">
-                            <span class="lang-pt">Análise Corporal da Doença</span>
-                            <span class="lang-ja" style="display:none">病気の体的分析</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-4" class="section-header">
+                        <span class="lang-pt">Análise Corporal da Doença</span>
+                        <span class="lang-ja" style="display:none">病気の体的分析</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=Bshouzyou.html" class="topic-card">
                         <div class="topic-card__icon">160</div>
                         <div class="topic-card__title">
@@ -1206,7 +1245,8 @@
                     <a href="../reader.html?vol=shumeic2&file=BB2.html" class="topic-card">
                         <div class="topic-card__icon">162</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Análise da Doença 2 (Doenças dos OlhosOuvidosNarizNevralgia Facial)</span>
+                            <span class="lang-pt">Análise da Doença 2 (Doenças dos OlhosOuvidosNarizNevralgia
+                                Facial)</span>
                             <span class="lang-ja" style="display:none">病気の分析 2（眼病耳病鼻病顔面神経痛）</span>
                         </div>
                     </a>
@@ -1220,14 +1260,16 @@
                     <a href="../reader.html?vol=shumeic2&file=BB4.html" class="topic-card">
                         <div class="topic-card__icon">164</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Análise da Doença 4 (Tuberculose PulmonarAsmaPleurisiaPneumonia)</span>
+                            <span class="lang-pt">Análise da Doença 4 (Tuberculose
+                                PulmonarAsmaPleurisiaPneumonia)</span>
                             <span class="lang-ja" style="display:none">病気の分析 4（肺結核喘息肋膜炎肺炎）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=BB5.html" class="topic-card">
                         <div class="topic-card__icon">165</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Análise da Doença 5 (Doenças do CoraçãoEstômagoEsôfagoFígadoVesícula Biliar)</span>
+                            <span class="lang-pt">Análise da Doença 5 (Doenças do CoraçãoEstômagoEsôfagoFígadoVesícula
+                                Biliar)</span>
                             <span class="lang-ja" style="display:none">病気の分析 5（心臓胃食道肝臓胆嚢の病気）</span>
                         </div>
                     </a>
@@ -1272,7 +1314,8 @@
                             <span class="lang-pt">Análise da Doença 11 (Outras Doenças)</span>
                             <span class="lang-ja" style="display:none">病気の分析 11（その他の疾患）</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=BTB1.html" class="topic-card">
                         <div class="topic-card__icon">172</div>
                         <div class="topic-card__title">
@@ -1290,7 +1333,8 @@
                     <a href="../reader.html?vol=shumeic2&file=BTB3.html" class="topic-card">
                         <div class="topic-card__icon">174</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Análise Corporal da Doença 3 (A Construção da Medicina Japonesa)</span>
+                            <span class="lang-pt">Análise Corporal da Doença 3 (A Construção da Medicina
+                                Japonesa)</span>
                             <span class="lang-ja" style="display:none">病気の体的分析 3（日本医学の建設）</span>
                         </div>
                     </a>
@@ -1419,11 +1463,14 @@
                             <span class="lang-pt">Doenças dos Animais</span>
                             <span class="lang-ja" style="display:none">動物の病気</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-5" class="section-header">
-                            <span class="lang-pt">Análise Espiritual das Doenças</span>
-                            <span class="lang-ja" style="display:none">病気の霊的分析</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-5" class="section-header">
+                        <span class="lang-pt">Análise Espiritual das Doenças</span>
+                        <span class="lang-ja" style="display:none">病気の霊的分析</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=BH1.html" class="topic-card">
                         <div class="topic-card__icon">193</div>
                         <div class="topic-card__title">
@@ -1462,21 +1509,24 @@
                     <a href="../reader.html?vol=shumeic2&file=seisinbyou1.html" class="topic-card">
                         <div class="topic-card__icon">198</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Doença Mental, Anormalidade Mental 1（Possessão por Espírito Humano）</span>
+                            <span class="lang-pt">Doença Mental, Anormalidade Mental 1（Possessão por Espírito
+                                Humano）</span>
                             <span class="lang-ja" style="display:none">精神病、精神異常 1（人霊の憑依）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=seisinbyou2.html" class="topic-card">
                         <div class="topic-card__icon">199</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Doença Mental, Anormalidade Mental 2（Possessão por Espírito Animal）</span>
+                            <span class="lang-pt">Doença Mental, Anormalidade Mental 2（Possessão por Espírito
+                                Animal）</span>
                             <span class="lang-ja" style="display:none">精神病、精神異常 2（動物霊の憑依）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=seisinbyou3.html" class="topic-card">
                         <div class="topic-card__icon">200</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Doença Mental, Anormalidade Mental 3（Possessão Conjunta de Espírito Humano e Animal）</span>
+                            <span class="lang-pt">Doença Mental, Anormalidade Mental 3（Possessão Conjunta de Espírito
+                                Humano e Animal）</span>
                             <span class="lang-ja" style="display:none">精神病、精神異常 3（人霊と動物霊の共同憑依）</span>
                         </div>
                     </a>
@@ -1836,7 +1886,8 @@
                             <span class="lang-pt">Falar dormindo, ranger de dentes, ronco</span>
                             <span class="lang-ja" style="display:none">寝言、歯ぎしり、イビキ</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=zisatu.html" class="topic-card">
                         <div class="topic-card__icon">252</div>
                         <div class="topic-card__title">
@@ -1941,7 +1992,8 @@
                             <span class="lang-pt">Doenças por possessão conjunta de espíritos humanos e animais</span>
                             <span class="lang-ja" style="display:none">人霊と動物霊の共同憑依による病気</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=hebi1.html" class="topic-card">
                         <div class="topic-card__icon">267</div>
                         <div class="topic-card__title">
@@ -1980,14 +2032,16 @@
                     <a href="../reader.html?vol=shumeic2&file=ryuuzin3.html" class="topic-card">
                         <div class="topic-card__icon">272</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Doenças por possessão e reencarnação de deus-dragão 3 (Dragão de Madeira)</span>
+                            <span class="lang-pt">Doenças por possessão e reencarnação de deus-dragão 3 (Dragão de
+                                Madeira)</span>
                             <span class="lang-ja" style="display:none">龍神の憑霊、再生による病気 3（木龍）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=ryuuzin4.html" class="topic-card">
                         <div class="topic-card__icon">273</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Doenças por possessão e reencarnação de deus-dragão 4 (Deus-dragão de poçoslagos)</span>
+                            <span class="lang-pt">Doenças por possessão e reencarnação de deus-dragão 4 (Deus-dragão de
+                                poçoslagos)</span>
                             <span class="lang-ja" style="display:none">龍神の憑霊、再生による病気 4（井戸池の龍神）</span>
                         </div>
                     </a>
@@ -2102,7 +2156,8 @@
                             <span class="lang-pt">Veneno de remédios e possessão espiritual</span>
                             <span class="lang-ja" style="display:none">薬毒と憑霊</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=saisei1.html" class="topic-card">
                         <div class="topic-card__icon">290</div>
                         <div class="topic-card__title">
@@ -2130,7 +2185,8 @@
                             <span class="lang-pt">Renascimento e Doença 4 (Renascimento de animais)</span>
                             <span class="lang-ja" style="display:none">再生と病気 4（動物の再生）</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=kaikoku1.html" class="topic-card">
                         <div class="topic-card__icon">294</div>
                         <div class="topic-card__title">
@@ -2169,14 +2225,16 @@
                     <a href="../reader.html?vol=shumeic2&file=tumi1.html" class="topic-card">
                         <div class="topic-card__icon">299</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Pecado e Doença 1 (O pecado dos ancestrais recai sobre os descendentes)</span>
+                            <span class="lang-pt">Pecado e Doença 1 (O pecado dos ancestrais recai sobre os
+                                descendentes)</span>
                             <span class="lang-ja" style="display:none">罪と病気 1（先祖の罪が子孫に来る）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=tumi2.html" class="topic-card">
                         <div class="topic-card__icon">300</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Pecado e Doença 2 (O pecado dos ancestrais recai sobre os descendentes)</span>
+                            <span class="lang-pt">Pecado e Doença 2 (O pecado dos ancestrais recai sobre os
+                                descendentes)</span>
                             <span class="lang-ja" style="display:none">罪と病気 2（先祖の罪が子孫に来る）</span>
                         </div>
                     </a>
@@ -2277,11 +2335,13 @@
                             <span class="lang-pt">Personalidade Humana e Doença</span>
                             <span class="lang-ja" style="display:none">人間の性格と病気</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-6" class="section-header">
-                            <span class="lang-pt">Crítica à Medicina Moderna</span>
-                            <span class="lang-ja" style="display:none">現代医学批判</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-6" class="section-header">
+                        <span class="lang-pt">Crítica à Medicina Moderna</span>
+                        <span class="lang-ja" style="display:none">現代医学批判</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=kanwa1.html" class="topic-card">
                         <div class="topic-card__icon">315</div>
                         <div class="topic-card__title">
@@ -2449,7 +2509,8 @@
                             <span class="lang-pt">Outras terapias de fé e terapias espirituais 2</span>
                             <span class="lang-ja" style="display:none">その他の信仰療法、霊的療法 2</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=hikagaku1.html" class="topic-card">
                         <div class="topic-card__icon">339</div>
                         <div class="topic-card__title">
@@ -2502,14 +2563,16 @@
                     <a href="../reader.html?vol=shumeic2&file=munou1.html" class="topic-card">
                         <div class="topic-card__icon">346</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A incompetência da medicina contribui para o desenvolvimento desta Religião 1</span>
+                            <span class="lang-pt">A incompetência da medicina contribui para o desenvolvimento desta
+                                Religião 1</span>
                             <span class="lang-ja" style="display:none">医学の無能が本教発展に貢献 1</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic2&file=munou2.html" class="topic-card">
                         <div class="topic-card__icon">347</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A incompetência da medicina contribui para o desenvolvimento desta Religião 2</span>
+                            <span class="lang-pt">A incompetência da medicina contribui para o desenvolvimento desta
+                                Religião 2</span>
                             <span class="lang-ja" style="display:none">医学の無能が本教発展に貢献 2</span>
                         </div>
                     </a>
@@ -2617,7 +2680,8 @@
                             <span class="lang-pt">Informando os médicos</span>
                             <span class="lang-ja" style="display:none">医者に知らせる</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=ID1.html" class="topic-card">
                         <div class="topic-card__icon">363</div>
                         <div class="topic-card__title">
@@ -2918,11 +2982,14 @@
                             <span class="lang-pt">Aforismos e Comentários</span>
                             <span class="lang-ja" style="display:none">寸言寸評集</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-7" class="section-header">
-                            <span class="lang-pt">Método de Saúde Divino</span>
-                            <span class="lang-ja" style="display:none">神示の健康法</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-7" class="section-header">
+                        <span class="lang-pt">Método de Saúde Divino</span>
+                        <span class="lang-ja" style="display:none">神示の健康法</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=kenkou1SINTAI.html" class="topic-card">
                         <div class="topic-card__icon">406</div>
                         <div class="topic-card__title">
@@ -3132,7 +3199,8 @@
                             <span class="lang-pt">Educação Infantil</span>
                             <span class="lang-ja" style="display:none">児童教育</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=eiyou1SEISAN.html" class="topic-card">
                         <div class="topic-card__icon">436</div>
                         <div class="topic-card__title">
@@ -3251,11 +3319,14 @@
                             <span class="lang-pt">Desejo Alimentar</span>
                             <span class="lang-ja" style="display:none">食 欲</span>
                         </div>
-                    </a><div class="group-spacer"></div><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                        <font id="section-8" class="section-header">
-                            <span class="lang-pt">Agricultura Natural</span>
-                            <span class="lang-ja" style="display:none">自然農法</span>
-                        </font><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <font id="section-8" class="section-header">
+                        <span class="lang-pt">Agricultura Natural</span>
+                        <span class="lang-ja" style="display:none">自然農法</span>
+                    </font>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic2&file=SN1.html" class="topic-card">
                         <div class="topic-card__icon">453</div>
                         <div class="topic-card__title">
@@ -3479,49 +3550,63 @@
                             <span class="lang-pt">Proibição do Uso de Composto</span>
                             <span class="lang-ja" style="display:none">堆肥の使用禁止</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic2&file=" class="topic-card">
                         <div class="topic-card__icon">485</div>
                         <div class="topic-card__title">
                             <span class="lang-pt"></span>
                             <span class="lang-ja" style="display:none"></span>
                         </div>
-                    </a><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                </div>
+
             </div>
-            
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -3530,36 +3615,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>

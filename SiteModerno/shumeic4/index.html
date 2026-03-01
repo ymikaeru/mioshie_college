@@ -1,65 +1,77 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <script src="../js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="../index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="../index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
-            <option value="">Navegação por Temas</option>
-            <option value="#section-0">Os Feitos de Meishu-Sama</option><option value="#section-1">Construção do Protótipo do Paraíso Terrestre</option><option value="#section-2">Incompreensão dos de fora</option><option value="#section-3">Coleção de Fragmentos Religiosos</option><option value="#section-4">Análise de Todas as Coisas da Natureza</option><option value="#section-5">Sobre a Arte</option><option value="#section-6">Sobre a Situação Atual</option>
-       </select>
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else window.location.href='index2.html';">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
-                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
-                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-                    <span class="lang-pt">Ensinamentos Complementares</span>
-                    <span class="lang-ja" style="display:none">補足編</span>
-                </h1>
+    <header class="header">
+        <a href="../index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
             </div>
-            <div class="topic-list">
-                <div style="height: 12px;"></div>
-                            <div id="section-0" class="section-header">
-                                <span class="lang-pt">Os Feitos de Meishu-Sama</span>
-                                <span class="lang-ja" style="display:none">明主様の御事跡</span>
-                            </div><div style="height: 12px;"></div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="../index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
+                <option value="">Temas</option>
+                <option value="#section-0">Os Feitos de Meishu-Sama</option>
+                <option value="#section-1">Construção do Protótipo do Paraíso Terrestre</option>
+                <option value="#section-2">Incompreensão dos de fora</option>
+                <option value="#section-3">Coleção de Fragmentos Religiosos</option>
+                <option value="#section-4">Análise de Todas as Coisas da Natureza</option>
+                <option value="#section-5">Sobre a Arte</option>
+                <option value="#section-6">Sobre a Situação Atual</option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
+                    <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
+                        <span class="lang-pt">Ensinamentos Complementares</span>
+                        <span class="lang-ja" style="display:none">補足編</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+                    <div style="height: 12px;"></div>
+                    <div id="section-0" class="section-header">
+                        <span class="lang-pt">Os Feitos de Meishu-Sama</span>
+                        <span class="lang-ja" style="display:none">明主様の御事跡</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=sinti.html" class="topic-card">
                         <div class="topic-card__icon">1</div>
                         <div class="topic-card__title">
@@ -332,11 +344,13 @@
                             <span class="lang-pt">A Ascensão de Meishu-Sama e o Johrei</span>
                             <span class="lang-ja" style="display:none">明主様御昇天と浄霊</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-1" class="section-header">
-                                <span class="lang-pt">Construção do Protótipo do Paraíso Terrestre</span>
-                                <span class="lang-ja" style="display:none">地上天国の雛形建設</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-1" class="section-header">
+                        <span class="lang-pt">Construção do Protótipo do Paraíso Terrestre</span>
+                        <span class="lang-ja" style="display:none">地上天国の雛形建設</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=gyokusen.html" class="topic-card">
                         <div class="topic-card__icon">40</div>
                         <div class="topic-card__title">
@@ -469,7 +483,8 @@
                             <span class="lang-pt">O milagre da coleção de obras de arte</span>
                             <span class="lang-ja" style="display:none">美術品蒐集の奇蹟</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic4&file=kensetuKEIRIN1.html" class="topic-card">
                         <div class="topic-card__icon">59</div>
                         <div class="topic-card__title">
@@ -553,11 +568,13 @@
                             <span class="lang-pt">A salvação da classe dirigente</span>
                             <span class="lang-ja" style="display:none">指導階級の救い</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-2" class="section-header">
-                                <span class="lang-pt">Incompreensão dos de fora</span>
-                                <span class="lang-ja" style="display:none">外野の無理解</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-2" class="section-header">
+                        <span class="lang-pt">Incompreensão dos de fora</span>
+                        <span class="lang-ja" style="display:none">外野の無理解</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=masukomiKOUGEKI1.html" class="topic-card">
                         <div class="topic-card__icon">71</div>
                         <div class="topic-card__title">
@@ -627,11 +644,13 @@
                             <span class="lang-pt">A situação financeira da organização religiosa</span>
                             <span class="lang-ja" style="display:none">教団の資産状況</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-3" class="section-header">
-                                <span class="lang-pt">Coleção de Fragmentos Religiosos</span>
-                                <span class="lang-ja" style="display:none">宗教断片集</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-3" class="section-header">
+                        <span class="lang-pt">Coleção de Fragmentos Religiosos</span>
+                        <span class="lang-ja" style="display:none">宗教断片集</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=norito.html" class="topic-card">
                         <div class="topic-card__icon">81</div>
                         <div class="topic-card__title">
@@ -953,11 +972,13 @@
                             <span class="lang-pt">Coletânea de Fragmentos de Espiritologia 3</span>
                             <span class="lang-ja" style="display:none">霊学断片集 3</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-4" class="section-header">
-                                <span class="lang-pt">Análise de Todas as Coisas da Natureza</span>
-                                <span class="lang-ja" style="display:none">森羅万象の解析</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-4" class="section-header">
+                        <span class="lang-pt">Análise de Todas as Coisas da Natureza</span>
+                        <span class="lang-ja" style="display:none">森羅万象の解析</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=genrei.html" class="topic-card">
                         <div class="topic-card__icon">127</div>
                         <div class="topic-card__title">
@@ -1335,11 +1356,13 @@
                             <span class="lang-pt">Feitiços</span>
                             <span class="lang-ja" style="display:none">呪 詛</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-5" class="section-header">
-                                <span class="lang-pt">Sobre a Arte</span>
-                                <span class="lang-ja" style="display:none">芸術について</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-5" class="section-header">
+                        <span class="lang-pt">Sobre a Arte</span>
+                        <span class="lang-ja" style="display:none">芸術について</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=geizyutuSIMEI.html" class="topic-card">
                         <div class="topic-card__icon">181</div>
                         <div class="topic-card__title">
@@ -1371,7 +1394,8 @@
                     <a href="../reader.html?vol=shumeic4&file=BH3.html" class="topic-card">
                         <div class="topic-card__icon">185</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Ensaio de Crítica de Arte 3（A Razão do Desaparecimento dos Mestres）</span>
+                            <span class="lang-pt">Ensaio de Crítica de Arte 3（A Razão do Desaparecimento dos
+                                Mestres）</span>
                             <span class="lang-ja" style="display:none">美術評論文 3（名人の失くなった理由）</span>
                         </div>
                     </a>
@@ -1535,11 +1559,13 @@
                             <span class="lang-pt">Fil me</span>
                             <span class="lang-ja" style="display:none">映 画</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-6" class="section-header">
-                                <span class="lang-pt">Sobre a Situação Atual</span>
-                                <span class="lang-ja" style="display:none">時局について</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-6" class="section-header">
+                        <span class="lang-pt">Sobre a Situação Atual</span>
+                        <span class="lang-ja" style="display:none">時局について</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=zikyoku1.html" class="topic-card">
                         <div class="topic-card__icon">209</div>
                         <div class="topic-card__title">
@@ -1630,7 +1656,9 @@
                             <span class="lang-pt">Estratégia da Guerra da Grande Ásia Oriental 2</span>
                             <span class="lang-ja" style="display:none">大東亜戦争戦略論 2</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=aho1.html" class="topic-card">
                         <div class="topic-card__icon">222</div>
                         <div class="topic-card__title">
@@ -1714,42 +1742,61 @@
                             <span class="lang-pt">Epi grama 9</span>
                             <span class="lang-ja" style="display:none">寸 鉄 9</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                </div>
+
             </div>
-            
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -1758,36 +1805,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>

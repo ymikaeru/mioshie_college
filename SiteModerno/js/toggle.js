@@ -89,10 +89,7 @@ function _initMobileNav() {
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           Histórico
         </button>
-        <button class="mobile-nav-link" onclick="openBookmarksList(); closeMobileNav();">
-          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          Favoritos
-        </button>
+
         <button class="mobile-nav-link" onclick="toggleTheme(); closeMobileNav();">
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
           Mudar Tema
@@ -377,54 +374,34 @@ function renderHistory() {
   }).join('');
 }
 
-// --- Bookmarks Logic ---
-window.openBookmarksList = function () {
-  const modal = document.getElementById('bookmarksModal');
-  const resultsEl = document.getElementById('bookmarksResults');
-  if (modal && resultsEl) {
-    modal.classList.add('active');
-    updateBookmarksList();
-  }
-}
+// --- Font Size Control ---
+const FONT_SIZES = [14, 16, 18, 21, 24];
+let _currentFontSizeIdx = null;
 
-window.closeBookmarksList = function () {
-  const modal = document.getElementById('bookmarksModal');
-  if (modal) modal.classList.remove('active');
-}
-
-function updateBookmarksList() {
-  const resultsEl = document.getElementById('bookmarksResults');
-  if (!resultsEl) return;
-
-  const bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
-  const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-
-  if (bookmarks.length === 0) {
-    resultsEl.innerHTML = '<li class="search-empty">Nenhum favorito.</li>';
-    return;
-  }
-
-  resultsEl.innerHTML = bookmarks.map((b, idx) => {
-    const href = `${basePath}reader.html?vol=${b.vol}&file=${b.file}`;
-    return `
-      <li style="position:relative">
-        <a href="${href}" class="search-result-item">
-          <div class="search-result-title">${b.title} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${b.vol.slice(-1)})</span></div>
-          <div class="search-result-context">${b.vol} / ${b.file}</div>
-        </a>
-        <button onclick="removeBookmarkByIndex(${idx})" style="position:absolute; right:15px; top:50%; transform:translateY(-50%); background:none; border:none; color:#ff3b30; cursor:pointer; font-size:1.2rem; padding:10px;">&times;</button>
-      </li>
-    `;
-  }).join('');
-}
-
-window.removeBookmarkByIndex = function (idx) {
-  const bookmarks = JSON.parse(localStorage.getItem('shumei_bookmarks') || '[]');
-  bookmarks.splice(idx, 1);
-  localStorage.setItem('shumei_bookmarks', JSON.stringify(bookmarks));
-  updateBookmarksList();
-  if (typeof window.checkBookmarkState === 'function') window.checkBookmarkState();
+window.initFontSize = function () {
+  const saved = parseInt(localStorage.getItem('reader_font_size') || '16');
+  const idx = FONT_SIZES.indexOf(saved);
+  _currentFontSizeIdx = idx >= 0 ? idx : 1;
+  _applyFontSize();
 };
+
+window.changeFontSize = function (delta) {
+  if (_currentFontSizeIdx === null) _currentFontSizeIdx = 1;
+  _currentFontSizeIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, _currentFontSizeIdx + delta));
+  _applyFontSize();
+  localStorage.setItem('reader_font_size', FONT_SIZES[_currentFontSizeIdx]);
+};
+
+function _applyFontSize() {
+  const size = FONT_SIZES[_currentFontSizeIdx];
+  const readerEl = document.querySelector('.reader-container, #readerContainer');
+  if (readerEl) readerEl.style.fontSize = size + 'px';
+  // Update button states
+  const btnMinus = document.getElementById('fontDecrease');
+  const btnPlus = document.getElementById('fontIncrease');
+  if (btnMinus) btnMinus.disabled = (_currentFontSizeIdx === 0);
+  if (btnPlus) btnPlus.disabled = (_currentFontSizeIdx === FONT_SIZES.length - 1);
+}
 
 // --- DOM Initialization and Shared Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -442,16 +419,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.id === 'historyModal') closeHistory();
   });
 
-  const bookmarksModal = document.getElementById('bookmarksModal');
-  if (bookmarksModal) bookmarksModal.addEventListener('click', (e) => {
-    if (e.target.id === 'bookmarksModal') closeBookmarksList();
-  });
+
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeSearch();
       closeHistory();
-      closeBookmarksList();
     }
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();

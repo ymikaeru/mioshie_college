@@ -1,139 +1,156 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/styles.css">
-  <script src="js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else window.location.href='index2.html';">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="home-hero">
-                <h1 class="index-title" style="margin-bottom:16px">
-                    <span class="lang-pt">Ensinamentos de Meishu-Sama</span>
-                    <span class="lang-ja" style="display:none">明主様御教え</span>
-                </h1>
-                <p style="text-align:center; color:var(--text-muted); margin-bottom:48px; max-width:600px; margin-inline:auto;">
-                    <span class="lang-pt">Tradução em português das obras de Meishu-Sama, organizadas em volumes temáticos para estudo e reflexão.</span>
-                    <span class="lang-ja" style="display:none">明主様の御教えをテーマ別にまとめた日本語とポルトガル語の聖書図書館です。</span>
-                </p>
-                <div class="topic-list" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
-                    <a href="index2.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
-                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 1</span>
-                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
-                            <span class="lang-pt">Mundo Espiritual</span>
-                            <span class="lang-ja" style="display:none">霊界編</span>
-                        </div>
-                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
-                            <span class="lang-pt">Ensinamentos sobre o mundo espiritual e princípios fundamentais.</span>
-                            <span class="lang-ja" style="display:none">霊界と根本義に関する御教え集。</span>
-                        </div>
-                    </a>
-                    <a href="shumeic2/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
-                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 2</span>
-                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
-                            <span class="lang-pt">Método Divino de Saúde</span>
-                            <span class="lang-ja" style="display:none">浄霊・自然農法</span>
-                        </div>
-                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
-                            <span class="lang-pt">Método Divino de Saúde e Agricultura Natural em harmonia com a natureza.</span>
-                            <span class="lang-ja" style="display:none">浄霊、健康法、自然農法の御教え。</span>
-                        </div>
-                    </a>
-                    <a href="shumeic3/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
-                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 3</span>
-                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
-                            <span class="lang-pt">A Verdadeira Fé</span>
-                            <span class="lang-ja" style="display:none">信仰編</span>
-                        </div>
-                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
-                            <span class="lang-pt">Volume 3 - Ensinamentos sobre a prática e o aprimoramento da fé.</span>
-                            <span class="lang-ja" style="display:none">第三巻：信仰の実践 e 向上に関する御教え集。</span>
-                        </div>
-                    </a>
-                    <a href="shumeic4/index.html" class="topic-card" style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
-                        <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 4</span>
-                        <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
-                            <span class="lang-pt">Ensinamentos Complementares</span>
-                            <span class="lang-ja" style="display:none">補足編</span>
-                        </div>
-                        <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
-                            <span class="lang-pt">Ensinamentos complementares e temas diversos da obra divina.</span>
-                            <span class="lang-ja" style="display:none">第四巻：補足の御教えと様々なテーマ。</span>
-                        </div>
-                    </a>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
+            </div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="home-hero">
+                    <h1 class="index-title" style="margin-bottom:16px">
+                        <span class="lang-pt">Ensinamentos de Meishu-Sama</span>
+                        <span class="lang-ja" style="display:none">明主様御教え</span>
+                    </h1>
+                    <p
+                        style="text-align:center; color:var(--text-muted); margin-bottom:48px; max-width:600px; margin-inline:auto;">
+                        <span class="lang-pt">Tradução em português das obras de Meishu-Sama, organizadas em volumes
+                            temáticos para estudo e reflexão.</span>
+                        <span class="lang-ja" style="display:none">明主様の御教えをテーマ別にまとめた日本語とポルトガル語の聖書図書館です。</span>
+                    </p>
+                    <div class="topic-list" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));">
+                        <a href="index2.html" class="topic-card"
+                            style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                            <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 1</span>
+                            <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
+                                <span class="lang-pt">Mundo Espiritual</span>
+                                <span class="lang-ja" style="display:none">霊界編</span>
+                            </div>
+                            <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
+                                <span class="lang-pt">Ensinamentos sobre o mundo espiritual e princípios
+                                    fundamentais.</span>
+                                <span class="lang-ja" style="display:none">霊界と根本義に関する御教え集。</span>
+                            </div>
+                        </a>
+                        <a href="shumeic2/index.html" class="topic-card"
+                            style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                            <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 2</span>
+                            <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
+                                <span class="lang-pt">Método Divino de Saúde</span>
+                                <span class="lang-ja" style="display:none">浄霊・自然農法</span>
+                            </div>
+                            <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
+                                <span class="lang-pt">Método Divino de Saúde e Agricultura Natural em harmonia com a
+                                    natureza.</span>
+                                <span class="lang-ja" style="display:none">浄霊、健康法、自然農法の御教え。</span>
+                            </div>
+                        </a>
+                        <a href="shumeic3/index.html" class="topic-card"
+                            style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                            <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 3</span>
+                            <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
+                                <span class="lang-pt">A Verdadeira Fé</span>
+                                <span class="lang-ja" style="display:none">信仰編</span>
+                            </div>
+                            <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
+                                <span class="lang-pt">Volume 3 - Ensinamentos sobre a prática e o aprimoramento da
+                                    fé.</span>
+                                <span class="lang-ja" style="display:none">第三巻：信仰の実践 e 向上に関する御教え集。</span>
+                            </div>
+                        </a>
+                        <a href="shumeic4/index.html" class="topic-card"
+                            style="flex-direction:column; align-items:flex-start; height:100%; padding: 32px;">
+                            <span class="section-label" style="text-align:left; margin-bottom:12px;">Volume 4</span>
+                            <div class="topic-card__title" style="font-size:22px; margin-bottom:8px">
+                                <span class="lang-pt">Ensinamentos Complementares</span>
+                                <span class="lang-ja" style="display:none">補足編</span>
+                            </div>
+                            <div style="font-size:14px; color:var(--text-muted); line-height:1.5">
+                                <span class="lang-pt">Ensinamentos complementares e temas diversos da obra
+                                    divina.</span>
+                                <span class="lang-ja" style="display:none">第四巻：補足の御教えと様々なテーマ。</span>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
                 </div>
             </div>
-            
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -142,36 +159,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>

@@ -1,65 +1,79 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <script src="../js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="../index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="../index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
-            <option value="">Navegação por Temas</option>
-            <option value="#section-0">Verdade</option><option value="#section-1">A religião que gera felicidade</option><option value="#section-2">Inferno da Fé</option><option value="#section-3">Guia da vida de fé</option><option value="#section-4">Fé e Vida Social</option><option value="#section-5">Fé e Vida Familiar</option><option value="#section-6">Pecado e virtude</option><option value="#section-7">Conduta para a Obra Divina</option><option value="#section-8">O Goshintai e o Ohikari</option>
-       </select>
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja');">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
-                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 3</span>
-                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-                    <span class="lang-pt">A Verdadeira Fé</span>
-                    <span class="lang-ja" style="display:none">信仰編</span>
-                </h1>
+    <header class="header">
+        <a href="../index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
             </div>
-            <div class="topic-list">
-                <div style="height: 12px;"></div>
-                            <div id="section-0" class="section-header">
-                                <span class="lang-pt">Verdade</span>
-                                <span class="lang-ja" style="display:none">Verdade</span>
-                            </div><div style="height: 12px;"></div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="../index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
+                <option value="">Temas</option>
+                <option value="#section-0">Verdade</option>
+                <option value="#section-1">A religião que gera felicidade</option>
+                <option value="#section-2">Inferno da Fé</option>
+                <option value="#section-3">Guia da vida de fé</option>
+                <option value="#section-4">Fé e Vida Social</option>
+                <option value="#section-5">Fé e Vida Familiar</option>
+                <option value="#section-6">Pecado e virtude</option>
+                <option value="#section-7">Conduta para a Obra Divina</option>
+                <option value="#section-8">O Goshintai e o Ohikari</option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 3</span>
+                    <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
+                        <span class="lang-pt">A Verdadeira Fé</span>
+                        <span class="lang-ja" style="display:none">信仰編</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+                    <div style="height: 12px;"></div>
+                    <div id="section-0" class="section-header">
+                        <span class="lang-pt">Verdade</span>
+                        <span class="lang-ja" style="display:none">Verdade</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=sinri1.html" class="topic-card">
                         <div class="topic-card__icon">1</div>
                         <div class="topic-card__title">
@@ -105,14 +119,16 @@
                     <a href="../reader.html?vol=shumeic3&file=SB5.html" class="topic-card">
                         <div class="topic-card__icon">7</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Tese sobre a Verdadeira Civilização 5（A Natureza Imitativa da Civilização Antiga）</span>
+                            <span class="lang-pt">Tese sobre a Verdadeira Civilização 5（A Natureza Imitativa da
+                                Civilização Antiga）</span>
                             <span class="lang-ja" style="display:none">真文明論 5（旧文明の模造性）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic3&file=SB6.html" class="topic-card">
                         <div class="topic-card__icon">8</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Tese sobre a Verdadeira Civilização 6（A Natureza Bárbara da Civilização Antiga）</span>
+                            <span class="lang-pt">Tese sobre a Verdadeira Civilização 6（A Natureza Bárbara da
+                                Civilização Antiga）</span>
                             <span class="lang-ja" style="display:none">真文明論 6（旧文明の野蛮性）</span>
                         </div>
                     </a>
@@ -164,7 +180,8 @@
                             <span class="lang-pt">Superstição Científica</span>
                             <span class="lang-ja" style="display:none">科学迷信</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=musin.html" class="topic-card">
                         <div class="topic-card__icon">16</div>
                         <div class="topic-card__title">
@@ -206,7 +223,8 @@
                             <span class="lang-pt">Comunismo 4</span>
                             <span class="lang-ja" style="display:none">共産主義 4</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=kirisuto1.html" class="topic-card">
                         <div class="topic-card__icon">22</div>
                         <div class="topic-card__title">
@@ -311,7 +329,8 @@
                             <span class="lang-pt">O Antigo e o Novo na Religião 2</span>
                             <span class="lang-ja" style="display:none">宗教の新旧 2</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=koxtuka1.html" class="topic-card">
                         <div class="topic-card__icon">37</div>
                         <div class="topic-card__title">
@@ -402,7 +421,8 @@
                             <span class="lang-pt">Controle de natalidade</span>
                             <span class="lang-ja" style="display:none">産制論</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=shakaiAKU.html" class="topic-card">
                         <div class="topic-card__icon">50</div>
                         <div class="topic-card__title">
@@ -458,7 +478,8 @@
                             <span class="lang-pt">A corporificação do bem</span>
                             <span class="lang-ja" style="display:none">善の具現</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=shugi.html" class="topic-card">
                         <div class="topic-card__icon">58</div>
                         <div class="topic-card__title">
@@ -507,7 +528,8 @@
                             <span class="lang-pt">A mentalidade insular dos japoneses 2</span>
                             <span class="lang-ja" style="display:none">日本人の島国根性 2</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=567.html" class="topic-card">
                         <div class="topic-card__icon">65</div>
                         <div class="topic-card__title">
@@ -560,7 +582,8 @@
                     <a href="../reader.html?vol=shumeic3&file=tateYOKO2.html" class="topic-card">
                         <div class="topic-card__icon">72</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Trama e urdidura 2 (Civilização Oriental e Civilização Ocidental)</span>
+                            <span class="lang-pt">Trama e urdidura 2 (Civilização Oriental e Civilização
+                                Ocidental)</span>
                             <span class="lang-ja" style="display:none">経と緯 2（東洋文明と西洋文明）</span>
                         </div>
                     </a>
@@ -602,14 +625,16 @@
                     <a href="../reader.html?vol=shumeic3&file=ZENAKUsintai1.html" class="topic-card">
                         <div class="topic-card__icon">78</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A essência do bem e do mal 1 (O ser humano não consegue discernir o bem e o mal)</span>
+                            <span class="lang-pt">A essência do bem e do mal 1 (O ser humano não consegue discernir o
+                                bem e o mal)</span>
                             <span class="lang-ja" style="display:none">善悪の真諦 1（善悪は人間には判らない）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic3&file=ZENAKUsintai2.html" class="topic-card">
                         <div class="topic-card__icon">79</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A essência do bem e do mal 2 (O bem e o mal variam com o tempo, o lugar e a posição)</span>
+                            <span class="lang-pt">A essência do bem e do mal 2 (O bem e o mal variam com o tempo, o
+                                lugar e a posição)</span>
                             <span class="lang-ja" style="display:none">善悪の真諦 2（善悪は時所位で異なる）</span>
                         </div>
                     </a>
@@ -640,11 +665,13 @@
                             <span class="lang-pt">Avaliação geral do bem e do mal</span>
                             <span class="lang-ja" style="display:none">善悪の総体的評価</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-1" class="section-header">
-                                <span class="lang-pt">A religião que gera felicidade</span>
-                                <span class="lang-ja" style="display:none">A religião que gera felicidade</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-1" class="section-header">
+                        <span class="lang-pt">A religião que gera felicidade</span>
+                        <span class="lang-ja" style="display:none">A religião que gera felicidade</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=sinSHUUKYOU.html" class="topic-card">
                         <div class="topic-card__icon">84</div>
                         <div class="topic-card__title">
@@ -704,7 +731,8 @@
                     <a href="../reader.html?vol=shumeic3&file=kiseki4.html" class="topic-card">
                         <div class="topic-card__icon">92</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A religião que gera milagres 4 (A cura da cegueira, a junção de um dedo amputado)</span>
+                            <span class="lang-pt">A religião que gera milagres 4 (A cura da cegueira, a junção de um
+                                dedo amputado)</span>
                             <span class="lang-ja" style="display:none">奇蹟を生む宗教 4（盲目の治癒、被切断指の接合）</span>
                         </div>
                     </a>
@@ -777,7 +805,8 @@
                             <span class="lang-pt">A salvação pela caligrafia</span>
                             <span class="lang-ja" style="display:none">書による救い</span>
                         </div>
-                    </a><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
                     <a href="../reader.html?vol=shumeic3&file=tenkou.html" class="topic-card">
                         <div class="topic-card__icon">103</div>
                         <div class="topic-card__title">
@@ -840,11 +869,13 @@
                             <span class="lang-pt">Religião paradisíaca 6（Contribuição de assessores）</span>
                             <span class="lang-ja" style="display:none">天国的宗教 6（側近の寄稿）</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-2" class="section-header">
-                                <span class="lang-pt">Inferno da Fé</span>
-                                <span class="lang-ja" style="display:none">Inferno da Fé</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-2" class="section-header">
+                        <span class="lang-pt">Inferno da Fé</span>
+                        <span class="lang-ja" style="display:none">Inferno da Fé</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=hentai1.html" class="topic-card">
                         <div class="topic-card__icon">112</div>
                         <div class="topic-card__title">
@@ -946,7 +977,8 @@
                     <a href="../reader.html?vol=shumeic3&file=zyasinHANBETU2.html" class="topic-card">
                         <div class="topic-card__icon">126</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Método de discernimento de deuses malignos 2（Sermão Divino, Instrução Divina）</span>
+                            <span class="lang-pt">Método de discernimento de deuses malignos 2（Sermão Divino, Instrução
+                                Divina）</span>
                             <span class="lang-ja" style="display:none">邪神判別法 2（御講話、御垂示）</span>
                         </div>
                     </a>
@@ -963,11 +995,13 @@
                             <span class="lang-pt">A sonegação fiscal das novas religiões</span>
                             <span class="lang-ja" style="display:none">新興宗教の脱税</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-3" class="section-header">
-                                <span class="lang-pt">Guia da vida de fé</span>
-                                <span class="lang-ja" style="display:none">Guia da vida de fé</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-3" class="section-header">
+                        <span class="lang-pt">Guia da vida de fé</span>
+                        <span class="lang-ja" style="display:none">Guia da vida de fé</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=douri.html" class="topic-card">
                         <div class="topic-card__icon">129</div>
                         <div class="topic-card__title">
@@ -1139,7 +1173,8 @@
                     <a href="../reader.html?vol=shumeic3&file=sunao2.html" class="topic-card">
                         <div class="topic-card__icon">153</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A docilidade é primordial 2 (As palavras de Meishu-Sama devem ser praticadas com docilidade)</span>
+                            <span class="lang-pt">A docilidade é primordial 2 (As palavras de Meishu-Sama devem ser
+                                praticadas com docilidade)</span>
                             <span class="lang-ja" style="display:none">素直が一等 2（明主様御言葉は素直に実行すべき）</span>
                         </div>
                     </a>
@@ -1230,7 +1265,8 @@
                     <a href="../reader.html?vol=shumeic3&file=nikumi5.html" class="topic-card">
                         <div class="topic-card__icon">166</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Não seja odiado 5 (Dinheiro sujo não para na mãoRancor por dinheiro)</span>
+                            <span class="lang-pt">Não seja odiado 5 (Dinheiro sujo não para na mãoRancor por
+                                dinheiro)</span>
                             <span class="lang-ja" style="display:none">憎まれるなかれ 5（悪銭身に着かず金銭の怨み）</span>
                         </div>
                     </a>
@@ -1555,11 +1591,13 @@
                             <span class="lang-pt">Ver a Verdade</span>
                             <span class="lang-ja" style="display:none">見真実</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-4" class="section-header">
-                                <span class="lang-pt">Fé e Vida Social</span>
-                                <span class="lang-ja" style="display:none">Fé e Vida Social</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-4" class="section-header">
+                        <span class="lang-pt">Fé e Vida Social</span>
+                        <span class="lang-ja" style="display:none">Fé e Vida Social</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=keizai1.html" class="topic-card">
                         <div class="topic-card__icon">213</div>
                         <div class="topic-card__title">
@@ -1629,11 +1667,13 @@
                             <span class="lang-pt">Processo Judicial</span>
                             <span class="lang-ja" style="display:none">訴 訟</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-5" class="section-header">
-                                <span class="lang-pt">Fé e Vida Familiar</span>
-                                <span class="lang-ja" style="display:none">Fé e Vida Familiar</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-5" class="section-header">
+                        <span class="lang-pt">Fé e Vida Familiar</span>
+                        <span class="lang-ja" style="display:none">Fé e Vida Familiar</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=renai.html" class="topic-card">
                         <div class="topic-card__icon">223</div>
                         <div class="topic-card__title">
@@ -1787,11 +1827,13 @@
                             <span class="lang-pt">Causas espirituais da desarmonia familiar</span>
                             <span class="lang-ja" style="display:none">家族不和の霊的原因</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-6" class="section-header">
-                                <span class="lang-pt">Pecado e virtude</span>
-                                <span class="lang-ja" style="display:none">Pecado e virtude</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-6" class="section-header">
+                        <span class="lang-pt">Pecado e virtude</span>
+                        <span class="lang-ja" style="display:none">Pecado e virtude</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=tumi1.html" class="topic-card">
                         <div class="topic-card__icon">245</div>
                         <div class="topic-card__title">
@@ -1917,11 +1959,13 @@
                             <span class="lang-pt">Pecadores e impuros, acumulem virtude 6</span>
                             <span class="lang-ja" style="display:none">罪穢れの多い人間は徳を積め 6</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-7" class="section-header">
-                                <span class="lang-pt">Conduta para a Obra Divina</span>
-                                <span class="lang-ja" style="display:none">Conduta para a Obra Divina</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-7" class="section-header">
+                        <span class="lang-pt">Conduta para a Obra Divina</span>
+                        <span class="lang-ja" style="display:none">Conduta para a Obra Divina</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=Nigi.html" class="topic-card">
                         <div class="topic-card__icon">263</div>
                         <div class="topic-card__title">
@@ -2268,7 +2312,8 @@
                     <a href="../reader.html?vol=shumeic3&file=haidoku3.html" class="topic-card">
                         <div class="topic-card__icon">312</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">Leitura Reverente 3（Contribuição de dedicadores de tempo integral）</span>
+                            <span class="lang-pt">Leitura Reverente 3（Contribuição de dedicadores de tempo
+                                integral）</span>
                             <span class="lang-ja" style="display:none">拝 読 3（専従者の寄稿）</span>
                         </div>
                     </a>
@@ -2289,14 +2334,16 @@
                     <a href="../reader.html?vol=shumeic3&file=haidokuHYOUREI1.html" class="topic-card">
                         <div class="topic-card__icon">315</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A Leitura Reverente e o Fenômeno da Possessão Espiritual 1（Possessão por espírito humano）</span>
+                            <span class="lang-pt">A Leitura Reverente e o Fenômeno da Possessão Espiritual 1（Possessão
+                                por espírito humano）</span>
                             <span class="lang-ja" style="display:none">拝読と憑霊現象 1（人霊の憑依）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic3&file=haidokuHYOUREI2.html" class="topic-card">
                         <div class="topic-card__icon">316</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A Leitura Reverente e o Fenômeno da Possessão Espiritual 2（Possessão por espírito de animal）</span>
+                            <span class="lang-pt">A Leitura Reverente e o Fenômeno da Possessão Espiritual 2（Possessão
+                                por espírito de animal）</span>
                             <span class="lang-ja" style="display:none">拝読と憑霊現象 2（動物霊の憑依）</span>
                         </div>
                     </a>
@@ -2502,11 +2549,13 @@
                             <span class="lang-pt">A segunda vez é a verdadeira</span>
                             <span class="lang-ja" style="display:none">二度目が本当</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-8" class="section-header">
-                                <span class="lang-pt">O Goshintai e o Ohikari</span>
-                                <span class="lang-ja" style="display:none">O Goshintai e o Ohikari</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-8" class="section-header">
+                        <span class="lang-pt">O Goshintai e o Ohikari</span>
+                        <span class="lang-ja" style="display:none">O Goshintai e o Ohikari</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic3&file=Gkizui1.html" class="topic-card">
                         <div class="topic-card__icon">346</div>
                         <div class="topic-card__title">
@@ -2580,14 +2629,16 @@
                     <a href="../reader.html?vol=shumeic3&file=Ghyourei1.html" class="topic-card">
                         <div class="topic-card__icon">356</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A consagração do Goshintai e os fenômenos de possessão espiritual 1（Possessão por espírito humano）</span>
+                            <span class="lang-pt">A consagração do Goshintai e os fenômenos de possessão espiritual
+                                1（Possessão por espírito humano）</span>
                             <span class="lang-ja" style="display:none">御神体奉斎と憑霊現象 1（人霊の憑依）</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic3&file=Ghyourei2.html" class="topic-card">
                         <div class="topic-card__icon">357</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A consagração do Goshintai e os fenômenos de possessão espiritual 2（Possessão por espírito animal）</span>
+                            <span class="lang-pt">A consagração do Goshintai e os fenômenos de possessão espiritual
+                                2（Possessão por espírito animal）</span>
                             <span class="lang-ja" style="display:none">御神体奉斎と憑霊現象 2（動物霊の憑依）</span>
                         </div>
                     </a>
@@ -2601,7 +2652,8 @@
                     <a href="../reader.html?vol=shumeic3&file=Gboti.html" class="topic-card">
                         <div class="topic-card__icon">359</div>
                         <div class="topic-card__title">
-                            <span class="lang-pt">A consagração do Goshintai e cemitérios, locais de execução, ruínas de templos e santuários</span>
+                            <span class="lang-pt">A consagração do Goshintai e cemitérios, locais de execução, ruínas de
+                                templos e santuários</span>
                             <span class="lang-ja" style="display:none">御神体奉斎と墓地、処刑場、社寺跡地</span>
                         </div>
                     </a>
@@ -2821,42 +2873,58 @@
                             <span class="lang-pt">Purificação do Objeto Divino, da Luz Divina, etc.</span>
                             <span class="lang-ja" style="display:none">御神体、お光等のお浄め</span>
                         </div>
-                    </a><div class="group-spacer"></div><div class="group-spacer"></div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                </div>
+
             </div>
-            
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -2865,36 +2933,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>
