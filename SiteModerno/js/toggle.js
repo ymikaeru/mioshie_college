@@ -94,7 +94,7 @@ function _initMobileNav() {
         </button>
 
         <button class="mobile-nav-link" onclick="toggleLanguage(); closeMobileNav();">
-          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 12h7m-5-5 5 5-5 5m11-9c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2Z"/><path d="M22 6h-6m6 6h-6m6 6h-6"/></svg>
+          <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})
         </button>
 
@@ -224,7 +224,7 @@ function setLanguage(lang, triggerRender = true) {
     const mobileLangLink = mobileNav.querySelector('button[onclick*="toggleLanguage"]');
     if (mobileLangLink) {
       mobileLangLink.innerHTML = `
-        <svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 12h7m-5-5 5 5-5 5m11-9c-1 0-2 1-2 2s1 2 2 2 2-1 2-2-1-2-2-2Z"/><path d="M22 6h-6m6 6h-6m6 6h-6"/></svg>
+        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Mudar Idioma (${lang === 'pt' ? 'Português' : '日本語'})
       `;
     }
