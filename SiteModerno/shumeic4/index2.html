@@ -1,70 +1,99 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8">
-  <title>Ensinamentos - Biblioteca Sagrada</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/styles.css">
-  <script src="../js/toggle.js?v=1772246362"></script>
-  <script>
-    // Reader handles its own initialization that differs from Home/Index
-    if (!window.location.href.includes('reader.html')) {
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedLang = localStorage.getItem('site_lang') || 'pt';
-            if (typeof setLanguage === 'function') setLanguage(savedLang);
-        });
-    }
-  </script>
-  <script src="../site_data/global_index_titles.js"></script>
+    <meta charset="UTF-8">
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script src="../js/toggle.js?v=1772246362"></script>
+    <script>
+        // Reader handles its own initialization that differs from Home/Index
+        if (!window.location.href.includes('reader.html')) {
+            document.addEventListener('DOMContentLoaded', () => {
+                const savedLang = localStorage.getItem('site_lang') || 'pt';
+                if (typeof setLanguage === 'function') setLanguage(savedLang);
+            });
+        }
+    </script>
+    <script src="../site_data/global_index_titles.js"></script>
 </head>
+
 <body>
-  <header class="header">
-    <a href="../index.html" class="header__logo">
-      <div class="logo-circle">
-        <div class="logo-dot"></div>
-      </div>
-      Biblioteca Sagrada
-    </a>
-    <div class="header__nav">
-       <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-       <a href="../index2.html" data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol 1</span></a>
-       <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol 2</span></a>
-       <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
-       <a href="../shumeic4/index2.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
-        <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
-            <option value="">Navegação por Temas</option>
-            <option value="#section-0">通信カレッジ 既刊の御教え集等</option><option value="#section-1">信仰雑話（昭和23年9月5日発行）</option><option value="#section-2">奇蹟物語（昭和24年10月5日発行）</option><option value="#section-3">光への道（昭和24年12月30日発行）</option><option value="#section-4">霊界叢談（昭和24年8月25日発行）</option><option value="#section-5">自観説話集（昭和25年1月30日発行）</option><option value="#section-6">自観隨談（昭和24年8月30日発行）</option><option value="#section-7">世界救世教早わかり（昭和25年11月20日発行）</option><option value="#section-8">法難手記（昭和25年10月30日発行）</option><option value="#section-9">天国の福音（昭和22年2月5日発行）</option><option value="#section-10">結核と神霊療法（昭和24年6月25日発行）</option><option value="#section-11">神示の健康法（昭和25年4月20日発行）</option><option value="#section-12">結核の革命的療法（昭和26年8月15日）</option><option value="#section-13">結核信仰療法（昭和27年12月1日発行）</option><option value="#section-14">アメリカを救う（昭和28年1月1日発行）</option><option value="#section-15">教修要綱（一部のみ）（昭和29年5月10日発行）</option><option value="#section-16">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</option><option value="#section-17">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</option><option value="#section-18">岡田式浄化療法テキスト</option><option value="#section-19">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</option>
-       </select>
-    </div>
-    <div class="controls">
-       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
-       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-       <button class="btn-zen active" id="btn-pt" onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
-       <button class="btn-zen" id="btn-ja" onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else window.location.href='index2.html';">日本語</button>
-       <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-    </div>
-  </header>
-  <main class="main">
-    <div class="content-wrapper">
-        <div class="glass-pane">
-            
-            <div class="index-header" style="text-align:center; margin-bottom: 64px;">
-                <span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
-                <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-                    <span class="lang-pt">Ensinamentos Complementares</span>
-                    <span class="lang-ja" style="display:none">補足編</span>
-                </h1>
+    <header class="header">
+        <a href="../index.html" class="header__logo">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
             </div>
-            <div class="topic-list">
-                
-                        <blockquote id="section-0" class="section-header">
-                            <span class="lang-pt">通信カレッジ 既刊の御教え集等</span>
-                            <span class="lang-ja" style="display:none">通信カレッジ 既刊の御教え集等</span>
-                        </blockquote><div style="height: 12px;"></div>
-                            <div id="section-1" class="section-header">
-                                <span class="lang-pt">信仰雑話（昭和23年9月5日発行）</span>
-                                <span class="lang-ja" style="display:none">信仰雑話（昭和23年9月5日発行）</span>
-                            </div><div style="height: 12px;"></div>
+            Biblioteca Sagrada
+        </a>
+        <div class="header__nav">
+            <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a href="../index2.html"
+                data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"><span>Vol
+                    1</span></a>
+            <a href="../shumeic2/index.html" data-tooltip="Método Divino de Saúde・Agricultura Natural"><span>Vol
+                    2</span></a>
+            <a href="../shumeic3/index.html" data-tooltip="A Verdadeira Fé"><span>Vol 3</span></a>
+            <a href="../shumeic4/index.html" data-tooltip="Ensinamentos Complementares"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:250px">
+                <option value="">Navegação por Temas</option>
+                <option value="#section-0">通信カレッジ 既刊の御教え集等</option>
+                <option value="#section-1">信仰雑話（昭和23年9月5日発行）</option>
+                <option value="#section-2">奇蹟物語（昭和24年10月5日発行）</option>
+                <option value="#section-3">光への道（昭和24年12月30日発行）</option>
+                <option value="#section-4">霊界叢談（昭和24年8月25日発行）</option>
+                <option value="#section-5">自観説話集（昭和25年1月30日発行）</option>
+                <option value="#section-6">自観隨談（昭和24年8月30日発行）</option>
+                <option value="#section-7">世界救世教早わかり（昭和25年11月20日発行）</option>
+                <option value="#section-8">法難手記（昭和25年10月30日発行）</option>
+                <option value="#section-9">天国の福音（昭和22年2月5日発行）</option>
+                <option value="#section-10">結核と神霊療法（昭和24年6月25日発行）</option>
+                <option value="#section-11">神示の健康法（昭和25年4月20日発行）</option>
+                <option value="#section-12">結核の革命的療法（昭和26年8月15日）</option>
+                <option value="#section-13">結核信仰療法（昭和27年12月1日発行）</option>
+                <option value="#section-14">アメリカを救う（昭和28年1月1日発行）</option>
+                <option value="#section-15">教修要綱（一部のみ）（昭和29年5月10日発行）</option>
+                <option value="#section-16">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</option>
+                <option value="#section-17">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</option>
+                <option value="#section-18">岡田式浄化療法テキスト</option>
+                <option value="#section-19">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen active" id="btn-pt"
+                onclick="if(typeof setLanguage === 'function') setLanguage('pt');">PT-BR</button>
+            <button class="btn-zen" id="btn-ja"
+                onclick="if(typeof setLanguage === 'function') setLanguage('ja'); else window.location.href='index2.html';">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
+                    <h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
+                        <span class="lang-pt">Ensinamentos Complementares</span>
+                        <span class="lang-ja" style="display:none">補足編</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+
+                    <blockquote id="section-0" class="section-header">
+                        <span class="lang-pt">通信カレッジ 既刊の御教え集等</span>
+                        <span class="lang-ja" style="display:none">通信カレッジ 既刊の御教え集等</span>
+                    </blockquote>
+                    <div style="height: 12px;"></div>
+                    <div id="section-1" class="section-header">
+                        <span class="lang-pt">信仰雑話（昭和23年9月5日発行）</span>
+                        <span class="lang-ja" style="display:none">信仰雑話（昭和23年9月5日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=SZ1.html" class="topic-card">
                         <div class="topic-card__icon">1</div>
                         <div class="topic-card__title">
@@ -76,21 +105,24 @@
                         <div class="topic-card__icon">2</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">奇蹟プラグマチズム怒る勿れ難行苦行迷信邪教禁欲大乗と小乗宗教と分派地上天国観音教団とは何ぞや</span>
-                            <span class="lang-ja" style="display:none">奇蹟プラグマチズム怒る勿れ難行苦行迷信邪教禁欲大乗と小乗宗教と分派地上天国観音教団とは何ぞや</span>
+                            <span class="lang-ja"
+                                style="display:none">奇蹟プラグマチズム怒る勿れ難行苦行迷信邪教禁欲大乗と小乗宗教と分派地上天国観音教団とは何ぞや</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=SZ3.html" class="topic-card">
                         <div class="topic-card__icon">3</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">下座の行運命と自由主義気候と天候主義というもの科学の力地震に就て地球は呼吸する十干十二支の弁家相方位東洋と西洋</span>
-                            <span class="lang-ja" style="display:none">下座の行運命と自由主義気候と天候主義というもの科学の力地震に就て地球は呼吸する十干十二支の弁家相方位東洋と西洋</span>
+                            <span class="lang-ja"
+                                style="display:none">下座の行運命と自由主義気候と天候主義というもの科学の力地震に就て地球は呼吸する十干十二支の弁家相方位東洋と西洋</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=SZ4.html" class="topic-card">
                         <div class="topic-card__icon">4</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">神と仏神は在るか見神に就てプロテスタントとカトリック順序を過る勿れ酒と宗教夢に就て我と執着夫婦の道善と悪</span>
-                            <span class="lang-ja" style="display:none">神と仏神は在るか見神に就てプロテスタントとカトリック順序を過る勿れ酒と宗教夢に就て我と執着夫婦の道善と悪</span>
+                            <span class="lang-ja"
+                                style="display:none">神と仏神は在るか見神に就てプロテスタントとカトリック順序を過る勿れ酒と宗教夢に就て我と執着夫婦の道善と悪</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=SZ5.html" class="topic-card">
@@ -99,11 +131,13 @@
                             <span class="lang-pt">霊線に就て人間の賢愚宗教と科学結論</span>
                             <span class="lang-ja" style="display:none">霊線に就て人間の賢愚宗教と科学結論</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-2" class="section-header">
-                                <span class="lang-pt">奇蹟物語（昭和24年10月5日発行）</span>
-                                <span class="lang-ja" style="display:none">奇蹟物語（昭和24年10月5日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-2" class="section-header">
+                        <span class="lang-pt">奇蹟物語（昭和24年10月5日発行）</span>
+                        <span class="lang-ja" style="display:none">奇蹟物語（昭和24年10月5日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=KM1.html" class="topic-card">
                         <div class="topic-card__icon">6</div>
                         <div class="topic-card__title">
@@ -117,11 +151,13 @@
                             <span class="lang-pt">入信後の神懸り霊写真黄泉比良坂の戦</span>
                             <span class="lang-ja" style="display:none">入信後の神懸り霊写真黄泉比良坂の戦</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-3" class="section-header">
-                                <span class="lang-pt">光への道（昭和24年12月30日発行）</span>
-                                <span class="lang-ja" style="display:none">光への道（昭和24年12月30日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-3" class="section-header">
+                        <span class="lang-pt">光への道（昭和24年12月30日発行）</span>
+                        <span class="lang-ja" style="display:none">光への道（昭和24年12月30日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=HM1.html" class="topic-card">
                         <div class="topic-card__icon">8</div>
                         <div class="topic-card__title">
@@ -142,11 +178,13 @@
                             <span class="lang-pt">死人に鞭つ霊的肺患間違い信仰龍神の憑依癲癇精神病死線を越えた話</span>
                             <span class="lang-ja" style="display:none">死人に鞭つ霊的肺患間違い信仰龍神の憑依癲癇精神病死線を越えた話</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-4" class="section-header">
-                                <span class="lang-pt">霊界叢談（昭和24年8月25日発行）</span>
-                                <span class="lang-ja" style="display:none">霊界叢談（昭和24年8月25日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-4" class="section-header">
+                        <span class="lang-pt">霊界叢談（昭和24年8月25日発行）</span>
+                        <span class="lang-ja" style="display:none">霊界叢談（昭和24年8月25日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=RS1.html" class="topic-card">
                         <div class="topic-card__icon">11</div>
                         <div class="topic-card__title">
@@ -174,36 +212,43 @@
                             <span class="lang-pt">地獄界の続き天狗界龍神界神霊と仏霊、人霊霊層界</span>
                             <span class="lang-ja" style="display:none">地獄界の続き天狗界龍神界神霊と仏霊、人霊霊層界</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-5" class="section-header">
-                                <span class="lang-pt">自観説話集（昭和25年1月30日発行）</span>
-                                <span class="lang-ja" style="display:none">自観説話集（昭和25年1月30日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-5" class="section-header">
+                        <span class="lang-pt">自観説話集（昭和25年1月30日発行）</span>
+                        <span class="lang-ja" style="display:none">自観説話集（昭和25年1月30日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=JS1.html" class="topic-card">
                         <div class="topic-card__icon">15</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">序文真理と非真理五智を説く直観の哲学理屈の迷信真理の具現観音力とは何ぞや主の字五六七世界の建設超宗教</span>
-                            <span class="lang-ja" style="display:none">序文真理と非真理五智を説く直観の哲学理屈の迷信真理の具現観音力とは何ぞや主の字五六七世界の建設超宗教</span>
+                            <span class="lang-ja"
+                                style="display:none">序文真理と非真理五智を説く直観の哲学理屈の迷信真理の具現観音力とは何ぞや主の字五六七世界の建設超宗教</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=JS2.html" class="topic-card">
                         <div class="topic-card__icon">16</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">本教と大道主義大乗宗教神秘の扉は開かれたり学問のズレ日と月自然無視の文化智慧の光低気圧は人災なり</span>
-                            <span class="lang-ja" style="display:none">本教と大道主義大乗宗教神秘の扉は開かれたり学問のズレ日と月自然無視の文化智慧の光低気圧は人災なり</span>
+                            <span class="lang-ja"
+                                style="display:none">本教と大道主義大乗宗教神秘の扉は開かれたり学問のズレ日と月自然無視の文化智慧の光低気圧は人災なり</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=JS3.html" class="topic-card">
                         <div class="topic-card__icon">17</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">第三宗教信仰の種類善人よ強くなれ私の観た私私というもの科学が迷信を作る方法論と結果論進歩的宗教</span>
-                            <span class="lang-ja" style="display:none">第三宗教信仰の種類善人よ強くなれ私の観た私私というもの科学が迷信を作る方法論と結果論進歩的宗教</span>
+                            <span class="lang-ja"
+                                style="display:none">第三宗教信仰の種類善人よ強くなれ私の観た私私というもの科学が迷信を作る方法論と結果論進歩的宗教</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-6" class="section-header">
-                                <span class="lang-pt">自観隨談（昭和24年8月30日発行）</span>
-                                <span class="lang-ja" style="display:none">自観隨談（昭和24年8月30日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-6" class="section-header">
+                        <span class="lang-pt">自観隨談（昭和24年8月30日発行）</span>
+                        <span class="lang-ja" style="display:none">自観隨談（昭和24年8月30日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=JZ1.html" class="topic-card">
                         <div class="topic-card__icon">18</div>
                         <div class="topic-card__title">
@@ -238,11 +283,13 @@
                             <span class="lang-pt">狂信大本信者時代の私</span>
                             <span class="lang-ja" style="display:none">狂信大本信者時代の私</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-7" class="section-header">
-                                <span class="lang-pt">世界救世教早わかり（昭和25年11月20日発行）</span>
-                                <span class="lang-ja" style="display:none">世界救世教早わかり（昭和25年11月20日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-7" class="section-header">
+                        <span class="lang-pt">世界救世教早わかり（昭和25年11月20日発行）</span>
+                        <span class="lang-ja" style="display:none">世界救世教早わかり（昭和25年11月20日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=SMH1.html" class="topic-card">
                         <div class="topic-card__icon">23</div>
                         <div class="topic-card__title">
@@ -256,11 +303,13 @@
                             <span class="lang-pt">人は健康の器自然農法道理に従う救世主</span>
                             <span class="lang-ja" style="display:none">人は健康の器自然農法道理に従う救世主</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-8" class="section-header">
-                                <span class="lang-pt">法難手記（昭和25年10月30日発行）</span>
-                                <span class="lang-ja" style="display:none">法難手記（昭和25年10月30日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-8" class="section-header">
+                        <span class="lang-pt">法難手記（昭和25年10月30日発行）</span>
+                        <span class="lang-ja" style="display:none">法難手記（昭和25年10月30日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=HS1.html" class="topic-card">
                         <div class="topic-card__icon">25</div>
                         <div class="topic-card__title">
@@ -288,11 +337,15 @@
                             <span class="lang-pt">刑務所ナンセンス結論</span>
                             <span class="lang-ja" style="display:none">刑務所ナンセンス結論</span>
                         </div>
-                    </a><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
-                            <div id="section-9" class="section-header">
-                                <span class="lang-pt">天国の福音（昭和22年2月5日発行）</span>
-                                <span class="lang-ja" style="display:none">天国の福音（昭和22年2月5日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div id="section-9" class="section-header">
+                        <span class="lang-pt">天国の福音（昭和22年2月5日発行）</span>
+                        <span class="lang-ja" style="display:none">天国の福音（昭和22年2月5日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=TH1.html" class="topic-card">
                         <div class="topic-card__icon">29</div>
                         <div class="topic-card__title">
@@ -332,7 +385,8 @@
                         <div class="topic-card__icon">34</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">熱帯病に就て、スポーツ医学、真健康と擬健康、風邪引運動と薬廃運動、幸福への道、医学と自然</span>
-                            <span class="lang-ja" style="display:none">熱帯病に就て、スポーツ医学、真健康と擬健康、風邪引運動と薬廃運動、幸福への道、医学と自然</span>
+                            <span class="lang-ja"
+                                style="display:none">熱帯病に就て、スポーツ医学、真健康と擬健康、風邪引運動と薬廃運動、幸福への道、医学と自然</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=TH7.html" class="topic-card">
@@ -425,11 +479,13 @@
                             <span class="lang-pt">変質狂グロ患者狸霊と髑髏恋愛とは何ぞや、正邪の戦、総結論</span>
                             <span class="lang-ja" style="display:none">変質狂グロ患者狸霊と髑髏恋愛とは何ぞや、正邪の戦、総結論</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-10" class="section-header">
-                                <span class="lang-pt">結核と神霊療法（昭和24年6月25日発行）</span>
-                                <span class="lang-ja" style="display:none">結核と神霊療法（昭和24年6月25日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-10" class="section-header">
+                        <span class="lang-pt">結核と神霊療法（昭和24年6月25日発行）</span>
+                        <span class="lang-ja" style="display:none">結核と神霊療法（昭和24年6月25日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=Ksinrei1.html" class="topic-card">
                         <div class="topic-card__icon">48</div>
                         <div class="topic-card__title">
@@ -443,11 +499,13 @@
                             <span class="lang-pt">結論、結核と神霊科学</span>
                             <span class="lang-ja" style="display:none">結論、結核と神霊科学</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-11" class="section-header">
-                                <span class="lang-pt">神示の健康法（昭和25年4月20日発行）</span>
-                                <span class="lang-ja" style="display:none">神示の健康法（昭和25年4月20日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-11" class="section-header">
+                        <span class="lang-pt">神示の健康法（昭和25年4月20日発行）</span>
+                        <span class="lang-ja" style="display:none">神示の健康法（昭和25年4月20日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=SK1.html" class="topic-card">
                         <div class="topic-card__icon">50</div>
                         <div class="topic-card__title">
@@ -473,14 +531,16 @@
                         <div class="topic-card__icon">53</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">健康による天国化、坊ちゃんを作る健康法、日本人と精神病、乳幼児の健康、人体は綜合体である</span>
-                            <span class="lang-ja" style="display:none">健康による天国化、坊ちゃんを作る健康法、日本人と精神病、乳幼児の健康、人体は綜合体である</span>
+                            <span class="lang-ja"
+                                style="display:none">健康による天国化、坊ちゃんを作る健康法、日本人と精神病、乳幼児の健康、人体は綜合体である</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=SK5.html" class="topic-card">
                         <div class="topic-card__icon">54</div>
                         <div class="topic-card__title">
                             <span class="lang-pt">日本脳炎は果たして蚊の媒介か？、身体をこわす、寝冷、疫痢、細菌恐るべき乎、軽視できない事実</span>
-                            <span class="lang-ja" style="display:none">日本脳炎は果たして蚊の媒介か？、身体をこわす、寝冷、疫痢、細菌恐るべき乎、軽視できない事実</span>
+                            <span class="lang-ja"
+                                style="display:none">日本脳炎は果たして蚊の媒介か？、身体をこわす、寝冷、疫痢、細菌恐るべき乎、軽視できない事実</span>
                         </div>
                     </a>
                     <a href="../reader.html?vol=shumeic4&file=SK6.html" class="topic-card">
@@ -489,11 +549,13 @@
                             <span class="lang-pt">ワクチン禍の実例、予防接種と結核、私の健康法</span>
                             <span class="lang-ja" style="display:none">ワクチン禍の実例、予防接種と結核、私の健康法</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-12" class="section-header">
-                                <span class="lang-pt">結核の革命的療法（昭和26年8月15日）</span>
-                                <span class="lang-ja" style="display:none">結核の革命的療法（昭和26年8月15日）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-12" class="section-header">
+                        <span class="lang-pt">結核の革命的療法（昭和26年8月15日）</span>
+                        <span class="lang-ja" style="display:none">結核の革命的療法（昭和26年8月15日）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=Kkakumei1.html" class="topic-card">
                         <div class="topic-card__icon">56</div>
                         <div class="topic-card__title">
@@ -521,11 +583,13 @@
                             <span class="lang-pt">病原としての細菌、無機質界、霊主体従、無機から有機へ</span>
                             <span class="lang-ja" style="display:none">病原としての細菌、無機質界、霊主体従、無機から有機へ</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-13" class="section-header">
-                                <span class="lang-pt">結核信仰療法（昭和27年12月1日発行）</span>
-                                <span class="lang-ja" style="display:none">結核信仰療法（昭和27年12月1日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-13" class="section-header">
+                        <span class="lang-pt">結核信仰療法（昭和27年12月1日発行）</span>
+                        <span class="lang-ja" style="display:none">結核信仰療法（昭和27年12月1日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=Ksinkou1.html" class="topic-card">
                         <div class="topic-card__icon">60</div>
                         <div class="topic-card__title">
@@ -560,11 +624,13 @@
                             <span class="lang-pt">医療誤点の種々相、結論</span>
                             <span class="lang-ja" style="display:none">医療誤点の種々相、結論</span>
                         </div>
-                    </a><hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
-                            <div id="section-14" class="section-header">
-                                <span class="lang-pt">アメリカを救う（昭和28年1月1日発行）</span>
-                                <span class="lang-ja" style="display:none">アメリカを救う（昭和28年1月1日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;">
+                    <div id="section-14" class="section-header">
+                        <span class="lang-pt">アメリカを救う（昭和28年1月1日発行）</span>
+                        <span class="lang-ja" style="display:none">アメリカを救う（昭和28年1月1日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=AS1.html" class="topic-card">
                         <div class="topic-card__icon">65</div>
                         <div class="topic-card__title">
@@ -585,11 +651,15 @@
                             <span class="lang-pt">各種病気、結論</span>
                             <span class="lang-ja" style="display:none">各種病気、結論</span>
                         </div>
-                    </a><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
-                            <div id="section-15" class="section-header">
-                                <span class="lang-pt">教修要綱（一部のみ）（昭和29年5月10日発行）</span>
-                                <span class="lang-ja" style="display:none">教修要綱（一部のみ）（昭和29年5月10日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div id="section-15" class="section-header">
+                        <span class="lang-pt">教修要綱（一部のみ）（昭和29年5月10日発行）</span>
+                        <span class="lang-ja" style="display:none">教修要綱（一部のみ）（昭和29年5月10日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=KY1.html" class="topic-card">
                         <div class="topic-card__icon">68</div>
                         <div class="topic-card__title">
@@ -702,14 +772,19 @@
                             <span class="lang-ja" style="display:none">病気と霊</span>
                         </div>
                     </a>
-                            <div id="section-16" class="section-header">
-                                <span class="lang-pt">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</span>
-                                <span class="lang-ja" style="display:none">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</span>
-                            </div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
-                            <div id="section-17" class="section-header">
-                                <span class="lang-pt">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</span>
-                                <span class="lang-ja" style="display:none">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</span>
-                            </div><div style="height: 12px;"></div>
+                    <div id="section-16" class="section-header">
+                        <span class="lang-pt">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</span>
+                        <span class="lang-ja" style="display:none">（註 この教修要綱内の論文は、明主様御教えそのものではありません。）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div id="section-17" class="section-header">
+                        <span class="lang-pt">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</span>
+                        <span class="lang-ja" style="display:none">浄霊法講座 （昭和28年11月1日～30年5月1日発行）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=JK1.html" class="topic-card">
                         <div class="topic-card__icon">84</div>
                         <div class="topic-card__title">
@@ -786,11 +861,19 @@
                             <span class="lang-pt">10-1. 浄霊法講座 10－1（眼）</span>
                             <span class="lang-ja" style="display:none">10-1. 浄霊法講座 10－1（眼）</span>
                         </div>
-                    </a><div class="group-spacer"></div><div class="plain-text">（註 この浄霊法講座内の明主様御教えの表題の表記方法は原本と異なり、また、個別の御教えに付記した発行等年月日は浄霊法講座の発行年月日ではなく、各御教え自体の元々の発行等年月日です。）</div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
-                            <div id="section-18" class="section-header">
-                                <span class="lang-pt">岡田式浄化療法テキスト</span>
-                                <span class="lang-ja" style="display:none">岡田式浄化療法テキスト</span>
-                            </div><div style="height: 12px;"></div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <div class="plain-text">（註
+                        この浄霊法講座内の明主様御教えの表題の表記方法は原本と異なり、また、個別の御教えに付記した発行等年月日は浄霊法講座の発行年月日ではなく、各御教え自体の元々の発行等年月日です。）</div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div id="section-18" class="section-header">
+                        <span class="lang-pt">岡田式浄化療法テキスト</span>
+                        <span class="lang-ja" style="display:none">岡田式浄化療法テキスト</span>
+                    </div>
+                    <div style="height: 12px;"></div>
                     <a href="../reader.html?vol=shumeic4&file=MOAzuisen.html" class="topic-card">
                         <div class="topic-card__icon">95</div>
                         <div class="topic-card__title">
@@ -952,45 +1035,64 @@
                             <span class="lang-ja" style="display:none">その他の病気</span>
                         </div>
                     </a>
-                            <div id="section-19" class="section-header">
-                                <span class="lang-pt">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</span>
-                                <span class="lang-ja" style="display:none">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</span>
-                            </div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div style="height: 12px;"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div><div class="group-spacer"></div>
+                    <div id="section-19" class="section-header">
+                        <span class="lang-pt">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</span>
+                        <span class="lang-ja" style="display:none">（註 この岡田式浄化療法テキスト内の論文は、明主様御教えとそれ以外が混在しています。）</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div style="height: 12px;"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                    <div class="group-spacer"></div>
+                </div>
+
             </div>
-            
+        </div>
+    </main>
+
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
+                        autocomplete="off">
+                    <button class="search-close" id="searchClose">&times;</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked>
+                        Tudo</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
+                    <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só
+                        Conteúdo</label>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
         </div>
     </div>
-  </main>
-
-  <div class="search-modal-overlay" id="searchModal">
-    <div class="search-modal">
-      <div class="search-header">
-        <div class="search-input-row">
-          <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." autocomplete="off">
-          <button class="search-close" id="searchClose">&times;</button>
-        </div>
-        <div class="search-filters">
-          <label class="filter-label"><input type="radio" name="searchFilter" value="all" checked> Tudo</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="title"> Só Título</label>
-          <label class="filter-label"><input type="radio" name="searchFilter" value="content"> Só Conteúdo</label>
-        </div>
-      </div>
-      <ul class="search-results" id="searchResults"></ul>
-    </div>
-  </div>
 
     </div>
-  </div>
+    </div>
 
-  <script>
-    
-(function() {
-    const checkAuth = () => {
-        if (localStorage.getItem('shumei_auth') === 'true') return;
+    <script>
 
-        const overlay = document.createElement('div');
-        overlay.id = 'login-overlay';
-        overlay.innerHTML = `
+        (function () {
+            const checkAuth = () => {
+                if (localStorage.getItem('shumei_auth') === 'true') return;
+
+                const overlay = document.createElement('div');
+                overlay.id = 'login-overlay';
+                overlay.innerHTML = `
             <div class="login-card">
                 <h2>Biblioteca Sagrada</h2>
                 <p style="color: var(--text-muted); margin-bottom: 24px;">Insira a senha para acessar</p>
@@ -999,36 +1101,37 @@
                 <p id="login-error" style="color: #ff3b30; margin-top: 16px; font-size: 0.9rem; display: none;">Senha incorreta</p>
             </div>
         `;
-        document.body.appendChild(overlay);
+                document.body.appendChild(overlay);
 
-        const input = document.getElementById('login-pass');
-        const submit = document.getElementById('login-submit');
-        const error = document.getElementById('login-error');
+                const input = document.getElementById('login-pass');
+                const submit = document.getElementById('login-submit');
+                const error = document.getElementById('login-error');
 
-        const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
+                const attempt = () => {
+                    if (input.value === '567') {
+                        localStorage.setItem('shumei_auth', 'true');
+                        overlay.remove();
+                    } else {
+                        error.style.display = 'block';
+                        input.value = '';
+                        input.focus();
+                    }
+                };
+
+                submit.onclick = attempt;
+                input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
                 input.focus();
+            };
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', checkAuth);
+            } else {
+                checkAuth();
             }
-        };
+        })();
 
-        submit.onclick = attempt;
-        input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
-        input.focus();
-    };
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
-        checkAuth();
-    }
-})();
-
-  </script>
+    </script>
 
 </body>
+
 </html>
