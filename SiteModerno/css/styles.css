@@ -417,24 +417,9 @@ body {
   font-weight: 700;
 }
 
-/* Force legacy font colors to override any global resets */
-.topic-content font[color="#990000"],
-.topic-content font[color="#990000"] * {
-  color: #990000 !important;
-}
-
-.topic-content font[color="#0000ff"],
-.topic-content font[color="#0000ff"] * {
-  color: #0000ff !important;
-}
-
-.topic-content font[color="#ff0000"],
-.topic-content font[color="#ff0000"] * {
-  color: #ff0000 !important;
-}
 
 .topic-content p {
-  margin-bottom: 32px;
+  margin-bottom: 0;
 }
 
 /* --- Controls --- */
@@ -654,15 +639,18 @@ body {
 
 /* --- Reader Highlight Styles --- */
 mark.search-highlight {
-  background-color: rgba(184, 134, 11, 0.3);
+  background-color: transparent;
   color: inherit;
-  padding: 2px 0;
-  border-radius: 2px;
-  box-shadow: 0 1px 3px rgba(184, 134, 11, 0.2);
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-underline-offset: 2px;
 }
 
 [data-theme="dark"] mark.search-highlight {
-  background-color: rgba(212, 175, 55, 0.4);
+  background-color: transparent;
 }
 
 /* --- Mobile Fixes --- */
