@@ -99,11 +99,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('readHistory', JSON.stringify(filtered.slice(0, 20)));
             } catch (e) { }
 
-            let fullHtml = `
-                <div class="topic-header" style="margin-bottom: 40px; text-align: center;">
-                    <h1 class="topic-title-large" style="font-size: 2.2rem; margin-bottom: 16px;">${mainTitleToDisplay}</h1>
-                </div>
-            `;
+            const firstDate = topicsFound[0].date && topicsFound[0].date !== "Unknown" ? topicsFound[0].date : "";
+            let fullHtml = "";
+
 
             const navSelect = document.getElementById('readerTopicSelect');
             if (navSelect) {
@@ -118,46 +116,89 @@ document.addEventListener('DOMContentLoaded', async () => {
                 let rawContent = "";
                 if (isPt) {
                     rawContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
+
+                    // Conditional Title Injection for Portuguese
+                    const ptTitle = topicData.title_ptbr || topicData.title_pt || topicData.publication_title_pt || "";
+                    if (ptTitle && rawContent.trim()) {
+                        // Check if title is already there (ignoring HTML and whitespace)
+                        const cleanTitle = ptTitle.replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
+                        const contentStartClean = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
+
+                        if (cleanTitle.length > 5 && !contentStartClean.includes(cleanTitle)) {
+                            const displayDate = topicData.date && topicData.date !== "Unknown" ? ` (${topicData.date})` : "";
+                            const header = `<b><font size="+2">${ptTitle}</font></b>${displayDate}<br/>\n<br/>\n`;
+                            rawContent = header + rawContent;
+                        }
+                    }
                 } else {
                     rawContent = topicData.content || "";
                 }
 
-                // Normalize all line breaks into consistent <BR> markers, then apply
-                // user-defined rule:
-                //   <br><br><br>  →  paragraph break (new <p>)
-                //   <br><br>      →  space (merge within same paragraph)
-                //   <br>          →  space (merge within sentence)
+                // Normalize <br/>\n patterns from the JSON source:
+                //   <br/>\n<br/>\n<br/>               → <br><br>  (triple = explicit double break)
+                //   <br/>\n<br/>\n after date ）      → <br><br>  (date header context)
+                //   <br/>\n<br/>\n before Q&A label  → <br><br>  (Q&A context)
+                //   <br/>\n<br/>\n                   → new paragraph
+                //   <br/>\n                          → space
+                const DBLBR = '\x01DBLBR\x01';
                 let normalizedContent = rawContent;
 
-                // Step 1: unify \n\n (from JSON) and <br/> (from raw HTML) into <BR> markers
-                // IMPORTANT: \n\n maps to DOUBLE <BR> (= merge) NOT triple (= paragraph)
-                // Only original triple <br/><br/><br/> from raw HTML creates paragraph breaks
-                normalizedContent = normalizedContent.replace(/<br\s*\/?>/gi, '<BR>');
-                normalizedContent = normalizedContent.replace(/\n\n+/g, '<BR><BR>'); // double = merge
+                // Step 1: Triple break → DBLBR (must run before double)
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>\n?<br\s*\/?>\n?<br\s*\/?>\n?/gi, DBLBR);
+
+                // Step 2: Double break after Japanese date closing paren → DBLBR
+                normalizedContent = normalizedContent.replace(/([）)][^<\n]*)<br\s*\/?>\n?<br\s*\/?>\n?/gi, '$1' + DBLBR);
+
+                // Step 3: Double break immediately before colored font Q&A label → DBLBR
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>\n?<br\s*\/?>\n?(?=\s*<(?:b>\s*)?<font\s+color)/gi, DBLBR);
+
+                // Step 4: Remaining double break → space (merging content)
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>\n<br\s*\/?>\n/gi, ' ');
+
+                // Step 5: Single <br/>\n → space; remaining lone <br/> → space
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>\n/gi, ' ');
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>/gi, ' ');
+
+                // Step 6: Remaining literal newlines → space
                 normalizedContent = normalizedContent.replace(/\n/g, ' ');
 
-                // Step 2: apply the normalization rule (process triple BEFORE double)
-                normalizedContent = normalizedContent.replace(/(<BR>\s*){3,}/g, '\n\n');  // triple+ → paragraph break
-                normalizedContent = normalizedContent.replace(/(<BR>\s*){2,}/g, ' ');    // double → space (remove all <br> residuals, keep only triple for paragraphs
-                normalizedContent = normalizedContent.replace(/<BR>/g, ' ');              // single → space (merge)
+                // Step 7: Expand placeholders into split-friendly markers
+                normalizedContent = normalizedContent.replace(/\x01DBLBR\x01/g, '\n\n\x02DBLBR\x02\n\n');
 
-                // Step 3: clean up extra spaces
-                normalizedContent = normalizedContent.replace(/ {2,}/g, ' ');
+                // Step 8: Clean extra spaces (but preserve \n\n markers)
+                normalizedContent = normalizedContent.replace(/[ \t]{2,}/g, ' ').trim();
 
-                // Step 4: parse Markdown if needed, or wrap paragraphs
+                // Step 9: Build HTML
                 let formattedContent;
                 if (typeof marked !== 'undefined' && /(\*\*|__|###|# |\[)/.test(normalizedContent)) {
                     formattedContent = marked.parse(normalizedContent);
                 } else if (normalizedContent.includes('\n\n')) {
                     formattedContent = normalizedContent.split(/\n\n+/)
                         .filter(p => p.trim())
-                        .map(p => `<p>${p.trim()}</p>`)
+                        .map(p => {
+                            const trimmed = p.trim();
+                            if (trimmed === '\x02DBLBR\x02') return '<br>';
+                            return `<p>${trimmed}</p>`;
+                        })
                         .join('\n');
                 } else {
                     formattedContent = `<p>${normalizedContent.trim()}</p>`;
                 }
 
-                // Removing global font/color strip to restore Pergunta/Resposta colors
+                // Step 10: Final safety — resolve any leftover DBLBR markers
+                // (e.g. when marked.parse() was used above)
+                formattedContent = formattedContent.replace(/<p>\s*\x02DBLBR\x02\s*<\/p>/g, '<br>');
+                formattedContent = formattedContent.replace(/\x02DBLBR\x02/g, '<br>');
+
+                // Aggressive strip of all color-related attributes and styles
+                formattedContent = formattedContent.replace(/\s(color|bgcolor)=["'][^"']*["']/gi, '');
+                // Also clean up color in style attributes (handles both single and double quotes)
+                formattedContent = formattedContent.replace(/style=["']([^"']+)["']/gi, (match, styleBody) => {
+                    const cleanedStyle = styleBody.replace(/color\s*:\s*[^;]+;?/gi, '').trim();
+                    return cleanedStyle ? `style="${cleanedStyle}"` : '';
+                });
+                // Remove empty style markers
+                formattedContent = formattedContent.replace(/\sstyle=["']\s*["']/gi, '');
 
                 // Sanitize Japanese ideographic spaces (U+3000) that cause horizontal overflow
                 // on mobile — each U+3000 is ~1 em wide and causes long lines in diagram sections
@@ -232,9 +273,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                 // Check if the topic needs its title injected (if it's missing from the translation)
                 let injectedTitleHtml = "";
-                let specificTitle = isPt
-                    ? (topicData.title_ptbr || topicData.title_pt || null)
-                    : (topicData.title_ja || topicData.title || null);
+                let specificTitle = isPt ? null : (topicData.title_ja || topicData.title || null);
 
                 if (specificTitle && specificTitle !== mainTitleToDisplay) {
                     let plainContent = cleanedContent.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '').toLowerCase();
@@ -246,16 +285,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     if (plainSearchTitle.length > 5 && !plainContent.includes(plainSearchTitle)) {
                         // For first topic: use h2 only if main header title is different (multi-part files)
                         // For subsequent topics: always inject
-                        const shouldInject = index > 0 || specificTitle !== mainTitleToDisplay;
+                        const shouldInject = index > 0 || specificTitle;
                         if (shouldInject) {
-                            injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 1.5rem; font-weight: 600;">${specificTitle}</h2>`;
+                            injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 21px; font-weight: 700; text-align: center;">${specificTitle}</h2>`;
                         }
                     }
                 }
 
                 fullHtml += `
                     <div id="${topicId}" class="topic-content" style="margin-top: ${index > 0 ? '40px' : '0'};">
-                        ${displayDate ? `<div class="topic-meta" style="margin-bottom: 16px;">${displayDate}</div>` : ''}
                         ${injectedTitleHtml}
                         ${cleanedContent}
                     </div>
