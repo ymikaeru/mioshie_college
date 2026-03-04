@@ -122,15 +122,42 @@ document.addEventListener('DOMContentLoaded', async () => {
                     rawContent = topicData.content || "";
                 }
 
-                // If content looks like Markdown (contains ** or # or [), use marked
-                let formattedContent = rawContent;
-                if (typeof marked !== 'undefined' && (/(\*\*|__|###|# |\[)/.test(rawContent))) {
-                    formattedContent = marked.parse(rawContent);
+                // Normalize all line breaks into consistent <BR> markers, then apply
+                // user-defined rule:
+                //   <br><br><br>  →  paragraph break (new <p>)
+                //   <br><br>      →  space (merge within same paragraph)
+                //   <br>          →  space (merge within sentence)
+                let normalizedContent = rawContent;
+
+                // Step 1: unify \n\n (from JSON) and <br/> (from raw HTML) into <BR> markers
+                // IMPORTANT: \n\n maps to DOUBLE <BR> (= merge) NOT triple (= paragraph)
+                // Only original triple <br/><br/><br/> from raw HTML creates paragraph breaks
+                normalizedContent = normalizedContent.replace(/<br\s*\/?>/gi, '<BR>');
+                normalizedContent = normalizedContent.replace(/\n\n+/g, '<BR><BR>'); // double = merge
+                normalizedContent = normalizedContent.replace(/\n/g, ' ');
+
+                // Step 2: apply the normalization rule (process triple BEFORE double)
+                normalizedContent = normalizedContent.replace(/(<BR>\s*){3,}/g, '\n\n');  // triple+ → paragraph break
+                normalizedContent = normalizedContent.replace(/(<BR>\s*){2,}/g, ' ');    // double → space (remove all <br> residuals, keep only triple for paragraphs
+                normalizedContent = normalizedContent.replace(/<BR>/g, ' ');              // single → space (merge)
+
+                // Step 3: clean up extra spaces
+                normalizedContent = normalizedContent.replace(/ {2,}/g, ' ');
+
+                // Step 4: parse Markdown if needed, or wrap paragraphs
+                let formattedContent;
+                if (typeof marked !== 'undefined' && /(\*\*|__|###|# |\[)/.test(normalizedContent)) {
+                    formattedContent = marked.parse(normalizedContent);
+                } else if (normalizedContent.includes('\n\n')) {
+                    formattedContent = normalizedContent.split(/\n\n+/)
+                        .filter(p => p.trim())
+                        .map(p => `<p>${p.trim()}</p>`)
+                        .join('\n');
+                } else {
+                    formattedContent = `<p>${normalizedContent.trim()}</p>`;
                 }
 
                 // Removing global font/color strip to restore Pergunta/Resposta colors
-
-                formattedContent = formattedContent.replace(/\\n\\n/g, '</p><p>');
 
                 // Sanitize Japanese ideographic spaces (U+3000) that cause horizontal overflow
                 // on mobile — each U+3000 is ~1 em wide and causes long lines in diagram sections
