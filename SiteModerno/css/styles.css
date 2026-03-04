@@ -15,8 +15,8 @@
   --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
 
   /* Layout */
-  --max-width-content: 720px;
-  --container-width: 1040px;
+  --max-width-content: 1024px;
+  --container-width: 1200px;
   --nav-height: 80px;
   --radius: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
