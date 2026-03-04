@@ -340,40 +340,41 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
 
             if (searchQuery) {
-                const q = searchQuery.toLowerCase();
-                // Escape regex special chars (e.g. hyphens in "7-5-3")
-                const escapedQ = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                const contentBlocks = container.querySelectorAll('.topic-content, .topic-title-large');
-                let firstMatch = null;
+                const terms = searchQuery.toLowerCase().split('&').map(t => t.trim()).filter(t => t.length >= 2);
+                if (terms.length > 0) {
+                    const escapedTerms = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                    const highlightRegex = new RegExp(`(${escapedTerms.join('|')})`, 'gi');
+                    const contentBlocks = container.querySelectorAll('.topic-content, .topic-title-large');
+                    let firstMatch = null;
 
-                contentBlocks.forEach(block => {
-                    const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, null, false);
-                    let node;
-                    const textNodes = [];
-                    while (node = walker.nextNode()) textNodes.push(node);
+                    contentBlocks.forEach(block => {
+                        const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, null, false);
+                        let node;
+                        const textNodes = [];
+                        while (node = walker.nextNode()) textNodes.push(node);
 
-                    textNodes.forEach(textNode => {
-                        if (textNode.parentNode && textNode.parentNode.nodeName === 'MARK') return;
-                        const val = textNode.nodeValue;
-                        if (val.toLowerCase().includes(q) && val.trim().length > 0) {
-                            const regex = new RegExp(`(${escapedQ})`, 'gi');
-                            const fragment = document.createDocumentFragment();
-                            const div = document.createElement('div');
-                            div.innerHTML = val.replace(regex, '<mark class="search-highlight">$1</mark>');
-                            while (div.firstChild) fragment.appendChild(div.firstChild);
+                        textNodes.forEach(textNode => {
+                            if (textNode.parentNode && textNode.parentNode.nodeName === 'MARK') return;
+                            const val = textNode.nodeValue;
+                            if (highlightRegex.test(val) && val.trim().length > 0) {
+                                const fragment = document.createDocumentFragment();
+                                const div = document.createElement('div');
+                                div.innerHTML = val.replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
+                                while (div.firstChild) fragment.appendChild(div.firstChild);
 
-                            if (!firstMatch) {
-                                firstMatch = fragment.querySelector('mark');
+                                if (!firstMatch) {
+                                    firstMatch = fragment.querySelector('mark');
+                                }
+                                textNode.parentNode.replaceChild(fragment, textNode);
                             }
-                            textNode.parentNode.replaceChild(fragment, textNode);
-                        }
+                        });
                     });
-                });
 
-                if (firstMatch) {
-                    setTimeout(() => {
-                        firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 400);
+                    if (firstMatch) {
+                        setTimeout(() => {
+                            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 400);
+                    }
                 }
             }
         };

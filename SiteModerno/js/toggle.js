@@ -562,8 +562,14 @@ function performSearch(query) {
 
   const q = query.trim();
   const qLower = q.toLowerCase();
-  const activeLang = localStorage.getItem('site_lang') || 'pt';
+  const terms = qLower.split('&').map(t => t.trim()).filter(t => t.length >= 2);
 
+  if (terms.length === 0) {
+    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Digite termos com pelo menos 2 caracteres...</li>';
+    return;
+  }
+
+  const activeLang = localStorage.getItem('site_lang') || 'pt';
   const filterNodes = document.querySelectorAll('input[name="searchFilter"]');
   let filterMode = 'all';
   for (const node of filterNodes) {
@@ -574,45 +580,66 @@ function performSearch(query) {
   for (let item of searchIndex) {
     let score = 0;
 
-    // PT fields (always available)
+    // PT fields
     const tPt = (item.t || '').toLowerCase();
     const cPt = (item.c || '').toLowerCase();
-    // JA fields (optional — added by updated build script)
+    // JA fields
     const tJa = (item.tj || '').toLowerCase();
     const cJa = (item.cj || '').toLowerCase();
 
-    // Choose primary fields based on active language
+    // Select primary and alternative fields
     const titleSearch = activeLang === 'ja' ? (tJa || tPt) : tPt;
     const contentSearch = activeLang === 'ja' ? (cJa || cPt) : cPt;
-    // Always search both languages for cross-language discoverability
-    const titleAlt = activeLang === 'ja' ? tPt : tJa;
-    const contentAlt = activeLang === 'ja' ? cPt : cJa;
+    const titleAlt = activeLang === 'ja' ? tPt : (tJa || '');
+    const contentAlt = activeLang === 'ja' ? cPt : (cJa || '');
 
-    let matchTitle = titleSearch.includes(qLower) || titleAlt.includes(qLower);
-    let matchContent = contentSearch.includes(qLower) || contentAlt.includes(qLower);
+    // AND logic: all terms must match either title or content
+    let allTermsMatch = true;
+    let matchesInTitleCount = 0;
+    let matchesInContentCount = 0;
 
-    if (titleSearch === qLower || titleAlt === qLower) score += 100;
-    else if (matchTitle) score += 50;
+    for (const term of terms) {
+      const matchInTitle = titleSearch.includes(term) || titleAlt.includes(term);
+      const matchInContent = contentSearch.includes(term) || contentAlt.includes(term);
 
-    if (matchContent) {
-      score += 10;
-      // Build snippet from whichever content matched
-      const raw = activeLang === 'ja' ? (item.cj || item.c || '') : (item.c || '');
-      const rawLower = raw.toLowerCase();
-      const idx = rawLower.indexOf(qLower);
-      if (idx !== -1) {
-        const start = Math.max(0, idx - 60);
-        const end = Math.min(raw.length, idx + q.length + 60);
-        let snippet = raw.substring(start, end);
-        if (start > 0) snippet = '...' + snippet;
-        if (end < raw.length) snippet += '...';
-        item.snippet = snippet;
+      if (!matchInTitle && !matchInContent) {
+        allTermsMatch = false;
+        break;
       }
+      if (matchInTitle) matchesInTitleCount++;
+      if (matchInContent) matchesInContentCount++;
     }
 
-    if (filterMode === 'title' && !matchTitle) continue;
-    if (filterMode === 'content' && !matchContent) continue;
-    if (score === 0) continue;
+    if (!allTermsMatch) continue;
+
+    // Filter by mode
+    if (filterMode === 'title' && matchesInTitleCount < terms.length) continue;
+    if (filterMode === 'content' && matchesInContentCount < terms.length) continue;
+
+    // Scoring
+    score = (matchesInTitleCount * 50) + (matchesInContentCount * 10);
+    // Extra boost if the EXACT full query string (normalized) appears in title
+    if (titleSearch.includes(qLower) || titleAlt.includes(qLower)) score += 100;
+
+    // Find snippet context for the first term matched in content
+    const raw = activeLang === 'ja' ? (item.cj || item.c || '') : (item.c || '');
+    const rawLower = raw.toLowerCase();
+    let bestIdx = -1;
+    for (const term of terms) {
+      bestIdx = rawLower.indexOf(term);
+      if (bestIdx !== -1) break;
+    }
+
+    if (bestIdx !== -1) {
+      const start = Math.max(0, bestIdx - 60);
+      const end = Math.min(raw.length, bestIdx + 120);
+      let snippet = raw.substring(start, end);
+      if (start > 0) snippet = '...' + snippet;
+      if (end < raw.length) snippet += '...';
+      item.snippet = snippet;
+    } else {
+      item.snippet = item.c.substring(0, 150) + '...';
+    }
 
     results.push({ ...item, score });
   }
@@ -621,20 +648,24 @@ function performSearch(query) {
   results = results.slice(0, 50);
 
   if (results.length === 0) {
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Nenhum resultado.</li>';
+    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Nenhum resultado para estes termos combinados.</li>';
     return;
   }
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-  const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Highlight all terms
+  const escapedTerms = terms.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const highlightRegex = new RegExp(`(${escapedTerms.join('|')})`, 'gi');
+
   resultsEl.innerHTML = results.map(r => {
     const href = `${basePath}reader.html?vol=${r.v}&file=${r.f}&search=${encodeURIComponent(q)}`;
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
-      .replace(new RegExp(`(${escapedQ})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+      .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
     return `<li><a href="${href}" class="search-result-item">
       <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
       <div class="search-result-context">${highlight}</div>
     </a></li>`;
   }).join('');
 }
+
