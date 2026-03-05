@@ -93,6 +93,11 @@ function _initMobileNav() {
           Histórico
         </button>
 
+        <button class="mobile-nav-link" onclick="openFavorites(); closeMobileNav();">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          Salvos
+        </button>
+
         <button class="mobile-nav-link" onclick="toggleLanguage(); closeMobileNav();">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
           Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})
@@ -391,8 +396,70 @@ function renderHistory() {
   resultsEl.innerHTML = history.map(item => {
     const href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}`;
     const date = new Date(item.time).toLocaleString();
-    return `<li><a href="${href}" class="search-result-item"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${item.vol.slice(-1)})</span></div><div class="search-result-context">${date}</div></a></li>`;
+    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${item.vol.slice(-1)})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
+}
+
+// --- Favorites Logic ---
+window.openFavorites = function () {
+  const modal = document.getElementById('favoritesModal');
+  const resultsEl = document.getElementById('favoritesResults');
+  if (modal && resultsEl) {
+    modal.classList.add('active');
+    renderFavorites();
+  }
+}
+
+window.closeFavorites = function () {
+  const modal = document.getElementById('favoritesModal');
+  if (modal) modal.classList.remove('active');
+}
+
+function renderFavorites() {
+  const resultsEl = document.getElementById('favoritesResults');
+  if (!resultsEl) return;
+
+  const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+  const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+
+  if (favorites.length === 0) {
+    resultsEl.innerHTML = '<li class="search-empty">Nenhum ensinamento salvo.</li>';
+    return;
+  }
+
+  // Sort by newest first
+  favorites.sort((a, b) => b.time - a.time);
+
+  resultsEl.innerHTML = favorites.map(item => {
+    const href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}`;
+    const date = new Date(item.time).toLocaleString();
+    return `<li>
+      <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
+        <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${item.vol.slice(-1)})</span></div><div class="search-result-context">Salvo em ${date}</div></a>
+        <button onclick="removeFavoriteFromModal('${item.vol}', '${item.file}')" style="background:none; border:none;  cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:var(--accent);">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+        </button>
+      </div>
+    </li>`;
+  }).join('');
+}
+
+window.removeFavoriteFromModal = function (volId, filename) {
+  let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+  favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
+  localStorage.setItem('savedFavorites', JSON.stringify(favorites));
+  renderFavorites(); // re-render the list
+
+  // Check if we are currently on the reader page for this item, and update the button if so
+  if (window.location.pathname.includes('reader.html')) {
+    const params = new URLSearchParams(window.location.search);
+    const currentVol = params.get('vol');
+    const currentFile = params.get('file');
+    if (currentVol === volId && currentFile === filename) {
+      const btn = document.getElementById('favoriteBtn');
+      if (btn) btn.classList.remove('active');
+    }
+  }
 }
 
 // --- Font Size Control ---
@@ -445,12 +512,16 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.id === 'historyModal') closeHistory();
   });
 
-
+  const favoritesModal = document.getElementById('favoritesModal');
+  if (favoritesModal) favoritesModal.addEventListener('click', (e) => {
+    if (e.target.id === 'favoritesModal') closeFavorites();
+  });
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
       closeSearch();
       closeHistory();
+      closeFavorites();
     }
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
       e.preventDefault();
@@ -492,8 +563,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add transition style to header and toolbar once DOM is ready
   document.addEventListener('DOMContentLoaded', () => {
     const header = document.querySelector('.header');
-    const toolbar = document.querySelector('.reader-toolbar');
-    if (!header && !toolbar) return;
 
     // Inject transition CSS once
     const style = document.createElement('style');
@@ -517,6 +586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let hideTimer = null;
 
     function showChrome() {
+      const toolbar = document.querySelector('.reader-toolbar');
       if (header) header.classList.remove('immersed');
       if (toolbar) toolbar.classList.remove('immersed');
       clearTimeout(hideTimer);
@@ -532,6 +602,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showChrome();
         return;
       }
+      const toolbar = document.querySelector('.reader-toolbar');
       if (header) header.classList.add('immersed');
       if (toolbar) toolbar.classList.add('immersed');
     }
@@ -632,7 +703,7 @@ function performSearch(query) {
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
       .replace(new RegExp(`(${escapedQ})`, 'gi'), '<mark class="search-highlight">$1</mark>');
-    return `<li><a href="${href}" class="search-result-item">
+    return `<li><a href="${href}" class="search-result-item" onclick="closeSearch()">
       <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
       <div class="search-result-context">${highlight}</div>
     </a></li>`;

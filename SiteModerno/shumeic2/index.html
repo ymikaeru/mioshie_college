@@ -49,6 +49,7 @@
 </div>
 <div class="controls">
 <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <button class="btn-zen" onclick="openFavorites()" title="Salvos">⭐</button>
 <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
 <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
 <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
@@ -3581,6 +3582,27 @@
 </div>
 </div>
 </main>
+    <div class="search-modal-overlay" id="historyModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Histórico de Navegação</h2>
+                <button class="search-close" onclick="closeHistory()">&times;</button>
+            </div>
+            <ul class="search-results" id="historyResults"></ul>
+        </div>
+    </div>
+
+    <div class="search-modal-overlay" id="favoritesModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Ensinamentos Salvos</h2>
+                <button class="search-close" onclick="closeFavorites()">&times;</button>
+            </div>
+            <ul class="search-results" id="favoritesResults"></ul>
+        </div>
+    </div>
+
+
 <div class="search-modal-overlay" id="searchModal">
 <div class="search-modal">
 <div class="search-header">
