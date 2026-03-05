@@ -36,6 +36,7 @@
     </div>
     <div class="controls">
       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+      <button class="btn-zen" onclick="openFavorites()" title="Salvos">⭐</button>
       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
       <button class="btn-zen font-ctrl" id="fontDecrease" onclick="changeFontSize(-1)"
         title="Diminuir fonte">A−</button>
@@ -125,18 +126,24 @@
     </div>
   </div>
 
+  <div class="search-modal-overlay" id="favoritesModal">
+    <div class="search-modal">
+      <div class="search-header">
+        <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Ensinamentos Salvos</h2>
+        <button class="search-close" onclick="closeFavorites()">&times;</button>
+      </div>
+      <ul class="search-results" id="favoritesResults"></ul>
+    </div>
+  </div>
+
   <script src="js/toggle.js?v=1772246362"></script>
   <script src="js/reader.js?v=1772246362"></script>
   <script>document.addEventListener('DOMContentLoaded', () => { if (typeof initFontSize === 'function') initFontSize(); });</script>
 
-  <!-- Scroll-to-top button -->
-  <button id="scroll-to-top" title="Voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-
   <script>
     (function () {
       const bar = document.getElementById('reading-progress');
-      const btn = document.getElementById('scroll-to-top');
-      const SHOW_AFTER = 300;   // px from top before button can appear
+      const SHOW_AFTER = 300;   // px from top before bar can appear
       const HIDE_AFTER = 3000;  // ms of inactivity before auto-hiding
 
       let hideTimer = null;
@@ -144,12 +151,10 @@
 
       function showUI() {
         if (aboveThreshold) {
-          if (btn) btn.classList.add('visible');
           if (bar) bar.style.opacity = '1';
         }
         clearTimeout(hideTimer);
         hideTimer = setTimeout(function () {
-          if (btn) btn.classList.remove('visible');
           if (bar) bar.style.opacity = '0';
         }, HIDE_AFTER);
       }
@@ -170,7 +175,6 @@
           showUI();
         } else {
           clearTimeout(hideTimer);
-          if (btn) btn.classList.remove('visible');
           if (bar) bar.style.opacity = '0';
         }
       }, { passive: true });

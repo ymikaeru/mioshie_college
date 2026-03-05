@@ -1248,13 +1248,13 @@ select[data-tooltip]::after {
 /* --- Premium Unified Toolbar --- */
 .reader-toolbar {
   position: fixed;
-  bottom: 32px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 16px;
+  gap: 4px;
+  padding: 6px 8px;
   background: rgba(var(--surface-rgb), 0.85);
   backdrop-filter: saturate(180%) blur(30px);
   -webkit-backdrop-filter: saturate(180%) blur(30px);
@@ -1267,8 +1267,8 @@ select[data-tooltip]::after {
 
 .reader-toolbar .btn-zen {
   padding: 0;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   border: none;
   background: transparent;
@@ -1278,6 +1278,11 @@ select[data-tooltip]::after {
   color: var(--text-muted);
   position: relative;
   transition: all 0.2s var(--ease);
+}
+
+.reader-toolbar .btn-zen svg {
+  width: 18px;
+  height: 18px;
 }
 
 .reader-toolbar .btn-zen:hover {

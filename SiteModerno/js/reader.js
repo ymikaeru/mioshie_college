@@ -100,6 +100,40 @@ document.addEventListener('DOMContentLoaded', async () => {
                 localStorage.setItem('readHistory', JSON.stringify(filtered.slice(0, 20)));
             } catch (e) { }
 
+            // --- Navigation / Toolbar State ---
+            window.toggleFavorite = function () {
+                let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+                const isSaved = favorites.some(f => f.vol === volId && f.file === filename);
+
+                if (isSaved) {
+                    favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
+                } else {
+                    favorites.unshift({
+                        title: mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' '),
+                        vol: volId,
+                        file: filename,
+                        time: Date.now()
+                    });
+                }
+                localStorage.setItem('savedFavorites', JSON.stringify(favorites));
+
+                // Update Button State
+                const btn = document.getElementById('favoriteBtn');
+                if (btn) {
+                    if (!isSaved) {
+                        btn.classList.add('active');
+                        btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                         <span class="toolbar-tooltip">Salvo</span>`;
+                    } else {
+                        btn.classList.remove('active');
+                        btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+                                         <span class="toolbar-tooltip">Salvar</span>`;
+                    }
+                }
+                // If favorites modal is open, re-render it
+                if (typeof renderFavorites === 'function') renderFavorites();
+            };
+
             const firstDate = topicsFound[0].date && topicsFound[0].date !== "Unknown" ? topicsFound[0].date : "";
             let fullHtml = "";
 
@@ -407,6 +441,29 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
 
+            // Check if current is favorited
+            const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+            const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
+            const favClass = isFavorited ? 'active' : '';
+            const favIcon = isFavorited
+                ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`
+                : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
+            const favText = isFavorited ? 'Salvo' : 'Salvar';
+
+            const toolbarHtml = `
+                <div class="reader-toolbar">
+                    <button class="btn-zen ${favClass}" id="favoriteBtn" onclick="toggleFavorite()">
+                        ${favIcon}
+                        <span class="toolbar-tooltip">${favText}</span>
+                    </button>
+                    <div class="toolbar-divider"></div>
+                    <button class="btn-zen" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
+                         <span class="toolbar-tooltip">Topo</span>
+                    </button>
+                </div>
+            `;
+
             container.innerHTML = `
                 <nav class="breadcrumbs">
                     <a href="index.html">Início</a> <span>/</span> 
@@ -417,6 +474,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ${fullHtml}
                     ${navFooter}
                 </div>
+                ${toolbarHtml}
             `;
 
             if (searchQuery) {
