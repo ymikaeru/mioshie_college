@@ -1441,7 +1441,7 @@ font.section-header,
 }
 
 .stats-total-number {
-  font-size: 28px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--accent);
   line-height: 1;
