@@ -1556,9 +1556,10 @@ font.section-header,
   width: 0%;
   background: linear-gradient(90deg, var(--accent), #e8b84b);
   z-index: 3000;
-  transition: width 0.1s linear;
+  transition: width 0.1s linear, opacity 0.4s ease;
   border-radius: 0 2px 2px 0;
   box-shadow: 0 0 8px rgba(184, 134, 11, 0.5);
+  opacity: 0;
 }
 
 /* --- Scroll-to-Top Button --- */

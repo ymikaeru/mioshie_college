@@ -142,14 +142,15 @@
       let hideTimer = null;
       let aboveThreshold = false;
 
-      function showBtn() {
-        if (!btn) return;
+      function showUI() {
         if (aboveThreshold) {
-          btn.classList.add('visible');
+          if (btn) btn.classList.add('visible');
+          if (bar) bar.style.opacity = '1';
         }
         clearTimeout(hideTimer);
         hideTimer = setTimeout(function () {
-          btn.classList.remove('visible');
+          if (btn) btn.classList.remove('visible');
+          if (bar) bar.style.opacity = '0';
         }, HIDE_AFTER);
       }
 
@@ -157,7 +158,7 @@
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
-        // Progress bar
+        // Progress bar width
         if (bar && docHeight > 0) {
           bar.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
         }
@@ -166,16 +167,17 @@
         aboveThreshold = scrollTop > SHOW_AFTER;
 
         if (aboveThreshold) {
-          showBtn();
+          showUI();
         } else {
           clearTimeout(hideTimer);
           if (btn) btn.classList.remove('visible');
+          if (bar) bar.style.opacity = '0';
         }
       }, { passive: true });
 
-      // Also wake the button on touch or mouse move
+      // Also wake both on touch or mouse move
       ['touchstart', 'mousemove'].forEach(function (evt) {
-        window.addEventListener(evt, showBtn, { passive: true });
+        window.addEventListener(evt, showUI, { passive: true });
       });
     })();
   </script>
