@@ -136,7 +136,22 @@
     (function () {
       const bar = document.getElementById('reading-progress');
       const btn = document.getElementById('scroll-to-top');
-      const SHOW_AFTER = 300; // px from top before button appears
+      const SHOW_AFTER = 300;   // px from top before button can appear
+      const HIDE_AFTER = 3000;  // ms of inactivity before auto-hiding
+
+      let hideTimer = null;
+      let aboveThreshold = false;
+
+      function showBtn() {
+        if (!btn) return;
+        if (aboveThreshold) {
+          btn.classList.add('visible');
+        }
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(function () {
+          btn.classList.remove('visible');
+        }, HIDE_AFTER);
+      }
 
       window.addEventListener('scroll', function () {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
@@ -147,15 +162,21 @@
           bar.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
         }
 
-        // Scroll-to-top visibility
-        if (btn) {
-          if (scrollTop > SHOW_AFTER) {
-            btn.classList.add('visible');
-          } else {
-            btn.classList.remove('visible');
-          }
+        // Update threshold flag
+        aboveThreshold = scrollTop > SHOW_AFTER;
+
+        if (aboveThreshold) {
+          showBtn();
+        } else {
+          clearTimeout(hideTimer);
+          if (btn) btn.classList.remove('visible');
         }
       }, { passive: true });
+
+      // Also wake the button on touch or mouse move
+      ['touchstart', 'mousemove'].forEach(function (evt) {
+        window.addEventListener(evt, showBtn, { passive: true });
+      });
     })();
   </script>
 </body>
