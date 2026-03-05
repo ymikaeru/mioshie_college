@@ -11,6 +11,9 @@
 </head>
 
 <body>
+  <!-- Reading progress bar -->
+  <div id="reading-progress"></div>
+
   <header class="header">
     <a href="index.html" class="header__logo">
       <div class="logo-circle">
@@ -48,8 +51,8 @@
   </main>
   <script>
 
-(function() {
-    const checkAuth = () => {
+    (function () {
+      const checkAuth = () => {
         if (localStorage.getItem('shumei_auth') === 'true') return;
 
         const overlay = document.createElement('div');
@@ -70,27 +73,27 @@
         const error = document.getElementById('login-error');
 
         const attempt = () => {
-            if (input.value === '567') {
-                localStorage.setItem('shumei_auth', 'true');
-                overlay.remove();
-            } else {
-                error.style.display = 'block';
-                input.value = '';
-                input.focus();
-            }
+          if (input.value === '567') {
+            localStorage.setItem('shumei_auth', 'true');
+            overlay.remove();
+          } else {
+            error.style.display = 'block';
+            input.value = '';
+            input.focus();
+          }
         };
 
         submit.onclick = attempt;
         input.onkeypress = (e) => { if (e.key === 'Enter') attempt(); };
         input.focus();
-    };
+      };
 
-    if (document.readyState === 'loading') {
+      if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', checkAuth);
-    } else {
+      } else {
         checkAuth();
-    }
-})();
+      }
+    })();
 
   </script>
 
@@ -125,6 +128,36 @@
   <script src="js/toggle.js?v=1772246362"></script>
   <script src="js/reader.js?v=1772246362"></script>
   <script>document.addEventListener('DOMContentLoaded', () => { if (typeof initFontSize === 'function') initFontSize(); });</script>
+
+  <!-- Scroll-to-top button -->
+  <button id="scroll-to-top" title="Voltar ao topo" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+  <script>
+    (function () {
+      const bar = document.getElementById('reading-progress');
+      const btn = document.getElementById('scroll-to-top');
+      const SHOW_AFTER = 300; // px from top before button appears
+
+      window.addEventListener('scroll', function () {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+        // Progress bar
+        if (bar && docHeight > 0) {
+          bar.style.width = Math.min(100, (scrollTop / docHeight) * 100) + '%';
+        }
+
+        // Scroll-to-top visibility
+        if (btn) {
+          if (scrollTop > SHOW_AFTER) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+        }
+      }, { passive: true });
+    })();
+  </script>
 </body>
 
 </html>
