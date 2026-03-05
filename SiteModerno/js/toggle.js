@@ -358,11 +358,14 @@ function performSearch(query) {
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
   resultsEl.innerHTML = results.map(r => {
-    const href = `${basePath}reader.html?vol=${r.v}&file=${r.f}&search=${encodeURIComponent(query)}`;
+    const vNum = r.v.replace('shumeic', '');
+    const fBase = r.f.replace('.html', '');
+    // Using hash permalink: #v4/filename
+    const href = `${basePath}reader.html${query ? '?s=' + encodeURIComponent(query) : ''}#v${vNum}/${fBase}`;
     // Escape query for regex
     const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     const highlight = (r.snippet || '').replace(new RegExp(`(${escapedQuery})`, 'gi'), '<mark class="search-highlight">$1</mark>');
-    return `<li><a href="${href}" class="search-result-item"><div class="search-result-title">${r.t} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${r.v.slice(-1)})</span></div><div class="search-result-context">${highlight}</div></a></li>`;
+    return `<li><a href="${href}" class="search-result-item"><div class="search-result-title">${r.t} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${highlight}</div></a></li>`;
   }).join('');
 }
 
@@ -394,9 +397,11 @@ function renderHistory() {
   }
 
   resultsEl.innerHTML = history.map(item => {
-    const href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}`;
+    const vNum = item.vol.replace('shumeic', '');
+    const fBase = item.file.replace('.html', '');
+    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
     const date = new Date(item.time).toLocaleString();
-    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${item.vol.slice(-1)})</span></div><div class="search-result-context">${date}</div></a></li>`;
+    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
 }
 
@@ -431,11 +436,13 @@ function renderFavorites() {
   favorites.sort((a, b) => b.time - a.time);
 
   resultsEl.innerHTML = favorites.map(item => {
-    const href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}`;
+    const vNum = item.vol.replace('shumeic', '');
+    const fBase = item.file.replace('.html', '');
+    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `<li>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
-        <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${item.vol.slice(-1)})</span></div><div class="search-result-context">Salvo em ${date}</div></a>
+        <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">Salvo em ${date}</div></a>
         <button onclick="removeFavoriteFromModal('${item.vol}', '${item.file}')" style="background:none; border:none;  cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:var(--accent);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
         </button>
