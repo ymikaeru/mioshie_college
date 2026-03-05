@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <nav class="breadcrumbs">
                     <a href="index.html">Início</a> <span>/</span> 
                     <a href="${volPath}">Volume ${volId.slice(-1)}</a> <span>/</span>
-                    <span style="color:var(--text-main)">Leitura</span>
+                    <span style="color:var(--text-main)">${mainTitleToDisplay}</span>
                 </nav>
                 <div class="reader-container">
                     ${fullHtml}
