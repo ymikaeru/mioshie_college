@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const navSelect = document.getElementById('readerTopicSelect');
             if (navSelect) {
-                navSelect.innerHTML = '<option value="">Publicações</option>';
+                navSelect.innerHTML = '<option value="">Ensinamentos</option>';
                 navSelect.style.display = 'none';
 
                 // Robust scroll listener
@@ -366,7 +366,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         .filter(o => o.value)
                         .map(o => ({ value: o.value, text: o.textContent }));
                     if (opts.length > 0) {
-                        window._updateMobileNavTopics('Publicações deste ensinamento', opts);
+                        window._updateMobileNavTopics('Ensinamentos deste ensinamento', opts);
                     } else {
                         window._updateMobileNavTopics('', []);
                     }
