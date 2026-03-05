@@ -132,7 +132,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // Conditional Title Injection for Portuguese
                     const ptTitle = topicData.title_ptbr || topicData.title_pt || topicData.publication_title_pt || "";
-                    if (ptTitle && rawContent.trim() && !genericRegex.test(ptTitle)) {
+                    // Skip injection if content already starts with <b> — the HTML source itself
+                    // already has an embedded title (e.g. "Ensinamento de Meishu-Sama: '...'").
+                    // Injecting the generic JSON title (e.g. "Causa Fundamental da Doença 1")
+                    // on top of it would create a duplicate/wrong title.
+                    const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim());
+                    if (ptTitle && rawContent.trim() && !genericRegex.test(ptTitle) && !contentAlreadyHasTitle) {
                         // Check if title is already there (ignoring HTML and whitespace)
                         const cleanTitle = ptTitle.replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
                         const contentStartClean = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
