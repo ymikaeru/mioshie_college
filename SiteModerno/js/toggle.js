@@ -167,7 +167,7 @@ window._updateMobileNavTopics = function (label, optionsList) {
     container.innerHTML = '';
     return;
   }
-  const label_to_use = 'Ensinamentos deste ensinamento';
+  const label_to_use = 'Publicações deste ensinamento';
   let html = `
     <div class="mobile-nav-divider"></div>
     <div class="mobile-nav-section-label">${label_to_use}</div>
