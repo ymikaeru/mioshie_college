@@ -255,8 +255,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 _tmp.innerHTML = cleanedContent;
 
                 // Enhanced title stripping to fix duplicate titles
-                // ONLY strip if we have a non-generic title promoted to the header
-                if (!isGeneric) {
+                // ONLY strip in Japanese mode: Japanese uses specificTitle h2 injection (lines below)
+                // so stripping the duplicate from content body is safe.
+                // In Portuguese there is NO separate h2 title element — the <b> in content IS
+                // the only title display. Stripping it would erase the title entirely.
+                if (!isGeneric && !isPt) {
                     const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
                     const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
 
