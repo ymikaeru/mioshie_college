@@ -292,7 +292,23 @@ document.addEventListener('DOMContentLoaded', async () => {
                     let pTitle = isPt ? (topicData.publication_title_pt || topicData.title_ptbr || topicData.title_pt) : (topicData.title_ja);
                     pTitle = pTitle || topicData.title || `Parte ${index + 1}`;
 
-                    // REFINEMENT: If the title is generic, peek into the content for a specific one
+                    // ALWAYS try to extract quoted title from first <b> in content (before date)
+                    // This handles cases like "Causa Fundamental da Doença 1/2/3" that are
+                    // repeated-but-not-in-genericRegex, by extracting the real title from content
+                    const rawForNav = isPt ? (topicData.content_ptbr || topicData.content_pt || topicData.content) : topicData.content;
+                    if (rawForNav && rawForNav.length > 20) {
+                        const docNav = new DOMParser().parseFromString(rawForNav, 'text/html');
+                        const firstB = docNav.querySelector('b');
+                        if (firstB) {
+                            const bText = firstB.textContent.trim();
+                            const quoteMatch = bText.match(/["“«‘]([^"”»’]+)["”»’]/);
+                            if (quoteMatch && quoteMatch[1].length > 5 && quoteMatch[1].length < 150) {
+                                pTitle = quoteMatch[1];
+                            }
+                        }
+                    }
+
+                    // REFINEMENT: If still generic, try broader span/font extraction
                     const genericRegex = /O Método do Johrei|Princípio do Johrei|Sobre a Verdade|Verdade \d|Ensinamento \d|Parte \d|JH\d|JH \d|Publicação \d|Agricultura Natural|Instrução Divina|Purificação Equilibrada|Coletânea de fragmentos/i;
                     if (genericRegex.test(pTitle)) {
                         const raw = isPt ? (topicData.content_ptbr || topicData.content_pt || topicData.content) : topicData.content;
@@ -301,7 +317,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                             const span = doc.querySelector('span, b, font');
                             if (span) {
                                 let text = span.textContent.trim();
-                                let quoteMatch = text.match(/[“"']([^”"']+)[”"']/);
+                                let quoteMatch = text.match(/["\"']([^"\"']+)["\"']/);
                                 let extracted = quoteMatch ? quoteMatch[1] : text.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*|明主様御垂示\s*|明主様御講話\s*/gi, '');
                                 if (extracted.length > 5 && extracted.length < 150) {
                                     pTitle = extracted;
@@ -366,7 +382,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         .filter(o => o.value)
                         .map(o => ({ value: o.value, text: o.textContent }));
                     if (opts.length > 0) {
-                        window._updateMobileNavTopics('Ensinamentos deste ensinamento', opts);
+                        window._updateMobileNavTopics('Publicações deste ensinamento', opts);
                     } else {
                         window._updateMobileNavTopics('', []);
                     }
