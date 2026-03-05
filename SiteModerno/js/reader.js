@@ -98,6 +98,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const filtered = history.filter(h => h.file !== filename || h.vol !== volId);
                 filtered.unshift(newEntry);
                 localStorage.setItem('readHistory', JSON.stringify(filtered.slice(0, 20)));
+
+                // Update document title
+                document.title = `Meishu-Sama: ${mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' ')} - Biblioteca Sagrada`;
             } catch (e) { }
 
             // --- Navigation / Toolbar State ---
@@ -468,7 +471,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <nav class="breadcrumbs">
                     <a href="index.html">Início</a> <span>/</span> 
                     <a href="${volPath}">Volume ${volId.slice(-1)}</a> <span>/</span>
-                    <span style="color:var(--text-main)">Leitura</span>
+                    <span style="color:var(--text-main)">${mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' ')}</span>
                 </nav>
                 <div class="reader-container">
                     ${fullHtml}
