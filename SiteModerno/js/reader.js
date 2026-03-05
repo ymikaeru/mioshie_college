@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
             const navSelect = document.getElementById('readerTopicSelect');
             if (navSelect) {
-                navSelect.innerHTML = '<option value="">Ensinamentos</option>';
+                navSelect.innerHTML = '<option value="">Publicações</option>';
                 navSelect.style.display = 'none';
 
                 // Robust scroll listener
