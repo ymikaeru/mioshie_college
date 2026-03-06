@@ -189,29 +189,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                     // Content cleanup and Markdown conversion
                     let rawContent = "";
+                    const activeTitle = isPt ? (topicData.title_ptbr || topicData.title_pt || topicData.publication_title_pt || "") : (topicData.title_ja || topicData.title || "");
+
                     if (isPt) {
                         rawContent = topicData.content_ptbr || topicData.content_pt || topicData.content || "";
-
-                        // Conditional Title Injection for Portuguese
-                        const ptTitle = topicData.title_ptbr || topicData.title_pt || topicData.publication_title_pt || "";
-                        // Skip injection if content already starts with <b> — the HTML source itself
-                        // already has an embedded title (e.g. "Ensinamento de Meishu-Sama: '...'").
-                        // Injecting the generic JSON title (e.g. "Causa Fundamental da Doença 1")
-                        // on top of it would create a duplicate/wrong title.
-                        const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim());
-                        if (ptTitle && rawContent.trim() && !genericRegex.test(ptTitle) && !contentAlreadyHasTitle) {
-                            // Check if title is already there (ignoring HTML and whitespace)
-                            const cleanTitle = ptTitle.replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
-                            const contentStartClean = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\s\d\W]/g, '').toLowerCase();
-
-                            if (cleanTitle.length > 5 && !contentStartClean.includes(cleanTitle)) {
-                                const displayDate = topicData.date && topicData.date !== "Unknown" ? `<br/>\n(${topicData.date})` : "";
-                                const header = `<b><font size="+2">${ptTitle}</font></b>${displayDate}<br/>\n<br/>\n`;
-                                rawContent = header + rawContent;
-                            }
-                        }
                     } else {
                         rawContent = topicData.content || "";
+                    }
+
+                    // Conditional Title Injection (Unified for PT and JA)
+                    // Skip injection if content already starts with <b> - usually indicates an embedded title.
+                    const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim());
+                    if (activeTitle && rawContent.trim() && !genericRegex.test(activeTitle) && !contentAlreadyHasTitle) {
+                        const cleanTitle = activeTitle.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '').toLowerCase();
+                        const contentStartClean = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '').toLowerCase();
+
+                        if (cleanTitle.length > 5 && !contentStartClean.includes(cleanTitle)) {
+                            const displayDate = topicData.date && topicData.date !== "Unknown" ? `<br/>\n(${topicData.date})` : "";
+                            const header = `<b><font size="+2">${activeTitle}</font></b>${displayDate}<br/>\n<br/>\n`;
+                            rawContent = header + rawContent;
+                        }
                     }
 
                     // Normalize <br/>\n patterns from the JSON source:
@@ -315,43 +312,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
 
 
-                    // DOM-based: remove leading element ONLY if its stripped text is an exact match
-                    // to the main title (prevents removing teaching titles that just share a word)
+                    // Sanitize Japanese ideographic spaces (U+3000) that cause horizontal overflow
+                    // on mobile — each U+3000 is ~1 em wide and causes long lines in diagram sections
+                    formattedContent = formattedContent.replace(/\u3000+/g, (m) => ' '.repeat(Math.min(m.length, 4)));
+
                     cleanedContent = formattedContent;
-                    const _tmp = document.createElement('div');
-                    _tmp.innerHTML = cleanedContent;
-
-                    // Enhanced title stripping to fix duplicate titles
-                    // ONLY strip in Japanese mode: Japanese uses specificTitle h2 injection (lines below)
-                    // so stripping the duplicate from content body is safe.
-                    // In Portuguese there is NO separate h2 title element — the <b> in content IS
-                    // the only title display. Stripping it would erase the title entirely.
-                    if (!isGeneric && !isPt) {
-                        const firstBlocks = _tmp.querySelectorAll('p, div, h1, h2, h3, blockquote');
-                        const titlePlain = mainTitleToDisplay.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-
-                        for (let i = 0; i < Math.min(firstBlocks.length, 3); i++) {
-                            const block = firstBlocks[i];
-                            if (block.querySelector('img, table, ul, ol')) continue;
-
-                            const blockTextHtml = block.innerHTML;
-                            const blockTextContent = block.textContent;
-
-                            // CRITICAL: Never strip the publication title/date
-                            if (blockTextContent.includes("Publicado em") || blockTextContent.includes("発行）") || blockTextContent.includes("（昭和")) continue;
-
-                            const blockTextClean = blockTextContent.replace(/[\u3000\s\d\u30FB\u00B7\.\"\u300c\u300d]/g, '').toLowerCase();
-
-                            if (blockTextClean.length > 0 && blockTextClean.length < 150) {
-                                // Only strip if it's an exact match or very close to the title we promoted
-                                if (blockTextClean === titlePlain || (titlePlain.length > 10 && blockTextClean.includes(titlePlain))) {
-                                    block.remove();
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    cleanedContent = _tmp.innerHTML;
 
                     // Filter "Unknown" dates
                     let displayDate = topicData.date;
@@ -413,30 +378,8 @@ document.addEventListener('DOMContentLoaded', async () => {
                         navSelect.appendChild(op);
                     }
 
-                    // Check if the topic needs its title injected (if it's missing from the translation)
-                    let injectedTitleHtml = "";
-                    let specificTitle = isPt ? null : (topicData.title_ja || topicData.title || null);
-
-                    if (specificTitle && specificTitle !== mainTitleToDisplay) {
-                        let plainContent = cleanedContent.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '').toLowerCase();
-                        let plainSearchTitle = specificTitle
-                            .replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*/gi, '')
-                            .replace(/<[^>]+>/g, '')
-                            .replace(/[\u3000\s\d\u30FB\u00B7\.\"\"\''\u300c\u300d\-]/g, '')
-                            .toLowerCase();
-                        if (plainSearchTitle.length > 5 && !plainContent.includes(plainSearchTitle)) {
-                            // For first topic: use h2 only if main header title is different (multi-part files)
-                            // For subsequent topics: always inject
-                            const shouldInject = index > 0 || specificTitle;
-                            if (shouldInject) {
-                                injectedTitleHtml = `<h2 class="injected-topic-title" style="margin-bottom: 24px; color: var(--text-main); font-size: 21px; font-weight: 700; text-align: center;">${specificTitle}</h2>`;
-                            }
-                        }
-                    }
-
                     fullHtml += `
                     <div id="${topicId}" class="topic-content" style="margin-top: ${index > 0 ? '40px' : '0'};">
-                        ${injectedTitleHtml}
                         ${cleanedContent}
                     </div>
                 `;
