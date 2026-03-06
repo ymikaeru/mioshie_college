@@ -5,7 +5,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.documentElement.setAttribute('data-theme', savedTheme);
 
   // Global Language Logic
-  const savedLang = localStorage.getItem('site_lang') || 'pt';
+  const urlParams = new URLSearchParams(window.location.search);
+  let urlLang = urlParams.get('lang') || (urlParams.get('jp') !== null ? 'ja' : null);
+  const savedLang = urlLang || localStorage.getItem('site_lang') || 'pt';
   setLanguage(savedLang, false);
 
   // -------------------------------------------------------
@@ -67,6 +69,31 @@ function _initMobileNav() {
   }
 
   const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const menuTexts = {
+    pt: {
+      title: 'Biblioteca Sagrada',
+      close: 'Fechar menu',
+      navigation: 'Navegação',
+      actions: 'AÇÕES',
+      history: 'Histórico',
+      saved: 'Salvos',
+      lang: `Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})`,
+      theme: 'Mudar Tema',
+      fontSize: 'Tamanho da Fonte'
+    },
+    ja: {
+      title: '御教え図書館',
+      close: 'メニューを閉じる',
+      navigation: 'ナビゲーション',
+      actions: '操作',
+      history: '履歴',
+      saved: 'お気に入り',
+      lang: `言語切替 (${currentLang === 'pt' ? 'Português' : '日本語'})`,
+      theme: 'テーマ切替',
+      fontSize: 'フォントサイズ'
+    }
+  };
+  const t = menuTexts[currentLang] || menuTexts.pt;
 
   const mobileNavOverlay = document.createElement('div');
   mobileNavOverlay.className = 'mobile-nav-overlay';
@@ -75,41 +102,43 @@ function _initMobileNav() {
     <div class="mobile-nav-backdrop" id="mobileNavBackdrop"></div>
     <div class="mobile-nav-panel">
       <div class="mobile-nav-header">
-        <span>Biblioteca Sagrada</span>
-        <button class="mobile-nav-close" id="mobileNavClose" aria-label="Fechar menu">✕</button>
+        <span id="mobileMenuTitle">${t.title}</span>
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="${t.close}">✕</button>
       </div>
       <div class="mobile-nav-body">
 
-        <div class="mobile-nav-section-label">Navegação</div>
-        ${linksHtml}
+        <div class="mobile-nav-section-label" id="mobileNavLabelNav">${t.navigation}</div>
+        <div id="mobileNavLinks">
+          ${linksHtml}
+        </div>
 
         <div id="mobileDynamicTopics"></div>
 
         <div class="mobile-nav-divider"></div>
-        <div class="mobile-nav-section-label">Ações</div>
+        <div class="mobile-nav-section-label" id="mobileNavLabelActions">${t.actions}</div>
         
-        <button class="mobile-nav-link" onclick="openHistory(); closeMobileNav();">
+        <button class="mobile-nav-link" onclick="openHistory(); closeMobileNav();" id="mobileNavLinkHistory">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-          Histórico
+          <span class="link-text">${t.history}</span>
         </button>
 
-        <button class="mobile-nav-link" onclick="openFavorites(); closeMobileNav();">
+        <button class="mobile-nav-link" onclick="openFavorites(); closeMobileNav();" id="mobileNavLinkFavorites">
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
-          Salvos
+          <span class="link-text">${t.saved}</span>
         </button>
 
-        <button class="mobile-nav-link" onclick="toggleLanguage(); closeMobileNav();">
+        <button class="mobile-nav-link" onclick="toggleLanguage(); closeMobileNav();" id="mobileNavLinkLang">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-          Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})
+          <span class="link-text">${t.lang}</span>
         </button>
 
-        <button class="mobile-nav-link" onclick="toggleTheme(); closeMobileNav();">
+        <button class="mobile-nav-link" onclick="toggleTheme(); closeMobileNav();" id="mobileNavLinkTheme">
           <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-          Mudar Tema
+          <span class="link-text">${t.theme}</span>
         </button>
 
         <div class="mobile-nav-divider"></div>
-        <div class="mobile-nav-section-label">Tamanho da Fonte</div>
+        <div class="mobile-nav-section-label" id="mobileNavLabelFont">${t.fontSize}</div>
         <div class="mobile-font-row">
           <button class="mobile-font-btn" id="mobileFontDown" onclick="changeFontSize(-1)">A-</button>
           <button class="mobile-font-btn" id="mobileFontUp" onclick="changeFontSize(1)">A+</button>
@@ -172,7 +201,10 @@ window._updateMobileNavTopics = function (label, optionsList) {
     container.innerHTML = '';
     return;
   }
-  const label_to_use = 'Publicações deste ensinamento';
+
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const label_to_use = currentLang === 'ja' ? '刊行物：テーマ' : 'Publicações deste ensinamento';
+
   let html = `
     <div class="mobile-nav-divider"></div>
     <div class="mobile-nav-section-label">${label_to_use}</div>
@@ -207,6 +239,11 @@ async function toggleTheme() {
 function setLanguage(lang, triggerRender = true) {
   localStorage.setItem('site_lang', lang);
 
+  // Update URL parameter without reloading (standard behavior for language stability)
+  const url = new URL(window.location.href);
+  url.searchParams.set('lang', lang);
+  window.history.replaceState({}, '', url);
+
   // Update toggle button state
   const toggleBtn = document.getElementById('lang-toggle');
   if (toggleBtn) {
@@ -214,30 +251,137 @@ function setLanguage(lang, triggerRender = true) {
       toggleBtn.innerText = '日本語';
       toggleBtn.title = 'Mudar para Japonês';
     } else {
-      toggleBtn.innerText = 'PT';
+      toggleBtn.innerText = 'Português';
       toggleBtn.title = 'Mudar para Português';
     }
+  }
+
+  // Update Header Title (Logo)
+  const headerLogo = document.querySelector('.header__logo');
+  if (headerLogo) {
+    const ptTitle = 'Biblioteca Sagrada';
+    const jaTitle = '御教え図書館';
+    // Preserve the logo-circle if it exists
+    const logoCircle = headerLogo.querySelector('.logo-circle');
+    headerLogo.innerHTML = '';
+    if (logoCircle) headerLogo.appendChild(logoCircle);
+    headerLogo.appendChild(document.createTextNode(lang === 'ja' ? jaTitle : ptTitle));
   }
 
   // Refresh mobile nav if it's open or exists
   const mobileNav = document.getElementById('mobileNavOverlay');
   if (mobileNav) {
-    // We could re-init or just re-run the part that builds it, 
-    // but for simplicity we'll just let the user re-open it 
-    // or we'd need to update the text specifically.
-    // Actually, let's update the mobile link text if it's there.
-    const mobileLangLink = mobileNav.querySelector('button[onclick*="toggleLanguage"]');
-    if (mobileLangLink) {
-      mobileLangLink.innerHTML = `
-        <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Mudar Idioma (${lang === 'pt' ? 'Português' : '日本語'})
-      `;
+    const menuTexts = {
+      pt: {
+        title: 'Biblioteca Sagrada',
+        close: 'Fechar menu',
+        navigation: 'Navegação',
+        actions: 'AÇÕES',
+        history: 'Histórico',
+        saved: 'Salvos',
+        lang: '日本語',
+        theme: 'Mudar Tema',
+        fontSize: 'Tamanho da Fonte'
+      },
+      ja: {
+        title: '御教え図書館',
+        close: 'メニューを閉じる',
+        navigation: 'ナビゲーション',
+        actions: '操作',
+        history: '履歴',
+        saved: 'お気に入り',
+        lang: 'Português',
+        theme: 'テーマ切替',
+        fontSize: 'フォントサイズ'
+      }
+    };
+    const t = menuTexts[lang] || menuTexts.pt;
+
+    const updateLabel = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = text;
+    };
+    const updateLink = (id, text) => {
+      const el = document.getElementById(id);
+      if (el) {
+        const textSpan = el.querySelector('.link-text');
+        if (textSpan) textSpan.textContent = text;
+      }
+    };
+
+    updateLabel('mobileMenuTitle', t.title);
+    updateLabel('mobileNavLabelNav', t.navigation);
+    updateLabel('mobileNavLabelActions', t.actions);
+    updateLabel('mobileNavLabelFont', t.fontSize);
+    updateLink('mobileNavLinkHistory', t.history);
+    updateLink('mobileNavLinkFavorites', t.saved);
+    updateLink('mobileNavLinkLang', t.lang);
+    updateLink('mobileNavLinkTheme', t.theme);
+
+    const closeBtn = document.getElementById('mobileNavClose');
+    if (closeBtn) closeBtn.setAttribute('aria-label', t.close);
+
+    // Update Mobile Nav Links (translate them)
+    const mobileLinksContainer = document.getElementById('mobileNavLinks');
+    if (mobileLinksContainer) {
+      const desktopNav = document.querySelector('.header__nav');
+      const navLinks = desktopNav ? Array.from(desktopNav.querySelectorAll('a')) : [];
+      const linksHtml = navLinks.map(a => {
+        let text = a.textContent.trim();
+        // Translate common nav terms
+        if (lang === 'ja') {
+          if (text.includes('Início') || text.includes('⌂')) text = 'トップ';
+          else if (text.includes('Vol 1') || a.href.includes('index2.html')) text = '巻 1';
+          else if (text.includes('Vol 2') || a.href.includes('shumeic2')) text = '巻 2';
+          else if (text.includes('Vol 3') || a.href.includes('shumeic3')) text = '巻 3';
+          else if (text.includes('Vol 4') || a.href.includes('shumeic4')) text = '巻 4';
+        }
+        const icon = a.href.includes('index.html') && a.textContent.trim().startsWith('⌂')
+          ? `<svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>`
+          : `<svg class="nav-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`;
+        return `<a href="${a.href}" class="mobile-nav-link">${icon}${text}</a>`;
+      }).join('');
+      mobileLinksContainer.innerHTML = linksHtml;
     }
   }
 
   // Toggle visibility of lang-specific elements
   document.querySelectorAll('.lang-pt').forEach(el => el.style.display = (lang === 'pt' ? 'inline' : 'none'));
   document.querySelectorAll('.lang-ja').forEach(el => el.style.display = (lang === 'ja' ? 'inline' : 'none'));
+
+  // Update select options with data-pt/data-ja
+  document.querySelectorAll('option[data-pt]').forEach(opt => {
+    opt.textContent = lang === 'ja' ? (opt.getAttribute('data-ja') || opt.getAttribute('data-pt')) : opt.getAttribute('data-pt');
+  });
+
+  // Refresh mobile nav topics if select exists
+  const desktopNav = document.querySelector('.header__nav');
+  const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
+  if (headerNavSelect && headerNavSelect.id !== 'readerTopicSelect') {
+    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => ({
+      value: o.value,
+      text: o.textContent
+    }));
+    if (opts.length > 0) {
+      window._updateMobileNavTopics('Temas do Volume', opts);
+    }
+  }
+
+  // Translate Search Modal
+  const searchInput = document.getElementById('searchInput');
+  if (searchInput) {
+    searchInput.placeholder = lang === 'ja' ? '御教えから探す...' : 'Buscar nos ensinamentos...';
+  }
+  const filterLabels = document.querySelectorAll('.search-filters .filter-label');
+  if (filterLabels.length >= 3) {
+    const labels = lang === 'ja' ? ['すべて', 'タイトルのみ', '本文のみ'] : ['Tudo', 'Só Título', 'Só Conteúdo'];
+    filterLabels.forEach((label, idx) => {
+      const input = label.querySelector('input');
+      label.innerHTML = '';
+      if (input) label.appendChild(input);
+      label.appendChild(document.createTextNode(' ' + labels[idx]));
+    });
+  }
 
   // Trigger content re-rendering if the function exists
   if (triggerRender && typeof window.renderContent === 'function') {
@@ -267,7 +411,9 @@ async function getSearchIndex() {
 
   isFetchingIndex = true;
   const resultsEl = document.getElementById('searchResults');
-  if (resultsEl) resultsEl.innerHTML = '<li class="search-loading">Carregando índice de pesquisa...</li>';
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const loadingMsg = currentLang === 'ja' ? '検索インデックスを読み込み中...' : 'Carregando índice de pesquisa...';
+  if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${loadingMsg}</li>`;
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
 
@@ -277,7 +423,8 @@ async function getSearchIndex() {
     searchIndex = await response.json();
   } catch (err) {
     console.error(err);
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-error">Erro ao carregar o índice.</li>';
+    const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice.';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-error">${errorMsg}</li>`;
   } finally {
     isFetchingIndex = false;
   }
@@ -302,8 +449,10 @@ window.closeSearch = function () {
 
 function performSearch(query) {
   const resultsEl = document.getElementById('searchResults');
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
   if (!query || query.trim().length < 3) {
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Digite pelo menos 3 caracteres...</li>';
+    const minCharsMsg = currentLang === 'ja' ? '3文字以上入力してください...' : 'Digite pelo menos 3 caracteres...';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${minCharsMsg}</li>`;
     return;
   }
 
@@ -352,7 +501,8 @@ function performSearch(query) {
   results = results.slice(0, 50);
 
   if (results.length === 0) {
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Nenhum resultado.</li>';
+    const noResultsMsg = currentLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${noResultsMsg}</li>`;
     return;
   }
 
@@ -540,7 +690,9 @@ document.addEventListener('DOMContentLoaded', () => {
     clearTimeout(searchTimeout);
     const query = searchInput.value;
     const resultsEl = document.getElementById('searchResults');
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-loading">Buscando...</li>';
+    const currentLang = localStorage.getItem('site_lang') || 'pt';
+    const searchingMsg = currentLang === 'ja' ? '検索中...' : 'Buscando...';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${searchingMsg}</li>`;
     searchTimeout = setTimeout(async () => {
       await getSearchIndex();
       performSearch(query);
@@ -631,8 +783,10 @@ const _originalPerformSearch = performSearch;
 // Wrap performSearch to add Japanese field support
 function performSearch(query) {
   const resultsEl = document.getElementById('searchResults');
+  const activeLang = localStorage.getItem('site_lang') || 'pt';
   if (!query || query.trim().length < 2) {
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Digite pelo menos 2 caracteres...</li>';
+    const minCharsMsg = activeLang === 'ja' ? '2文字以上入力してください...' : 'Digite pelo menos 2 caracteres...';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${minCharsMsg}</li>`;
     return;
   }
 
@@ -640,7 +794,14 @@ function performSearch(query) {
 
   const q = query.trim();
   const qLower = q.toLowerCase();
-  const activeLang = localStorage.getItem('site_lang') || 'pt';
+
+  // Support for multiple search terms with & (AND logic)
+  const queryParts = qLower.split('&').map(p => p.trim()).filter(p => p.length >= 2);
+  if (queryParts.length === 0) {
+    const invalidQueryMsg = activeLang === 'ja' ? '有効な検索ワードを入力してください...' : 'Digite termos de busca válidos...';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${invalidQueryMsg}</li>`;
+    return;
+  }
 
   const filterNodes = document.querySelectorAll('input[name="searchFilter"]');
   let filterMode = 'all';
@@ -650,12 +811,10 @@ function performSearch(query) {
 
   let results = [];
   for (let item of searchIndex) {
-    let score = 0;
-
     // PT fields (always available)
     const tPt = (item.t || '').toLowerCase();
     const cPt = (item.c || '').toLowerCase();
-    // JA fields (optional — added by updated build script)
+    // JA fields (optional)
     const tJa = (item.tj || '').toLowerCase();
     const cJa = (item.cj || '').toLowerCase();
 
@@ -666,31 +825,59 @@ function performSearch(query) {
     const titleAlt = activeLang === 'ja' ? tPt : tJa;
     const contentAlt = activeLang === 'ja' ? cPt : cJa;
 
-    let matchTitle = titleSearch.includes(qLower) || titleAlt.includes(qLower);
-    let matchContent = contentSearch.includes(qLower) || contentAlt.includes(qLower);
+    let allMatched = true;
+    let score = 0;
+    let matchedTitleOnce = false;
+    let matchedContentOnce = false;
 
-    if (titleSearch === qLower || titleAlt === qLower) score += 100;
-    else if (matchTitle) score += 50;
+    for (const part of queryParts) {
+      const matchTitlePart = titleSearch.includes(part) || titleAlt.includes(part);
+      const matchContentPart = contentSearch.includes(part) || contentAlt.includes(part);
 
-    if (matchContent) {
-      score += 10;
-      // Build snippet from whichever content matched
+      if (!matchTitlePart && !matchContentPart) {
+        allMatched = false;
+        break;
+      }
+
+      if (titleSearch === part || titleAlt === part) score += 100;
+      else if (matchTitlePart) score += 50;
+
+      if (matchContentPart) score += 10;
+
+      if (matchTitlePart) matchedTitleOnce = true;
+      if (matchContentPart) matchedContentOnce = true;
+    }
+
+    if (!allMatched) continue;
+    if (filterMode === 'title' && !matchedTitleOnce) continue;
+    if (filterMode === 'content' && !matchedContentOnce) continue;
+
+    if (matchedContentOnce) {
+      // Build snippet from whichever content matched first part for simplicity, 
+      // or the part that yields the first match.
       const raw = activeLang === 'ja' ? (item.cj || item.c || '') : (item.c || '');
       const rawLower = raw.toLowerCase();
-      const idx = rawLower.indexOf(qLower);
-      if (idx !== -1) {
-        const start = Math.max(0, idx - 60);
-        const end = Math.min(raw.length, idx + q.length + 60);
+
+      let bestPart = queryParts[0];
+      let bestIdx = -1;
+      for (const part of queryParts) {
+        let idx = rawLower.indexOf(part);
+        if (idx !== -1) {
+          bestPart = part;
+          bestIdx = idx;
+          break;
+        }
+      }
+
+      if (bestIdx !== -1) {
+        const start = Math.max(0, bestIdx - 60);
+        const end = Math.min(raw.length, bestIdx + bestPart.length + 60);
         let snippet = raw.substring(start, end);
         if (start > 0) snippet = '...' + snippet;
         if (end < raw.length) snippet += '...';
         item.snippet = snippet;
       }
     }
-
-    if (filterMode === 'title' && !matchTitle) continue;
-    if (filterMode === 'content' && !matchContent) continue;
-    if (score === 0) continue;
 
     results.push({ ...item, score });
   }
@@ -699,17 +886,21 @@ function performSearch(query) {
   results = results.slice(0, 50);
 
   if (results.length === 0) {
-    if (resultsEl) resultsEl.innerHTML = '<li class="search-empty">Nenhum resultado.</li>';
+    const noResultsMsg = activeLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${noResultsMsg}</li>`;
     return;
   }
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-  const escapedQ = q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  // Escape all parts for regex
+  const escapedParts = queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const highlightRegex = new RegExp(`(${escapedParts.join('|')})`, 'gi');
+
   resultsEl.innerHTML = results.map(r => {
     const href = `${basePath}reader.html?vol=${r.v}&file=${r.f}&search=${encodeURIComponent(q)}`;
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
-      .replace(new RegExp(`(${escapedQ})`, 'gi'), '<mark class="search-highlight">$1</mark>');
+      .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
     return `<li><a href="${href}" class="search-result-item" onclick="closeSearch()">
       <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
       <div class="search-result-context">${highlight}</div>
