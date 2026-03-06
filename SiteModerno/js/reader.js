@@ -75,8 +75,19 @@ document.addEventListener('DOMContentLoaded', async () => {
                 } catch (e) { }
 
                 const indexTitle = (indexTitles[volId] && indexTitles[volId][filename]) ? indexTitles[volId][filename] : null;
-                const fallbackTitle = isPt ? (currentTopics[0].title_ptbr || currentTopics[0].title_pt || currentTopics[0].title) : currentTopics[0].title;
-                let mainTitleToDisplay = (isPt && indexTitle) ? indexTitle : fallbackTitle;
+                const jaSpecificTitle = currentTopics[0].title_ja || currentTopics[0].title;
+                const ptSpecificTitle = currentTopics[0].title_ptbr || currentTopics[0].title_pt || currentTopics[0].title;
+
+                let mainTitleToDisplay = indexTitle || (isPt ? ptSpecificTitle : jaSpecificTitle);
+
+                // If in Japanese mode and the selected title looks Portuguese (contains Roman letters but no Japanese characters),
+                // and we have a specific Japanese title available, switch to it.
+                if (!isPt && mainTitleToDisplay) {
+                    const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(mainTitleToDisplay);
+                    if (!hasJapanese && jaSpecificTitle && jaSpecificTitle !== mainTitleToDisplay) {
+                        mainTitleToDisplay = jaSpecificTitle;
+                    }
+                }
 
                 // If title is generic or missing, peek into topics for a better one
                 const genericRegex = /O Método do Johrei|Princípio do Johrei|Sobre a Verdade|Verdade \d|Ensinamento \d|Parte \d|JH\d|JH \d|Publicação \d|Agricultura Natural|Instrução Divina|Purificação Equilibrada|Coletânea de fragmentos/i;
@@ -448,24 +459,35 @@ document.addEventListener('DOMContentLoaded', async () => {
                     }
                 }
 
+                const navLabels = {
+                    pt: { prev: '← Anterior', next: 'Próximo →' },
+                    ja: { prev: '← 前へ', next: '次へ →' }
+                };
+                const nl = navLabels[lang] || navLabels.pt;
+
                 // Navigation Footer
                 const navFooter = `
                 <div class="reader-nav-footer" style="display: flex; justify-content: space-between; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
-                    ${prevFile ? `<a href="?vol=${volId}&file=${prevFile}" class="btn-zen" style="text-decoration:none">← Anterior</a>` : '<span></span>'}
-                    ${nextFile ? `<a href="?vol=${volId}&file=${nextFile}" class="btn-zen" style="text-decoration:none">Próximo →</a>` : '<span></span>'}
+                    ${prevFile ? `<a href="?vol=${volId}&file=${prevFile}" class="btn-zen" style="text-decoration:none">${nl.prev}</a>` : '<span></span>'}
+                    ${nextFile ? `<a href="?vol=${volId}&file=${nextFile}" class="btn-zen" style="text-decoration:none">${nl.next}</a>` : '<span></span>'}
                 </div>
             `;
 
                 const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
 
-                // Check if current is favorited
+                const favLabels = {
+                    pt: { saved: 'Salvo', save: 'Salvar', top: 'Topo' },
+                    ja: { saved: '保存済み', save: '保存', top: 'トップ' }
+                };
+                const fl = favLabels[lang] || favLabels.pt;
+
                 const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
                 const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
                 const favClass = isFavorited ? 'active' : '';
                 const favIcon = isFavorited
                     ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`
                     : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
-                const favText = isFavorited ? 'Salvo' : 'Salvar';
+                const favText = isFavorited ? fl.saved : fl.save;
 
                 const toolbarHtml = `
                 <div class="reader-toolbar">
@@ -476,15 +498,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <div class="toolbar-divider"></div>
                     <button class="btn-zen" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                         <span class="toolbar-tooltip">Topo</span>
+                         <span class="toolbar-tooltip">${fl.top}</span>
                     </button>
                 </div>
             `;
 
+                const breadcrumbLabels = {
+                    pt: { home: 'Início', volume: 'Volume' },
+                    ja: { home: 'トップ', volume: '巻' }
+                };
+                const bl = breadcrumbLabels[lang] || breadcrumbLabels.pt;
+
                 container.innerHTML = `
                 <nav class="breadcrumbs">
-                    <a href="index.html">Início</a> <span>/</span> 
-                    <a href="${volPath}">Volume ${volId.slice(-1)}</a> <span>/</span>
+                    <a href="index.html">${bl.home}</a> <span>/</span> 
+                    <a href="${volPath}">${bl.volume} ${volId.slice(-1)}</a> <span>/</span>
                     <span style="color:var(--text-main)">${mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' ')}</span>
                 </nav>
                 <div class="reader-container">
@@ -495,40 +523,52 @@ document.addEventListener('DOMContentLoaded', async () => {
             `;
 
                 if (searchQuery) {
-                    const q = searchQuery.toLowerCase();
-                    // Escape regex special chars (e.g. hyphens in "7-5-3")
-                    const escapedQ = searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-                    const contentBlocks = container.querySelectorAll('.topic-content, .topic-title-large');
-                    let firstMatch = null;
+                    const q = searchQuery.trim().toLowerCase();
+                    // Support multiple search terms with &
+                    const queryParts = q.split('&').map(p => p.trim()).filter(p => p.length >= 2);
 
-                    contentBlocks.forEach(block => {
-                        const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, null, false);
-                        let node;
-                        const textNodes = [];
-                        while (node = walker.nextNode()) textNodes.push(node);
+                    if (queryParts.length > 0) {
+                        // Escape regex special chars for all parts
+                        const escapedParts = queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+                        const highlightRegex = new RegExp(`(${escapedParts.join('|')})`, 'gi');
 
-                        textNodes.forEach(textNode => {
-                            if (textNode.parentNode && textNode.parentNode.nodeName === 'MARK') return;
-                            const val = textNode.nodeValue;
-                            if (val.toLowerCase().includes(q) && val.trim().length > 0) {
-                                const regex = new RegExp(`(${escapedQ})`, 'gi');
-                                const fragment = document.createDocumentFragment();
-                                const div = document.createElement('div');
-                                div.innerHTML = val.replace(regex, '<mark class="search-highlight">$1</mark>');
-                                while (div.firstChild) fragment.appendChild(div.firstChild);
+                        const contentBlocks = container.querySelectorAll('.topic-content, .topic-title-large');
+                        let firstMatch = null;
 
-                                if (!firstMatch) {
-                                    firstMatch = fragment.querySelector('mark');
+                        contentBlocks.forEach(block => {
+                            const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, null, false);
+                            let node;
+                            const textNodes = [];
+                            while (node = walker.nextNode()) textNodes.push(node);
+
+                            textNodes.forEach(textNode => {
+                                if (textNode.parentNode && textNode.parentNode.nodeName === 'MARK') return;
+                                const val = textNode.nodeValue;
+
+                                // Check if any part matches
+                                const hasMatch = queryParts.some(part => val.toLowerCase().includes(part));
+
+                                if (hasMatch && val.trim().length > 0) {
+                                    const fragment = document.createDocumentFragment();
+                                    const div = document.createElement('div');
+                                    div.innerHTML = val.replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
+                                    while (div.firstChild) fragment.appendChild(div.firstChild);
+
+                                    if (!firstMatch) {
+                                        firstMatch = fragment.querySelector('mark');
+                                    }
+                                    if (textNode.parentNode) {
+                                        textNode.parentNode.replaceChild(fragment, textNode);
+                                    }
                                 }
-                                textNode.parentNode.replaceChild(fragment, textNode);
-                            }
+                            });
                         });
-                    });
 
-                    if (firstMatch) {
-                        setTimeout(() => {
-                            firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }, 400);
+                        if (firstMatch) {
+                            setTimeout(() => {
+                                firstMatch.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 400);
+                        }
                     }
                 }
             };
