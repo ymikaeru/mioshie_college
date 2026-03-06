@@ -1,0 +1,149 @@
+[
+  {
+    "source_path": "theme_0_topic_150",
+    "expected_filename": "kyousan4.html",
+    "returned_filename": "kirisuto1.html",
+    "title_ptbr": "Sobre o Cristianismo 1 (Cristo é o Redentor)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Cristianismo</font>　1<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(Cristo é o Redentor)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_162",
+    "expected_filename": "kirisuto1.html",
+    "returned_filename": "kirisuto2.html",
+    "title_ptbr": "Sobre o Cristianismo 2 (A Origem do Bem e do Mal e o Cristianismo)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Cristianismo</font>　2<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(A Origem do Bem e do Mal e o Cristianismo)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_165",
+    "expected_filename": "kirisuto2.html",
+    "returned_filename": "kirisuto3.html",
+    "title_ptbr": "Sobre o Cristianismo 3 (A Possessão de Cristo)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Cristianismo</font>　3<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(A Possessão de Cristo)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_177",
+    "expected_filename": "kirisuto3.html",
+    "returned_filename": "kirisuto4.html",
+    "title_ptbr": "Sobre o Cristianismo 4 (A Situação Atual do Cristianismo)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Cristianismo</font>　4<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(A Situação Atual do Cristianismo)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_181",
+    "expected_filename": "kirisuto4.html",
+    "returned_filename": "kirisuto5.html",
+    "title_ptbr": "Sobre o Cristianismo 5 (Sobre os erros da Bíblia, etc.)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Cristianismo</font>　5<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(Sobre os erros da Bíblia, etc.)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_221",
+    "expected_filename": "nitiren.html",
+    "returned_filename": "oomoto1.html",
+    "title_ptbr": "Sobre a Religião Oomoto 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Religião Oomoto</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_228",
+    "expected_filename": "oomoto1.html",
+    "returned_filename": "oomoto2.html",
+    "title_ptbr": "Sobre a Religião Oomoto 2",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Religião Oomoto</font>　2<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_238",
+    "expected_filename": "oomoto2.html",
+    "returned_filename": "oomoto3.html",
+    "title_ptbr": "Sobre a Religião Oomoto 3",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Religião Oomoto</font>　3<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_286",
+    "expected_filename": "sinkyuu2.html",
+    "returned_filename": "koxtuka1.html",
+    "title_ptbr": "Sobre a Teoria do Estado 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Teoria do Estado</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_298",
+    "expected_filename": "koxtuka1.html",
+    "returned_filename": "koxtuka2.html",
+    "title_ptbr": "Sobre a Teoria do Estado 2 (Diretrizes para a Reconstrução do Japão)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Teoria do Estado</font>　2<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(Diretrizes para a Reconstrução do Japão)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_306",
+    "expected_filename": "koxtuka2.html",
+    "returned_filename": "koxtuka3.html",
+    "title_ptbr": "Sobre a Teoria do Estado 3 (A Reconstrução da Alemanha e da Itália)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Teoria do Estado</font>　3<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(A Reconstrução da Alemanha e da Itália)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_339",
+    "expected_filename": "minshuSHUGI.html",
+    "returned_filename": "kokubou1.html",
+    "title_ptbr": "Sobre a Questão da Defesa Nacional 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Questão da Defesa Nacional</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_352",
+    "expected_filename": "kokubou1.html",
+    "returned_filename": "kokubou2.html",
+    "title_ptbr": "Sobre a Questão da Defesa Nacional 2",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Questão da Defesa Nacional</font>　2<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_467",
+    "expected_filename": "sisou.html",
+    "returned_filename": "sekai1.html",
+    "title_ptbr": "Sobre o Mundialismo 1 (Artigo Divino)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Mundialismo</font>　1<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(Artigo Divino)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_474",
+    "expected_filename": "sekai1.html",
+    "returned_filename": "sekai2.html",
+    "title_ptbr": "Sobre o Mundialismo 2 (Palestras e Ensinamentos)",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre o Mundialismo</font>　2<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　(Palestras e Ensinamentos)</font><br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_493",
+    "expected_filename": "USAsekai.html",
+    "returned_filename": "simaguni1.html",
+    "title_ptbr": "Sobre a Mentalidade Insular dos Japoneses 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Mentalidade Insular dos Japoneses</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_498",
+    "expected_filename": "simaguni1.html",
+    "returned_filename": "simaguni2.html",
+    "title_ptbr": "Sobre a Mentalidade Insular dos Japoneses 2",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Mentalidade Insular dos Japoneses</font>　2<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_531",
+    "expected_filename": "hiTUKI.html",
+    "returned_filename": "daizyouSHOUZYOU1.html",
+    "title_ptbr": "Sobre Daijo e Shojo 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre Daijo e Shojo</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_535",
+    "expected_filename": "daizyouSHOUZYOU1.html",
+    "returned_filename": "daizyouSHOUZYOU2.html",
+    "title_ptbr": "Sobre Daijo e Shojo 2",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre Daijo e Shojo</font>　2<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_547",
+    "expected_filename": "daizyouSHOUZYOU2.html",
+    "returned_filename": "izunome1.html",
+    "title_ptbr": "Sobre a Atuação de Izunome 1",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Atuação de Izunome</font>　1<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  },
+  {
+    "source_path": "theme_0_topic_554",
+    "expected_filename": "izunome1.html",
+    "returned_filename": "izunome2.html",
+    "title_ptbr": "Sobre a Atuação de Izunome 2",
+    "content_ptbr": "<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">　　　<font color=\"#0000ff\" face=\"メイリオ\" size=\"+2\">Sobre a Atuação de Izunome</font>　2<br/>\n</font><br/>\n</p>\n<blockquote>\n<blockquote>\n<blockquote><br/>"
+  }
+]
