@@ -2,7 +2,6 @@ const CACHE_NAME = 'shumei-pwa-v2';
 const APP_SHELL = [
   './',
   './index.html',
-  './index2.html',
   './reader.html',
   './css/styles.css',
   './js/toggle.js',
