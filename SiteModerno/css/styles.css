@@ -53,7 +53,7 @@ body {
   background: var(--bg-color);
   color: var(--text-main);
   line-height: 1.6;
-  font-size: 16px;
+  font-size: 15px;
   -webkit-font-smoothing: antialiased;
   transition: background 0.5s var(--ease), color 0.5s var(--ease);
   overflow-x: hidden;
@@ -333,7 +333,7 @@ html {
 
 .topic-card__title {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 600;
   color: var(--text-main);
   line-height: 1.4;
