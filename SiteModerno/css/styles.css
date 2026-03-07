@@ -1117,6 +1117,15 @@ select[data-tooltip]::after {
     margin-bottom: 32px;
   }
 
+  #backToIndexBtn .lang-pt,
+  #backToIndexBtn .lang-ja {
+    display: none !important;
+  }
+
+  #backToIndexBtn svg {
+    margin-right: 0 !important;
+  }
+
   /* Force cards to single column */
   .topic-list {
     grid-template-columns: 1fr !important;
@@ -1207,7 +1216,7 @@ select[data-tooltip]::after {
 /* ============================================================
    BREAKPOINT: ≤ 380px (very small phones)
    ============================================================ */
-@media (max-width: 380px) {
+@media (max-width: 480px) {
   .header__logo {
     font-size: 0.95rem;
   }
@@ -1238,7 +1247,7 @@ select[data-tooltip]::after {
   }
 
   .mobile-br {
-    display: block;
+    display: block !important;
   }
 }
 

@@ -102,6 +102,20 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('readHistory', JSON.stringify(filtered.slice(0, 20)));
         } catch (e) { }
 
+        // Update Back to Index button
+        const backBtn = document.getElementById('backToIndexBtn');
+        if (backBtn) {
+            let indexUrl = 'index.html';
+            if (volId === 'shumeic1') indexUrl = 'index2.html';
+            else if (volId === 'shumeic2') indexUrl = 'shumeic2/index.html';
+            else if (volId === 'shumeic3') indexUrl = 'shumeic3/index.html';
+            else if (volId === 'shumeic4') indexUrl = 'shumeic4/index2.html';
+
+            // Adjust path if needed (though reader.html is currently root-level)
+            backBtn.href = indexUrl;
+            backBtn.style.display = 'flex';
+        }
+
         // Navigation Elements Footer
         const nl = { pt: { prev: '← Anterior', next: 'Próximo →' }, ja: { prev: '← 前へ', next: '次へ →' } }[lang] || { prev: '← Anterior', next: 'Próximo →' };
         const navFooter = `
