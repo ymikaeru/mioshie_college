@@ -22,7 +22,11 @@ function _initMobileNav() {
   const header = document.querySelector('.header');
   if (!header) return;
 
-  // --- 1. Inject hamburger button into header ---
+  // --- 1. Create actions container ---
+  const headerActions = document.createElement('div');
+  headerActions.className = 'header__actions';
+
+  // --- 2. Inject hamburger button ---
   const hamburgerBtn = document.createElement('button');
   hamburgerBtn.className = 'mobile-menu-btn';
   hamburgerBtn.setAttribute('aria-label', 'Menu de navegação');
@@ -33,7 +37,9 @@ function _initMobileNav() {
       <line x1="3" y1="12" x2="21" y2="12"/>
       <line x1="3" y1="18" x2="21" y2="18"/>
     </svg>`;
-  header.appendChild(hamburgerBtn);
+
+  headerActions.appendChild(hamburgerBtn);
+  header.appendChild(headerActions);
 
   // --- 2. Build nav links from existing desktop nav ---
   const desktopNav = header.querySelector('.header__nav');
@@ -159,7 +165,7 @@ function _initMobileNav() {
     if (e.key === 'Escape') closeMobileNav();
   });
 
-  // --- 5. Inject search button to the LEFT of the hamburger ---
+  // --- 5. Inject search button to the LEFT of the hamburger inside actions ---
   const searchBtn = document.createElement('button');
   searchBtn.className = 'mobile-search-btn';
   searchBtn.setAttribute('aria-label', 'Buscar');
@@ -168,7 +174,7 @@ function _initMobileNav() {
     <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
   </svg>`;
   searchBtn.addEventListener('click', () => openSearch());
-  header.insertBefore(searchBtn, hamburgerBtn);
+  headerActions.insertBefore(searchBtn, hamburgerBtn);
 
   // --- 6. Initialize context-aware topics in the mobile nav ---
   const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
@@ -907,3 +913,71 @@ function performSearch(query) {
     </a></li>`;
   }).join('');
 }
+
+// ============================================================
+// SMART HEADER — Hide on scroll down, show on scroll up/idle
+// ============================================================
+(function () {
+  let lastScrollY = window.pageYOffset;
+  let hideTimer = null;
+  const HIDE_DELAY = 4500; // 4.5 seconds of inactivity
+  const SCROLL_THRESHOLD = 10; // min scroll before hiding
+
+  function initSmartHeader() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    function showHeader() {
+      header.classList.remove('header--hidden');
+      resetTimer();
+    }
+
+    function hideHeader() {
+      // Don't hide if at the very top or if any menu is open
+      const isAtTop = window.pageYOffset < 50;
+      const anyOpen = document.querySelector(
+        '.search-modal-overlay.active, .history-modal-overlay.active, .favorites-modal-overlay.active, .mobile-nav-overlay.open'
+      );
+
+      if (!isAtTop && !anyOpen) {
+        header.classList.add('header--hidden');
+      }
+    }
+
+    function resetTimer() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(hideHeader, HIDE_DELAY);
+    }
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.pageYOffset;
+      const delta = currentScrollY - lastScrollY;
+
+      if (Math.abs(delta) > SCROLL_THRESHOLD) {
+        if (delta > 0 && currentScrollY > 100) {
+          // Scrolling down
+          hideHeader();
+        } else {
+          // Scrolling up
+          showHeader();
+        }
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // Interactions that reveal the header
+    const wakeEvents = ['mousedown', 'touchstart', 'keydown', 'click'];
+    wakeEvents.forEach(evt => {
+      document.addEventListener(evt, showHeader, { passive: true });
+    });
+
+    // Initial timer
+    resetTimer();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartHeader);
+  } else {
+    initSmartHeader();
+  }
+})();

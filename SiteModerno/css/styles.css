@@ -17,7 +17,7 @@
   /* Layout */
   --max-width-content: 1024px;
   --container-width: 1040px;
-  --nav-height: 80px;
+  --nav-height: 60px;
   --radius: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -56,12 +56,21 @@ body {
   font-size: 17px;
   -webkit-font-smoothing: antialiased;
   transition: background 0.5s var(--ease), color 0.5s var(--ease);
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* --- Premium Header --- */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background: var(--surface-80);
@@ -73,7 +82,14 @@ body {
   align-items: center;
   padding: 0 16px;
   z-index: 2000;
-  gap: 8px;
+  gap: 16px;
+}
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-shrink: 0;
 }
 
 .header__logo {
@@ -153,6 +169,8 @@ body {
   display: flex;
   justify-content: center;
   min-height: calc(100vh - var(--nav-height));
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* --- Index Page & Cards --- */
@@ -247,10 +265,18 @@ body {
 /* Index Hierarchy */
 .index-title {
   font-family: var(--font-serif);
-  font-size: 48px;
+  font-size: clamp(22px, 6vw, 42px);
   color: var(--text-main);
   margin-bottom: 56px;
   text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  padding: 0 10px;
+  max-width: 100%;
+}
+
+.mobile-br {
+  display: none;
 }
 
 .section-label {
@@ -311,6 +337,10 @@ body {
   font-weight: 600;
   color: var(--text-main);
   line-height: 1.4;
+  flex: 1;
+  min-width: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* --- Index Structure (Themes & Spacing) --- */
@@ -1055,13 +1085,15 @@ select[data-tooltip]::after {
 
   /* --- Main layout --- */
   .main {
-    padding: 0 0 100px;
-    /* no side padding — content fills screen */
+    padding: var(--nav-height) 0 100px;
+    width: 100%;
+    margin: 0;
+    /* Removed overflow-x: hidden as it breaks sticky header on some mobile browsers */
   }
 
   /* --- Glass pane: no card look on mobile --- */
   .glass-pane {
-    padding: 24px 20px;
+    padding: 24px 16px;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -1069,6 +1101,14 @@ select[data-tooltip]::after {
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
+    margin: 0;
+  }
+
+  .content-wrapper {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   /* --- Index page --- */
@@ -1191,8 +1231,18 @@ select[data-tooltip]::after {
 
   .glass-pane {
     padding: 20px 12px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .mobile-br {
+    display: block;
   }
 }
+
+
 
 /* --- Premium Unified Toolbar --- */
 .reader-toolbar {
@@ -1237,7 +1287,6 @@ select[data-tooltip]::after {
 .reader-toolbar .btn-zen:hover {
   background: var(--accent-soft);
   color: var(--accent);
-  transform: translateY(-4px);
 }
 
 .reader-toolbar .btn-zen.active {
@@ -1250,7 +1299,7 @@ select[data-tooltip]::after {
   width: 1.5px;
   height: 20px;
   background: var(--border);
-  margin: 0 4px;
+  margin: 0 2px;
 }
 
 .toolbar-tooltip {

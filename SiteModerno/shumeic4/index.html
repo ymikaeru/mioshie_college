@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 
 <html lang="pt-BR">
+
 <head>
-<meta charset="utf-8"/>
-<title>Ensinamentos - Biblioteca Sagrada</title>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<link href="../css/styles.css" rel="stylesheet"/>
-<script src="../js/toggle.js?v=1772246362"></script>
-<script>
+    <meta charset="utf-8" />
+    <title>Ensinamentos - Biblioteca Sagrada</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="../css/styles.css" rel="stylesheet" />
+    <script src="../js/toggle.js?v=1772246362"></script>
+    <script>
         // Reader handles its own initialization that differs from Home/Index
         if (!window.location.href.includes('reader.html')) {
             document.addEventListener('DOMContentLoaded', () => {
@@ -16,1763 +17,1793 @@
             });
         }
     </script>
-<script src="../site_data/global_index_titles.js"></script>
+    <script src="../site_data/global_index_titles.js"></script>
 </head>
+
 <body>
-<header class="header">
-<a class="header__logo" href="../index.html">
-<div class="logo-circle">
-<div class="logo-dot"></div>
-</div>
+    <header class="header">
+        <a class="header__logo" href="../index.html">
+            <div class="logo-circle">
+                <div class="logo-dot"></div>
+            </div>
             Biblioteca Sagrada
         </a>
-<div class="header__nav">
-<a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
-<a data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados" href="../index2.html"><span>Vol
+        <div class="header__nav">
+            <a href="../index.html" style="font-weight:600; opacity:0.7;"><span>⌂ Início</span></a>
+            <a data-tooltip="Mundo Espiritual・Espírito Precede a Matéria・Transição da Noite para o Dia・Culto aos Antepassados"
+                href="../index2.html"><span>Vol
                     1</span></a>
-<a data-tooltip="Método Divino de Saúde・Agricultura Natural" href="../shumeic2/index.html"><span>Vol
+            <a data-tooltip="Método Divino de Saúde・Agricultura Natural" href="../shumeic2/index.html"><span>Vol
                     2</span></a>
-<a data-tooltip="A Verdadeira Fé" href="../shumeic3/index.html"><span>Vol 3</span></a>
-<a data-tooltip="Ensinamentos Complementares" href="../shumeic4/index.html"><span>Vol 4</span></a>
-<select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
-<option value="" data-pt="Categorias" data-ja="カテゴリー">Categorias</option>
-<option value="#section-0" data-pt="Os Feitos de Meishu-Sama" data-ja="明主様の御事跡">Os Feitos de Meishu-Sama</option>
-<option value="#section-1" data-pt="Construção do Protótipo do Paraíso Terrestre" data-ja="地上天国の雛形建設">Construção do Protótipo do Paraíso Terrestre</option>
-<option value="#section-2" data-pt="Incompreensão dos de fora" data-ja="外野の無理解">Incompreensão dos de fora</option>
-<option value="#section-3" data-pt="Coleção de Fragmentos Religiosos" data-ja="宗教断片集">Coleção de Fragmentos Religiosos</option>
-<option value="#section-4" data-pt="Análise de Todas as Coisas da Natureza" data-ja="森羅万象の解析">Análise de Todas as Coisas da Natureza</option>
-<option value="#section-5" data-pt="Sobre a Arte" data-ja="芸術について">Sobre a Arte</option>
-<option value="#section-6" data-pt="Sobre a Situação Atual" data-ja="時局について">Sobre a Situação Atual</option>
-</select>
-</div>
-<div class="controls">
-<button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
+            <a data-tooltip="A Verdadeira Fé" href="../shumeic3/index.html"><span>Vol 3</span></a>
+            <a data-tooltip="Ensinamentos Complementares" href="../shumeic4/index.html"><span>Vol 4</span></a>
+            <select class="btn-zen" onchange="location.hash=this.value" style="max-width:140px">
+                <option value="" data-pt="Categorias" data-ja="カテゴリー">Categorias</option>
+                <option value="#section-0" data-pt="Os Feitos de Meishu-Sama" data-ja="明主様の御事跡">Os Feitos de Meishu-Sama
+                </option>
+                <option value="#section-1" data-pt="Construção do Protótipo do Paraíso Terrestre" data-ja="地上天国の雛形建設">
+                    Construção do Protótipo do Paraíso Terrestre</option>
+                <option value="#section-2" data-pt="Incompreensão dos de fora" data-ja="外野の無理解">Incompreensão dos de
+                    fora</option>
+                <option value="#section-3" data-pt="Coleção de Fragmentos Religiosos" data-ja="宗教断片集">Coleção de
+                    Fragmentos Religiosos</option>
+                <option value="#section-4" data-pt="Análise de Todas as Coisas da Natureza" data-ja="森羅万象の解析">Análise de
+                    Todas as Coisas da Natureza</option>
+                <option value="#section-5" data-pt="Sobre a Arte" data-ja="芸術について">Sobre a Arte</option>
+                <option value="#section-6" data-pt="Sobre a Situação Atual" data-ja="時局について">Sobre a Situação Atual
+                </option>
+            </select>
+        </div>
+        <div class="controls">
+            <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
             <button class="btn-zen" onclick="openFavorites()" title="Salvos">⭐</button>
-<button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
-<button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
-<button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
-</div>
-</header>
-<main class="main">
-<div class="content-wrapper">
-<div class="glass-pane">
-<div class="index-header" style="text-align:center; margin-bottom: 64px;">
-<span class="section-label" style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
-<h1 class="index-title" style="margin-top: 16px; font-size: 2.2rem; line-height: 1.4;">
-<span class="lang-pt">Ensinamentos Complementares</span>
-<span class="lang-ja" style="display:none">補足編</span>
-</h1>
-</div>
-<div class="topic-list">
-<div style="height: 12px;"></div>
-<div class="section-header" id="section-0">
-<span class="lang-pt">Os Feitos de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の御事跡</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinti.html">
-<div class="topic-card__icon">1</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Sabedoria Divina de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の神智</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki1.html">
-<div class="topic-card__icon">2</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki2.html">
-<div class="topic-card__icon">3</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki3.html">
-<div class="topic-card__icon">4</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 3</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki4.html">
-<div class="topic-card__icon">5</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 4</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki5.html">
-<div class="topic-card__icon">6</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 5</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki6.html">
-<div class="topic-card__icon">7</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 6</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 6</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki7.html">
-<div class="topic-card__icon">8</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 7</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 7</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki8.html">
-<div class="topic-card__icon">9</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 8</span>
-<span class="lang-ja" style="display:none">明主様御神業の御足跡 8</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide1.html">
-<div class="topic-card__icon">10</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様の思い出 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide2.html">
-<div class="topic-card__icon">11</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様の思い出 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide3.html">
-<div class="topic-card__icon">12</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 3</span>
-<span class="lang-ja" style="display:none">明主様の思い出 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide4.html">
-<div class="topic-card__icon">13</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 4</span>
-<span class="lang-ja" style="display:none">明主様の思い出 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide5.html">
-<div class="topic-card__icon">14</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 5</span>
-<span class="lang-ja" style="display:none">明主様の思い出 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide6.html">
-<div class="topic-card__icon">15</div>
-<div class="topic-card__title">
-<span class="lang-pt">Memórias de Meishu-Sama 6</span>
-<span class="lang-ja" style="display:none">明主様の思い出 6</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nitizyou1.html">
-<div class="topic-card__icon">16</div>
-<div class="topic-card__title">
-<span class="lang-pt">O Cotidiano de Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様の御日常 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nitizyou2.html">
-<div class="topic-card__icon">17</div>
-<div class="topic-card__title">
-<span class="lang-pt">O Cotidiano de Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様の御日常 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=onkoto.html">
-<div class="topic-card__icon">18</div>
-<div class="topic-card__title">
-<span class="lang-pt">Relatos sobre Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の御事</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sixtupitu.html">
-<div class="topic-card__icon">19</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Escritos de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の御執筆</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=waka.html">
-<div class="topic-card__icon">20</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Waka de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の和歌</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan1.html">
-<div class="topic-card__icon">21</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Publicações de Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様の出版 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan2.html">
-<div class="topic-card__icon">22</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Publicações de Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様の出版 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan3.html">
-<div class="topic-card__icon">23</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Publicações de Meishu-Sama 3</span>
-<span class="lang-ja" style="display:none">明主様の出版 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=radio.html">
-<div class="topic-card__icon">24</div>
-<div class="topic-card__title">
-<span class="lang-pt">Aparições de Meishu-Sama no Rádio</span>
-<span class="lang-ja" style="display:none">明主様のラジオ放送御出演</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=taidan.html">
-<div class="topic-card__icon">25</div>
-<div class="topic-card__title">
-<span class="lang-pt">Os Diálogos de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の御対談</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kouzan.html">
-<div class="topic-card__icon">26</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Administração de Minas por Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の鉱山経営</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tozan.html">
-<div class="topic-card__icon">27</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Escaladas de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様の登山</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan1.html">
-<div class="topic-card__icon">28</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Perseguições a Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様の御法難 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan2.html">
-<div class="topic-card__icon">29</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Perseguições a Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様の御法難 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan3.html">
-<div class="topic-card__icon">30</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Perseguições a Meishu-Sama 3</span>
-<span class="lang-ja" style="display:none">明主様の御法難 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan4.html">
-<div class="topic-card__icon">31</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Perseguições a Meishu-Sama 4</span>
-<span class="lang-ja" style="display:none">明主様の御法難 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan5.html">
-<div class="topic-card__icon">32</div>
-<div class="topic-card__title">
-<span class="lang-pt">As Perseguições a Meishu-Sama 5</span>
-<span class="lang-ja" style="display:none">明主様の御法難 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=haxtuten.html">
-<div class="topic-card__icon">33</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Grande Expansão da Igreja Messiânica</span>
-<span class="lang-ja" style="display:none">メシヤ教の大発展</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hawaii1.html">
-<div class="topic-card__icon">34</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Difusão no Havaí durante a vida de Meishu-Sama 1</span>
-<span class="lang-ja" style="display:none">明主様御在世中のハワイ布教 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hawaii2.html">
-<div class="topic-card__icon">35</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Difusão no Havaí durante a vida de Meishu-Sama 2</span>
-<span class="lang-ja" style="display:none">明主様御在世中のハワイ布教 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=USAhukyou.html">
-<div class="topic-card__icon">36</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Difusão nos EUA durante a vida de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様御在世中の米国布教</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=saika.html">
-<div class="topic-card__icon">37</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Viagem de Meishu-Sama para o Oeste</span>
-<span class="lang-ja" style="display:none">明主様の御西下</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=saigo.html">
-<div class="topic-card__icon">38</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Última Obra Divina de Meishu-Sama</span>
-<span class="lang-ja" style="display:none">明主様最後の御神業</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shouten.html">
-<div class="topic-card__icon">39</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Ascensão de Meishu-Sama e o Johrei</span>
-<span class="lang-ja" style="display:none">明主様御昇天と浄霊</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-1">
-<span class="lang-pt">Construção do Protótipo do Paraíso Terrestre</span>
-<span class="lang-ja" style="display:none">地上天国の雛形建設</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gyokusen.html">
-<div class="topic-card__icon">40</div>
-<div class="topic-card__title">
-<span class="lang-pt">Tamagawa-go</span>
-<span class="lang-ja" style="display:none">玉川郷</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinsen1.html">
-<div class="topic-card__icon">41</div>
-<div class="topic-card__title">
-<span class="lang-pt">Hakone Shinsen-kyo 1</span>
-<span class="lang-ja" style="display:none">箱根 神仙郷 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinsen2.html">
-<div class="topic-card__icon">42</div>
-<div class="topic-card__title">
-<span class="lang-pt">Hakone Shinsen-kyo 2</span>
-<span class="lang-ja" style="display:none">箱根 神仙郷 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zuiun.html">
-<div class="topic-card__icon">43</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atami Zuiun-kyo</span>
-<span class="lang-ja" style="display:none">熱海 瑞雲郷</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sakimi.html">
-<div class="topic-card__icon">44</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sede Provisória de Sakimi-cho</span>
-<span class="lang-ja" style="display:none">咲見町仮本部</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=heian1.html">
-<div class="topic-card__icon">45</div>
-<div class="topic-card__title">
-<span class="lang-pt">Kyoto Heian-kyo 1</span>
-<span class="lang-ja" style="display:none">京都 平安郷 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=heian2.html">
-<div class="topic-card__icon">46</div>
-<div class="topic-card__title">
-<span class="lang-pt">Quioto Heian-kyo 2</span>
-<span class="lang-ja" style="display:none">京都 平安郷 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya1.html">
-<div class="topic-card__icon">47</div>
-<div class="topic-card__title">
-<span class="lang-pt">Salão Messias 1</span>
-<span class="lang-ja" style="display:none">メシヤ会館 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya2.html">
-<div class="topic-card__icon">48</div>
-<div class="topic-card__title">
-<span class="lang-pt">Salão Messias 2</span>
-<span class="lang-ja" style="display:none">メシヤ会館 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya3.html">
-<div class="topic-card__icon">49</div>
-<div class="topic-card__title">
-<span class="lang-pt">Salão Messias 3</span>
-<span class="lang-ja" style="display:none">メシヤ会館 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suishou.html">
-<div class="topic-card__icon">50</div>
-<div class="topic-card__title">
-<span class="lang-pt">Palácio de Cristal</span>
-<span class="lang-ja" style="display:none">水晶殿</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=koumyou.html">
-<div class="topic-card__icon">51</div>
-<div class="topic-card__title">
-<span class="lang-pt">Palácio da Luz</span>
-<span class="lang-ja" style="display:none">光明殿</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB1.html">
-<div class="topic-card__icon">52</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte de Hakone 1</span>
-<span class="lang-ja" style="display:none">箱根美術館 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB2.html">
-<div class="topic-card__icon">53</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte de Hakone 2</span>
-<span class="lang-ja" style="display:none">箱根美術館 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB3.html">
-<div class="topic-card__icon">54</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte de Hakone 3</span>
-<span class="lang-ja" style="display:none">箱根美術館 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB4.html">
-<div class="topic-card__icon">55</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte de Hakone 4</span>
-<span class="lang-ja" style="display:none">箱根美術館 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=atamiB.html">
-<div class="topic-card__icon">56</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte de Atami</span>
-<span class="lang-ja" style="display:none">熱海美術館</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=buxtukyouB.html">
-<div class="topic-card__icon">57</div>
-<div class="topic-card__title">
-<span class="lang-pt">Museu de Arte Budista</span>
-<span class="lang-ja" style="display:none">仏教美術館</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=bizyutuhin.html">
-<div class="topic-card__icon">58</div>
-<div class="topic-card__title">
-<span class="lang-pt">O milagre da coleção de obras de arte</span>
-<span class="lang-ja" style="display:none">美術品蒐集の奇蹟</span>
-</div>
-</a>
-<div class="group-spacer"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKEIRIN1.html">
-<div class="topic-card__icon">59</div>
-<div class="topic-card__title">
-<span class="lang-pt">Construção e Plano Divino 1</span>
-<span class="lang-ja" style="display:none">建設と経綸 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKEIRIN2.html">
-<div class="topic-card__icon">60</div>
-<div class="topic-card__title">
-<span class="lang-pt">Construção e Plano Divino 2</span>
-<span class="lang-ja" style="display:none">建設と経綸 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKYOUSEN.html">
-<div class="topic-card__icon">61</div>
-<div class="topic-card__title">
-<span class="lang-pt">O progresso da construção e a expansão da doutrina</span>
-<span class="lang-ja" style="display:none">建設の進展と教線の発展</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata1.html">
-<div class="topic-card__icon">62</div>
-<div class="topic-card__title">
-<span class="lang-pt">O significado do modelo do Paraíso na Terra 1</span>
-<span class="lang-ja" style="display:none">地上天国の型の意義 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata2.html">
-<div class="topic-card__icon">63</div>
-<div class="topic-card__title">
-<span class="lang-pt">O significado do modelo do Paraíso na Terra 2</span>
-<span class="lang-ja" style="display:none">地上天国の型の意義 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata3.html">
-<div class="topic-card__icon">64</div>
-<div class="topic-card__title">
-<span class="lang-pt">O significado do modelo do Paraíso na Terra 3</span>
-<span class="lang-ja" style="display:none">地上天国の型の意義 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata4.html">
-<div class="topic-card__icon">65</div>
-<div class="topic-card__title">
-<span class="lang-pt">O significado do modelo do Paraíso na Terra 4</span>
-<span class="lang-ja" style="display:none">地上天国の型の意義 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneSENDEN.html">
-<div class="topic-card__icon">66</div>
-<div class="topic-card__title">
-<span class="lang-pt">O efeito publicitário do Museu de Arte de Hakone</span>
-<span class="lang-ja" style="display:none">箱根美術館の宣伝効果</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTsenden1.html">
-<div class="topic-card__icon">67</div>
-<div class="topic-card__title">
-<span class="lang-pt">O efeito publicitário do Paraíso na Terra 1</span>
-<span class="lang-ja" style="display:none">地上天国の宣伝効果 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTsenden2.html">
-<div class="topic-card__icon">68</div>
-<div class="topic-card__title">
-<span class="lang-pt">O efeito publicitário do Paraíso na Terra 2</span>
-<span class="lang-ja" style="display:none">地上天国の宣伝効果 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTtamasii.html">
-<div class="topic-card__icon">69</div>
-<div class="topic-card__title">
-<span class="lang-pt">O Paraíso na Terra eleva a alma</span>
-<span class="lang-ja" style="display:none">地上天国は魂を高める</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sidou.html">
-<div class="topic-card__icon">70</div>
-<div class="topic-card__title">
-<span class="lang-pt">A salvação da classe dirigente</span>
-<span class="lang-ja" style="display:none">指導階級の救い</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-2">
-<span class="lang-pt">Incompreensão dos de fora</span>
-<span class="lang-ja" style="display:none">外野の無理解</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI1.html">
-<div class="topic-card__icon">71</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ataques da mídia 1</span>
-<span class="lang-ja" style="display:none">マスコミからの攻撃 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI2.html">
-<div class="topic-card__icon">72</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ataques da mídia 2</span>
-<span class="lang-ja" style="display:none">マスコミからの攻撃 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI3.html">
-<div class="topic-card__icon">73</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ataques da mídia 3</span>
-<span class="lang-ja" style="display:none">マスコミからの攻撃 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI4.html">
-<div class="topic-card__icon">74</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ataques da mídia 4</span>
-<span class="lang-ja" style="display:none">マスコミからの攻撃 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI5.html">
-<div class="topic-card__icon">75</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ataques da mídia 5</span>
-<span class="lang-ja" style="display:none">マスコミからの攻撃 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiHIKYOURYOKU.html">
-<div class="topic-card__icon">76</div>
-<div class="topic-card__title">
-<span class="lang-pt">A postura não cooperativa da mídia</span>
-<span class="lang-ja" style="display:none">マスコミの非協力的姿勢</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKYOURYOKU.html">
-<div class="topic-card__icon">77</div>
-<div class="topic-card__title">
-<span class="lang-pt">A cooperação da mídia</span>
-<span class="lang-ja" style="display:none">マスコミの協力</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yusuri.html">
-<div class="topic-card__icon">78</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ameaças de extorsão</span>
-<span class="lang-ja" style="display:none">ユスリの恐喝</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sonotaBOUGAI.html">
-<div class="topic-card__icon">79</div>
-<div class="topic-card__title">
-<span class="lang-pt">Outras obstruções</span>
-<span class="lang-ja" style="display:none">その他の妨害</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sisan.html">
-<div class="topic-card__icon">80</div>
-<div class="topic-card__title">
-<span class="lang-pt">A situação financeira da organização religiosa</span>
-<span class="lang-ja" style="display:none">教団の資産状況</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-3">
-<span class="lang-pt">Coleção de Fragmentos Religiosos</span>
-<span class="lang-ja" style="display:none">宗教断片集</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=norito.html">
-<div class="topic-card__icon">81</div>
-<div class="topic-card__title">
-<span class="lang-pt">Oração Norito</span>
-<span class="lang-ja" style="display:none">祝 詞</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=noritoMONGON.html">
-<div class="topic-card__icon">82</div>
-<div class="topic-card__title">
-<span class="lang-pt">As palavras da oração Norito</span>
-<span class="lang-ja" style="display:none">祝詞の文言</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zengensanzi.html">
-<div class="topic-card__icon">83</div>
-<div class="topic-card__title">
-<span class="lang-pt">Zengen Sanshi</span>
-<span class="lang-ja" style="display:none">善言讃詞</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zengensanziMONGON.html">
-<div class="topic-card__icon">84</div>
-<div class="topic-card__title">
-<span class="lang-pt">As palavras da Zengen Sanshi</span>
-<span class="lang-ja" style="display:none">善言讃詞の文言</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kamunagara.html">
-<div class="topic-card__icon">85</div>
-<div class="topic-card__title">
-<span class="lang-pt">Kannagara Tamachi Haemase</span>
-<span class="lang-ja" style="display:none">惟神霊幸倍坐せ</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=amanokazuuta.html">
-<div class="topic-card__icon">86</div>
-<div class="topic-card__title">
-<span class="lang-pt">Amatsu Kazoeuta</span>
-<span class="lang-ja" style="display:none">天数歌</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=amatukanagi.html">
-<div class="topic-card__icon">87</div>
-<div class="topic-card__title">
-<span class="lang-pt">Amatsu Kanagi</span>
-<span class="lang-ja" style="display:none">天津金木</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonriki.html">
-<div class="topic-card__icon">88</div>
-<div class="topic-card__title">
-<span class="lang-pt">O poder de Kannon</span>
-<span class="lang-ja" style="display:none">観音力</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=guseKANNON.html">
-<div class="topic-card__icon">89</div>
-<div class="topic-card__title">
-<span class="lang-pt">Kannon, a Salvadora do Mundo</span>
-<span class="lang-ja" style="display:none">救世観音</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=asakusa.html">
-<div class="topic-card__icon">90</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Kannon-sama de Asakusa</span>
-<span class="lang-ja" style="display:none">浅草の観音様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonSAMA.html">
-<div class="topic-card__icon">91</div>
-<div class="topic-card__title">
-<span class="lang-pt">Kannon-sama</span>
-<span class="lang-ja" style="display:none">観音様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonZOU.html">
-<div class="topic-card__icon">92</div>
-<div class="topic-card__title">
-<span class="lang-pt">Estátua de Kannon</span>
-<span class="lang-ja" style="display:none">観音像</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=567daikoku.html">
-<div class="topic-card__icon">93</div>
-<div class="topic-card__title">
-<span class="lang-pt">Miroku Daikokuten</span>
-<span class="lang-ja" style="display:none">みろく大黒天</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikoku.html">
-<div class="topic-card__icon">94</div>
-<div class="topic-card__title">
-<span class="lang-pt">Daikoku-sama</span>
-<span class="lang-ja" style="display:none">大黒様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuEBISU.html">
-<div class="topic-card__icon">95</div>
-<div class="topic-card__title">
-<span class="lang-pt">Daikoku-sama e Ebisu-sama</span>
-<span class="lang-ja" style="display:none">大黒様と恵比寿様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuHOUSAI.html">
-<div class="topic-card__icon">96</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Consagração de Daikoku-sama</span>
-<span class="lang-ja" style="display:none">大黒様の御奉斎</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuREIHAI.html">
-<div class="topic-card__icon">97</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Adoração a Daikoku-sama</span>
-<span class="lang-ja" style="display:none">大黒様の礼拝</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuSAHOU.html">
-<div class="topic-card__icon">98</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Etiqueta para Daikoku-sama</span>
-<span class="lang-ja" style="display:none">大黒様の作法</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sintou.html">
-<div class="topic-card__icon">99</div>
-<div class="topic-card__title">
-<span class="lang-pt">Xinto ísmo</span>
-<span class="lang-ja" style="display:none">神 道</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zinzya.html">
-<div class="topic-card__icon">100</div>
-<div class="topic-card__title">
-<span class="lang-pt">Santu ário</span>
-<span class="lang-ja" style="display:none">神 社</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kamidana.html">
-<div class="topic-card__icon">101</div>
-<div class="topic-card__title">
-<span class="lang-pt">Kamida na</span>
-<span class="lang-ja" style="display:none">神 棚</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uzigami.html">
-<div class="topic-card__icon">102</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ujigami-sama</span>
-<span class="lang-ja" style="display:none">氏神様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zizou.html">
-<div class="topic-card__icon">103</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ojizō-sama</span>
-<span class="lang-ja" style="display:none">お地蔵様</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN1.html">
-<div class="topic-card__icon">104</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 1</span>
-<span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN2.html">
-<div class="topic-card__icon">105</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 2</span>
-<span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN3.html">
-<div class="topic-card__icon">106</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 3</span>
-<span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ohudaSHOBUN.html">
-<div class="topic-card__icon">107</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de ofuda, shinpu, omamori e gohei</span>
-<span class="lang-ja" style="display:none">お札、神符、お守り、御幣の処分方法</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ryuuzinSHOBUN.html">
-<div class="topic-card__icon">108</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de Ryūjin, etc.</span>
-<span class="lang-ja" style="display:none">龍神の処分方法等</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=toukenSHOBUN.html">
-<div class="topic-card__icon">109</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de espadas</span>
-<span class="lang-ja" style="display:none">刀剣の処分方法</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sonotaSHOBUN.html">
-<div class="topic-card__icon">110</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método de descarte de outros objetos possuídos, etc.</span>
-<span class="lang-ja" style="display:none">その他の憑霊物の処分方法等</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen1.html">
-<div class="topic-card__icon">111</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos Religiosos 1</span>
-<span class="lang-ja" style="display:none">宗教断片集 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen2.html">
-<div class="topic-card__icon">112</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos Religiosos 2</span>
-<span class="lang-ja" style="display:none">宗教断片集 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen3.html">
-<div class="topic-card__icon">113</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos Religiosos 3</span>
-<span class="lang-ja" style="display:none">宗教断片集 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen4.html">
-<div class="topic-card__icon">114</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos Religiosos 4 (Cristianismo)</span>
-<span class="lang-ja" style="display:none">宗教断片集 4（キリスト教）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen5.html">
-<div class="topic-card__icon">115</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos Religiosos 5 (Budismo)</span>
-<span class="lang-ja" style="display:none">宗教断片集 5（仏教）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zabieru.html">
-<div class="topic-card__icon">116</div>
-<div class="topic-card__title">
-<span class="lang-pt">Xavier</span>
-<span class="lang-ja" style="display:none">ザビエル</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi1.html">
-<div class="topic-card__icon">117</div>
-<div class="topic-card__title">
-<span class="lang-pt">Visão Espiritual 1</span>
-<span class="lang-ja" style="display:none">霊 視 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi2.html">
-<div class="topic-card__icon">118</div>
-<div class="topic-card__title">
-<span class="lang-pt">Visão Espiritual 2</span>
-<span class="lang-ja" style="display:none">霊 視 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi3.html">
-<div class="topic-card__icon">119</div>
-<div class="topic-card__title">
-<span class="lang-pt">Visão Espiritual 3 (Visão Espiritual e Espíritos de Raposa)</span>
-<span class="lang-ja" style="display:none">霊 視 3（霊視と狐霊）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reiSHASIN.html">
-<div class="topic-card__icon">120</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fotografia Espírita</span>
-<span class="lang-ja" style="display:none">霊写真</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kourei.html">
-<div class="topic-card__icon">121</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fenômenos de Comunicação Espiritual</span>
-<span class="lang-ja" style="display:none">交霊現象</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hikiyose.html">
-<div class="topic-card__icon">122</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fenômeno de Aporte de Objetos</span>
-<span class="lang-ja" style="display:none">物品引き寄せ現象</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reibai.html">
-<div class="topic-card__icon">123</div>
-<div class="topic-card__title">
-<span class="lang-pt">Médi um</span>
-<span class="lang-ja" style="display:none">霊 媒</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen1.html">
-<div class="topic-card__icon">124</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos de Espiritologia 1</span>
-<span class="lang-ja" style="display:none">霊学断片集 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen2.html">
-<div class="topic-card__icon">125</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos de Espiritologia 2</span>
-<span class="lang-ja" style="display:none">霊学断片集 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen3.html">
-<div class="topic-card__icon">126</div>
-<div class="topic-card__title">
-<span class="lang-pt">Coletânea de Fragmentos de Espiritologia 3</span>
-<span class="lang-ja" style="display:none">霊学断片集 3</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-4">
-<span class="lang-pt">Análise de Todas as Coisas da Natureza</span>
-<span class="lang-ja" style="display:none">森羅万象の解析</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=genrei.html">
-<div class="topic-card__icon">127</div>
-<div class="topic-card__title">
-<span class="lang-pt">Análise de Kotodama e Caracteres</span>
-<span class="lang-ja" style="display:none">言霊、文字の解析</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suuzi.html">
-<div class="topic-card__icon">128</div>
-<div class="topic-card__title">
-<span class="lang-pt">Análise dos Números</span>
-<span class="lang-ja" style="display:none">数字の解析</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=iro.html">
-<div class="topic-card__icon">129</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sobre as Cores</span>
-<span class="lang-ja" style="display:none">色について</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasou1.html">
-<div class="topic-card__icon">130</div>
-<div class="topic-card__title">
-<span class="lang-pt">Geomancia e Direções 1</span>
-<span class="lang-ja" style="display:none">家相方位 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasou2.html">
-<div class="topic-card__icon">131</div>
-<div class="topic-card__title">
-<span class="lang-pt">Geomancia e Direções 2</span>
-<span class="lang-ja" style="display:none">家相方位 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ninsou.html">
-<div class="topic-card__icon">132</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fisiono mia</span>
-<span class="lang-ja" style="display:none">人 相</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ningenseiHANDAN.html">
-<div class="topic-card__icon">133</div>
-<div class="topic-card__title">
-<span class="lang-pt">Método para Julgar a Natureza Humana</span>
-<span class="lang-ja" style="display:none">人間性判断法</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku1.html">
-<div class="topic-card__icon">134</div>
-<div class="topic-card__title">
-<span class="lang-pt">Onomancia 1</span>
-<span class="lang-ja" style="display:none">姓名学 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku2.html">
-<div class="topic-card__icon">135</div>
-<div class="topic-card__title">
-<span class="lang-pt">Onomancia 2</span>
-<span class="lang-ja" style="display:none">姓名学 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku3.html">
-<div class="topic-card__icon">136</div>
-<div class="topic-card__title">
-<span class="lang-pt">Onomancia 3</span>
-<span class="lang-ja" style="display:none">姓名学 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yume.html">
-<div class="topic-card__icon">137</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sobre Sonhos</span>
-<span class="lang-ja" style="display:none">夢について</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeKAIKOU.html">
-<div class="topic-card__icon">138</div>
-<div class="topic-card__title">
-<span class="lang-pt">Encontro em Sonhos (kaikou)</span>
-<span class="lang-ja" style="display:none">夢での邂逅（かいこう）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHURIKAE.html">
-<div class="topic-card__icon">139</div>
-<div class="topic-card__title">
-<span class="lang-pt">Substituição através de Sonhos</span>
-<span class="lang-ja" style="display:none">夢による振り替え</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN1.html">
-<div class="topic-card__icon">140</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 1 (Bons Presságios / Maus Presságios)</span>
-<span class="lang-ja" style="display:none">夢判断 1（吉兆凶兆）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN2.html">
-<div class="topic-card__icon">141</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 2 (Fé)</span>
-<span class="lang-ja" style="display:none">夢判断 2（信仰）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN3.html">
-<div class="topic-card__icon">142</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 3 (O Juízo Final)</span>
-<span class="lang-ja" style="display:none">夢判断 3（最後の審判）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN4.html">
-<div class="topic-card__icon">143</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 4（Espíritos Ancestrais）</span>
-<span class="lang-ja" style="display:none">夢判断 4（祖霊）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN5.html">
-<div class="topic-card__icon">144</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 5（Deuses DragõesEspíritos de Serpente）</span>
-<span class="lang-ja" style="display:none">夢判断 5（龍神蛇霊）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN6.html">
-<div class="topic-card__icon">145</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 6（Animais）</span>
-<span class="lang-ja" style="display:none">夢判断 6（動物）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN7.html">
-<div class="topic-card__icon">146</div>
-<div class="topic-card__title">
-<span class="lang-pt">Interpretação de Sonhos 7（Outros）</span>
-<span class="lang-ja" style="display:none">夢判断 7（その他）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeAKURYOU.html">
-<div class="topic-card__icon">147</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sonhos e Espíritos Malignos</span>
-<span class="lang-ja" style="display:none">夢と悪霊</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kixtuchou.html">
-<div class="topic-card__icon">148</div>
-<div class="topic-card__title">
-<span class="lang-pt">Bons Presságios</span>
-<span class="lang-ja" style="display:none">吉 兆</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kyouchou.html">
-<div class="topic-card__icon">149</div>
-<div class="topic-card__title">
-<span class="lang-pt">Maus Presságios</span>
-<span class="lang-ja" style="display:none">凶 兆</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=udonge.html">
-<div class="topic-card__icon">150</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Flor de Udonge</span>
-<span class="lang-ja" style="display:none">うどんげの花</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shuuzoku.html">
-<div class="topic-card__icon">151</div>
-<div class="topic-card__title">
-<span class="lang-pt">Costumes</span>
-<span class="lang-ja" style="display:none">習 俗</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=setubun.html">
-<div class="topic-card__icon">152</div>
-<div class="topic-card__title">
-<span class="lang-pt">Setsubun e Risshun</span>
-<span class="lang-ja" style="display:none">節分と立春</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=denshou.html">
-<div class="topic-card__icon">153</div>
-<div class="topic-card__title">
-<span class="lang-pt">Lendas</span>
-<span class="lang-ja" style="display:none">伝 承</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yogen.html">
-<div class="topic-card__icon">154</div>
-<div class="topic-card__title">
-<span class="lang-pt">Profecias</span>
-<span class="lang-ja" style="display:none">予 言</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uchuu.html">
-<div class="topic-card__icon">155</div>
-<div class="topic-card__title">
-<span class="lang-pt">Universo</span>
-<span class="lang-ja" style="display:none">宇 宙</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uchuuZIN.html">
-<div class="topic-card__icon">156</div>
-<div class="topic-card__title">
-<span class="lang-pt">Extraterrestres</span>
-<span class="lang-ja" style="display:none">宇宙人</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zisin.html">
-<div class="topic-card__icon">157</div>
-<div class="topic-card__title">
-<span class="lang-pt">Terremotos</span>
-<span class="lang-ja" style="display:none">地 震</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=huusuigai.html">
-<div class="topic-card__icon">158</div>
-<div class="topic-card__title">
-<span class="lang-pt">Danos por Vento e Água</span>
-<span class="lang-ja" style="display:none">風水害</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=rakurai.html">
-<div class="topic-card__icon">159</div>
-<div class="topic-card__title">
-<span class="lang-pt">Queda de Raios</span>
-<span class="lang-ja" style="display:none">落 雷</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reigai.html">
-<div class="topic-card__icon">160</div>
-<div class="topic-card__title">
-<span class="lang-pt">Danos por Frio</span>
-<span class="lang-ja" style="display:none">冷 害</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasai.html">
-<div class="topic-card__icon">161</div>
-<div class="topic-card__title">
-<span class="lang-pt">Incêndios</span>
-<span class="lang-ja" style="display:none">火 災</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasaiRYUUZIN.html">
-<div class="topic-card__icon">162</div>
-<div class="topic-card__title">
-<span class="lang-pt">Incêndios e Deuses Dragões</span>
-<span class="lang-ja" style="display:none">火災と龍神</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=atamiTAIKA.html">
-<div class="topic-card__icon">163</div>
-<div class="topic-card__title">
-<span class="lang-pt">O Grande Incêndio de Atami</span>
-<span class="lang-ja" style="display:none">熱海の大火</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tigaku.html">
-<div class="topic-card__icon">164</div>
-<div class="topic-card__title">
-<span class="lang-pt">Geologia</span>
-<span class="lang-ja" style="display:none">地 学</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kishou.html">
-<div class="topic-card__icon">165</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fenômenos Estranhos</span>
-<span class="lang-ja" style="display:none">奇 象</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=siranui.html">
-<div class="topic-card__icon">166</div>
-<div class="topic-card__title">
-<span class="lang-pt">Shiranui</span>
-<span class="lang-ja" style="display:none">不知火</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zinruiREKISI.html">
-<div class="topic-card__icon">167</div>
-<div class="topic-card__title">
-<span class="lang-pt">A História da Humanidade</span>
-<span class="lang-ja" style="display:none">人類の歴史</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nihonZENSEIKI.html">
-<div class="topic-card__icon">168</div>
-<div class="topic-card__title">
-<span class="lang-pt">O Século Anterior do Japão</span>
-<span class="lang-ja" style="display:none">日本の前世紀</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zintai1.html">
-<div class="topic-card__icon">169</div>
-<div class="topic-card__title">
-<span class="lang-pt">Corpo Humano 1（O Ser Humano é um Microcosmo）</span>
-<span class="lang-ja" style="display:none">人 体 1（人間は小宇宙）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zintai2.html">
-<div class="topic-card__icon">170</div>
-<div class="topic-card__title">
-<span class="lang-pt">Corpo Humano 2</span>
-<span class="lang-ja" style="display:none">人 体 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ningen.html">
-<div class="topic-card__icon">171</div>
-<div class="topic-card__title">
-<span class="lang-pt">Seres Humanos</span>
-<span class="lang-ja" style="display:none">人 間</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kinzyuu.html">
-<div class="topic-card__icon">172</div>
-<div class="topic-card__title">
-<span class="lang-pt">Aves, Feras, Insetos e Peixes</span>
-<span class="lang-ja" style="display:none">禽獣虫魚</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shokubutu.html">
-<div class="topic-card__icon">173</div>
-<div class="topic-card__title">
-<span class="lang-pt">Plantas</span>
-<span class="lang-ja" style="display:none">植 物</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=youkai.html">
-<div class="topic-card__icon">174</div>
-<div class="topic-card__title">
-<span class="lang-pt">Yōkai</span>
-<span class="lang-ja" style="display:none">妖 怪</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yousei.html">
-<div class="topic-card__icon">175</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fadas</span>
-<span class="lang-ja" style="display:none">妖 精</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari1.html">
-<div class="topic-card__icon">176</div>
-<div class="topic-card__title">
-<span class="lang-pt">Maldição 1（Maldição de Espíritos Humanos）</span>
-<span class="lang-ja" style="display:none">祟 り 1（人霊の祟り）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari2.html">
-<div class="topic-card__icon">177</div>
-<div class="topic-card__title">
-<span class="lang-pt">Maldição 2（Maldição de Espíritos de Animais）</span>
-<span class="lang-ja" style="display:none">祟 り 2（動物霊の祟り）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari3.html">
-<div class="topic-card__icon">178</div>
-<div class="topic-card__title">
-<span class="lang-pt">Maldição 3（Maldição da Terra）</span>
-<span class="lang-ja" style="display:none">祟 り 3（土地の祟り）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari4.html">
-<div class="topic-card__icon">179</div>
-<div class="topic-card__title">
-<span class="lang-pt">Maldição 4（Outras Maldições）</span>
-<span class="lang-ja" style="display:none">祟 り 4（その他の祟り）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zyuso.html">
-<div class="topic-card__icon">180</div>
-<div class="topic-card__title">
-<span class="lang-pt">Feitiços</span>
-<span class="lang-ja" style="display:none">呪 詛</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-5">
-<span class="lang-pt">Sobre a Arte</span>
-<span class="lang-ja" style="display:none">芸術について</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuSIMEI.html">
-<div class="topic-card__icon">181</div>
-<div class="topic-card__title">
-<span class="lang-pt">A Missão da Arte</span>
-<span class="lang-ja" style="display:none">芸術の使命</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuZINKAKU.html">
-<div class="topic-card__icon">182</div>
-<div class="topic-card__title">
-<span class="lang-pt">Arte e Personalidade</span>
-<span class="lang-ja" style="display:none">芸術と人格</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH1.html">
-<div class="topic-card__icon">183</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ensaio de Crítica de Arte 1（A Arte Japonesa e seu Futuro）</span>
-<span class="lang-ja" style="display:none">美術評論文 1（日本美術とその将来）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH2.html">
-<div class="topic-card__icon">184</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ensaio de Crítica de Arte 2（Reflexões sobre a Arte Oriental）</span>
-<span class="lang-ja" style="display:none">美術評論文 2（東洋美術雑感）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH3.html">
-<div class="topic-card__icon">185</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ensaio de Crítica de Arte 3（A Razão do Desaparecimento dos
-                                Mestres）</span>
-<span class="lang-ja" style="display:none">美術評論文 3（名人の失くなった理由）</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH4.html">
-<div class="topic-card__icon">186</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ensaio de Crítica de Arte 4</span>
-<span class="lang-ja" style="display:none">美術評論文 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH5.html">
-<div class="topic-card__icon">187</div>
-<div class="topic-card__title">
-<span class="lang-pt">Ensaio de Crítica de Arte 5</span>
-<span class="lang-ja" style="display:none">美術評論文 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK1.html">
-<div class="topic-card__icon">188</div>
-<div class="topic-card__title">
-<span class="lang-pt">Discurso sobre Arte 1</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK2.html">
-<div class="topic-card__icon">189</div>
-<div class="topic-card__title">
-<span class="lang-pt">Discurso sobre Arte 2</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK3.html">
-<div class="topic-card__icon">190</div>
-<div class="topic-card__title">
-<span class="lang-pt">Discurso sobre Arte 3</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK4.html">
-<div class="topic-card__icon">191</div>
-<div class="topic-card__title">
-<span class="lang-pt">Discurso sobre Arte 4</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK5.html">
-<div class="topic-card__icon">192</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 5</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK6.html">
-<div class="topic-card__icon">193</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 6</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 6</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK7.html">
-<div class="topic-card__icon">194</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 7</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 7</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK8.html">
-<div class="topic-card__icon">195</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 8</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 8</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK9.html">
-<div class="topic-card__icon">196</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 9</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 9</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK10.html">
-<div class="topic-card__icon">197</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 10</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 10</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK11.html">
-<div class="topic-card__icon">198</div>
-<div class="topic-card__title">
-<span class="lang-pt">Sermões sobre Arte 11</span>
-<span class="lang-ja" style="display:none">美術に関する御講話 11</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS1.html">
-<div class="topic-card__icon">199</div>
-<div class="topic-card__title">
-<span class="lang-pt">Orientações sobre Arte 1</span>
-<span class="lang-ja" style="display:none">美術に関する御垂示 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS2.html">
-<div class="topic-card__icon">200</div>
-<div class="topic-card__title">
-<span class="lang-pt">Orientações sobre Arte 2</span>
-<span class="lang-ja" style="display:none">美術に関する御垂示 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS3.html">
-<div class="topic-card__icon">201</div>
-<div class="topic-card__title">
-<span class="lang-pt">Orientações sobre Arte 3</span>
-<span class="lang-ja" style="display:none">美術に関する御垂示 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS4.html">
-<div class="topic-card__icon">202</div>
-<div class="topic-card__title">
-<span class="lang-pt">Orientações sobre Arte 4</span>
-<span class="lang-ja" style="display:none">美術に関する御垂示 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuKA1.html">
-<div class="topic-card__icon">203</div>
-<div class="topic-card__title">
-<span class="lang-pt">Artistas, Entertainers, Escritores 1</span>
-<span class="lang-ja" style="display:none">芸術家、芸能家、文学者 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuKA2.html">
-<div class="topic-card__icon">204</div>
-<div class="topic-card__title">
-<span class="lang-pt">Artistas, Entertainers, Escritores 2</span>
-<span class="lang-ja" style="display:none">芸術家、芸能家、文学者 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=picaso1.html">
-<div class="topic-card__icon">205</div>
-<div class="topic-card__title">
-<span class="lang-pt">Picasso 1</span>
-<span class="lang-ja" style="display:none">ピカソ 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=picaso2.html">
-<div class="topic-card__icon">206</div>
-<div class="topic-card__title">
-<span class="lang-pt">Picasso 2</span>
-<span class="lang-ja" style="display:none">ピカソ 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ongaku.html">
-<div class="topic-card__icon">207</div>
-<div class="topic-card__title">
-<span class="lang-pt">Mú sica</span>
-<span class="lang-ja" style="display:none">音 楽</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=eiga.html">
-<div class="topic-card__icon">208</div>
-<div class="topic-card__title">
-<span class="lang-pt">Fil me</span>
-<span class="lang-ja" style="display:none">映 画</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div class="section-header" id="section-6">
-<span class="lang-pt">Sobre a Situação Atual</span>
-<span class="lang-ja" style="display:none">時局について</span>
-</div>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku1.html">
-<div class="topic-card__icon">209</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 1</span>
-<span class="lang-ja" style="display:none">時 局 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku2.html">
-<div class="topic-card__icon">210</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 2</span>
-<span class="lang-ja" style="display:none">時 局 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku3.html">
-<div class="topic-card__icon">211</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 3</span>
-<span class="lang-ja" style="display:none">時 局 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku4.html">
-<div class="topic-card__icon">212</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 4</span>
-<span class="lang-ja" style="display:none">時 局 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku5.html">
-<div class="topic-card__icon">213</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 5</span>
-<span class="lang-ja" style="display:none">時 局 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku6.html">
-<div class="topic-card__icon">214</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 6</span>
-<span class="lang-ja" style="display:none">時 局 6</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku7.html">
-<div class="topic-card__icon">215</div>
-<div class="topic-card__title">
-<span class="lang-pt">Atu alidades 7</span>
-<span class="lang-ja" style="display:none">時 局 7</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai1.html">
-<div class="topic-card__icon">216</div>
-<div class="topic-card__title">
-<span class="lang-pt">Previsões do Futuro 1</span>
-<span class="lang-ja" style="display:none">未来予想 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai2.html">
-<div class="topic-card__icon">217</div>
-<div class="topic-card__title">
-<span class="lang-pt">Previsões do Futuro 2</span>
-<span class="lang-ja" style="display:none">未来予想 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai3.html">
-<div class="topic-card__icon">218</div>
-<div class="topic-card__title">
-<span class="lang-pt">Previsões do Futuro 3</span>
-<span class="lang-ja" style="display:none">未来予想 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai4.html">
-<div class="topic-card__icon">219</div>
-<div class="topic-card__title">
-<span class="lang-pt">Previsões do Futuro 4</span>
-<span class="lang-ja" style="display:none">未来予想 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daitoua1.html">
-<div class="topic-card__icon">220</div>
-<div class="topic-card__title">
-<span class="lang-pt">Estratégia da Guerra da Grande Ásia Oriental 1</span>
-<span class="lang-ja" style="display:none">大東亜戦争戦略論 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daitoua2.html">
-<div class="topic-card__icon">221</div>
-<div class="topic-card__title">
-<span class="lang-pt">Estratégia da Guerra da Grande Ásia Oriental 2</span>
-<span class="lang-ja" style="display:none">大東亜戦争戦略論 2</span>
-</div>
-</a>
-<hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;"/>
-<div style="height: 12px;"></div>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho1.html">
-<div class="topic-card__icon">222</div>
-<div class="topic-card__title">
-<span class="lang-pt">Literatura Tola 1</span>
-<span class="lang-ja" style="display:none">阿呆文学 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho2.html">
-<div class="topic-card__icon">223</div>
-<div class="topic-card__title">
-<span class="lang-pt">Literatura Tola 2</span>
-<span class="lang-ja" style="display:none">阿呆文学 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho3.html">
-<div class="topic-card__icon">224</div>
-<div class="topic-card__title">
-<span class="lang-pt">Literatura Tola 3</span>
-<span class="lang-ja" style="display:none">阿呆文学 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu1.html">
-<div class="topic-card__icon">225</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 1</span>
-<span class="lang-ja" style="display:none">寸 鉄 1</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu2.html">
-<div class="topic-card__icon">226</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 2</span>
-<span class="lang-ja" style="display:none">寸 鉄 2</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu3.html">
-<div class="topic-card__icon">227</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 3</span>
-<span class="lang-ja" style="display:none">寸 鉄 3</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu4.html">
-<div class="topic-card__icon">228</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 4</span>
-<span class="lang-ja" style="display:none">寸 鉄 4</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu5.html">
-<div class="topic-card__icon">229</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 5</span>
-<span class="lang-ja" style="display:none">寸 鉄 5</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu6.html">
-<div class="topic-card__icon">230</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 6</span>
-<span class="lang-ja" style="display:none">寸 鉄 6</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu7.html">
-<div class="topic-card__icon">231</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 7</span>
-<span class="lang-ja" style="display:none">寸 鉄 7</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu8.html">
-<div class="topic-card__icon">232</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 8</span>
-<span class="lang-ja" style="display:none">寸 鉄 8</span>
-</div>
-</a>
-<a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu9.html">
-<div class="topic-card__icon">233</div>
-<div class="topic-card__title">
-<span class="lang-pt">Epi grama 9</span>
-<span class="lang-ja" style="display:none">寸 鉄 9</span>
-</div>
-</a>
-            <!-- Stats Footer -->
-            <div class="volume-stats-footer">
-                <div class="stats-header">
-                    <span class="stats-title">
-                        <span class="lang-pt">Estatísticas do Volume</span>
-                        <span class="lang-ja" style="display:none">巻の統計</span>
-                    </span>
-                    <div class="stats-totals">
-                        <div class="stats-total-item">
-                            <span class="stats-total-number">7</span>
-                            <span class="stats-total-label"><span class="lang-pt">Categorias</span><span class="lang-ja" style="display:none">カテゴリ</span></span>
+            <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+            <button class="btn-zen" id="lang-toggle" onclick="toggleLanguage()" title="Mudar idioma">日本語</button>
+            <button class="btn-zen" onclick="toggleTheme()" title="Mudar Tema">☯</button>
+        </div>
+    </header>
+    <main class="main">
+        <div class="content-wrapper">
+            <div class="glass-pane">
+                <div class="index-header" style="text-align:center; margin-bottom: 64px;">
+                    <span class="section-label"
+                        style="color: var(--accent); font-weight: 600; letter-spacing: 2px;">VOLUME 4</span>
+                    <h1 class="index-title" style="margin-top: 16px; line-height: 1.4;">
+                        <span class="lang-pt">Ensinamentos Complementares</span>
+                        <span class="lang-ja" style="display:none">補足編</span>
+                    </h1>
+                </div>
+                <div class="topic-list">
+                    <div style="height: 12px;"></div>
+                    <div class="section-header" id="section-0">
+                        <span class="lang-pt">Os Feitos de Meishu-Sama</span>
+                        <span class="lang-ja" style="display:none">明主様の御事跡</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinti.html">
+                        <div class="topic-card__icon">1</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Sabedoria Divina de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の神智</span>
                         </div>
-                        <div class="stats-total-item">
-                            <span class="stats-total-number">233</span>
-                            <span class="stats-total-label"><span class="lang-pt">Ensinamentos</span><span class="lang-ja" style="display:none">刊行物</span></span>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki1.html">
+                        <div class="topic-card__icon">2</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki2.html">
+                        <div class="topic-card__icon">3</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki3.html">
+                        <div class="topic-card__icon">4</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 3</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki4.html">
+                        <div class="topic-card__icon">5</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 4</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki5.html">
+                        <div class="topic-card__icon">6</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 5</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki6.html">
+                        <div class="topic-card__icon">7</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 6</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 6</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki7.html">
+                        <div class="topic-card__icon">8</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 7</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 7</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sokuseki8.html">
+                        <div class="topic-card__icon">9</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Passos da Obra Divina de Meishu-Sama 8</span>
+                            <span class="lang-ja" style="display:none">明主様御神業の御足跡 8</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide1.html">
+                        <div class="topic-card__icon">10</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide2.html">
+                        <div class="topic-card__icon">11</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide3.html">
+                        <div class="topic-card__icon">12</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 3</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide4.html">
+                        <div class="topic-card__icon">13</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 4</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide5.html">
+                        <div class="topic-card__icon">14</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 5</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=omoide6.html">
+                        <div class="topic-card__icon">15</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Memórias de Meishu-Sama 6</span>
+                            <span class="lang-ja" style="display:none">明主様の思い出 6</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nitizyou1.html">
+                        <div class="topic-card__icon">16</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O Cotidiano de Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様の御日常 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nitizyou2.html">
+                        <div class="topic-card__icon">17</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O Cotidiano de Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様の御日常 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=onkoto.html">
+                        <div class="topic-card__icon">18</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Relatos sobre Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の御事</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sixtupitu.html">
+                        <div class="topic-card__icon">19</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Escritos de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の御執筆</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=waka.html">
+                        <div class="topic-card__icon">20</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Waka de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の和歌</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan1.html">
+                        <div class="topic-card__icon">21</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Publicações de Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様の出版 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan2.html">
+                        <div class="topic-card__icon">22</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Publicações de Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様の出版 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=syuxtupan3.html">
+                        <div class="topic-card__icon">23</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Publicações de Meishu-Sama 3</span>
+                            <span class="lang-ja" style="display:none">明主様の出版 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=radio.html">
+                        <div class="topic-card__icon">24</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Aparições de Meishu-Sama no Rádio</span>
+                            <span class="lang-ja" style="display:none">明主様のラジオ放送御出演</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=taidan.html">
+                        <div class="topic-card__icon">25</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Os Diálogos de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の御対談</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kouzan.html">
+                        <div class="topic-card__icon">26</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Administração de Minas por Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の鉱山経営</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tozan.html">
+                        <div class="topic-card__icon">27</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Escaladas de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様の登山</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan1.html">
+                        <div class="topic-card__icon">28</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Perseguições a Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様の御法難 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan2.html">
+                        <div class="topic-card__icon">29</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Perseguições a Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様の御法難 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan3.html">
+                        <div class="topic-card__icon">30</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Perseguições a Meishu-Sama 3</span>
+                            <span class="lang-ja" style="display:none">明主様の御法難 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan4.html">
+                        <div class="topic-card__icon">31</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Perseguições a Meishu-Sama 4</span>
+                            <span class="lang-ja" style="display:none">明主様の御法難 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hounan5.html">
+                        <div class="topic-card__icon">32</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As Perseguições a Meishu-Sama 5</span>
+                            <span class="lang-ja" style="display:none">明主様の御法難 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=haxtuten.html">
+                        <div class="topic-card__icon">33</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Grande Expansão da Igreja Messiânica</span>
+                            <span class="lang-ja" style="display:none">メシヤ教の大発展</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hawaii1.html">
+                        <div class="topic-card__icon">34</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Difusão no Havaí durante a vida de Meishu-Sama 1</span>
+                            <span class="lang-ja" style="display:none">明主様御在世中のハワイ布教 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hawaii2.html">
+                        <div class="topic-card__icon">35</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Difusão no Havaí durante a vida de Meishu-Sama 2</span>
+                            <span class="lang-ja" style="display:none">明主様御在世中のハワイ布教 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=USAhukyou.html">
+                        <div class="topic-card__icon">36</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Difusão nos EUA durante a vida de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様御在世中の米国布教</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=saika.html">
+                        <div class="topic-card__icon">37</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Viagem de Meishu-Sama para o Oeste</span>
+                            <span class="lang-ja" style="display:none">明主様の御西下</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=saigo.html">
+                        <div class="topic-card__icon">38</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Última Obra Divina de Meishu-Sama</span>
+                            <span class="lang-ja" style="display:none">明主様最後の御神業</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shouten.html">
+                        <div class="topic-card__icon">39</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Ascensão de Meishu-Sama e o Johrei</span>
+                            <span class="lang-ja" style="display:none">明主様御昇天と浄霊</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-1">
+                        <span class="lang-pt">Construção do Protótipo do Paraíso Terrestre</span>
+                        <span class="lang-ja" style="display:none">地上天国の雛形建設</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gyokusen.html">
+                        <div class="topic-card__icon">40</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Tamagawa-go</span>
+                            <span class="lang-ja" style="display:none">玉川郷</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinsen1.html">
+                        <div class="topic-card__icon">41</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Hakone Shinsen-kyo 1</span>
+                            <span class="lang-ja" style="display:none">箱根 神仙郷 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sinsen2.html">
+                        <div class="topic-card__icon">42</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Hakone Shinsen-kyo 2</span>
+                            <span class="lang-ja" style="display:none">箱根 神仙郷 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zuiun.html">
+                        <div class="topic-card__icon">43</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atami Zuiun-kyo</span>
+                            <span class="lang-ja" style="display:none">熱海 瑞雲郷</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sakimi.html">
+                        <div class="topic-card__icon">44</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sede Provisória de Sakimi-cho</span>
+                            <span class="lang-ja" style="display:none">咲見町仮本部</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=heian1.html">
+                        <div class="topic-card__icon">45</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Kyoto Heian-kyo 1</span>
+                            <span class="lang-ja" style="display:none">京都 平安郷 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=heian2.html">
+                        <div class="topic-card__icon">46</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Quioto Heian-kyo 2</span>
+                            <span class="lang-ja" style="display:none">京都 平安郷 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya1.html">
+                        <div class="topic-card__icon">47</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Salão Messias 1</span>
+                            <span class="lang-ja" style="display:none">メシヤ会館 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya2.html">
+                        <div class="topic-card__icon">48</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Salão Messias 2</span>
+                            <span class="lang-ja" style="display:none">メシヤ会館 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mesiya3.html">
+                        <div class="topic-card__icon">49</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Salão Messias 3</span>
+                            <span class="lang-ja" style="display:none">メシヤ会館 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suishou.html">
+                        <div class="topic-card__icon">50</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Palácio de Cristal</span>
+                            <span class="lang-ja" style="display:none">水晶殿</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=koumyou.html">
+                        <div class="topic-card__icon">51</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Palácio da Luz</span>
+                            <span class="lang-ja" style="display:none">光明殿</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB1.html">
+                        <div class="topic-card__icon">52</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte de Hakone 1</span>
+                            <span class="lang-ja" style="display:none">箱根美術館 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB2.html">
+                        <div class="topic-card__icon">53</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte de Hakone 2</span>
+                            <span class="lang-ja" style="display:none">箱根美術館 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB3.html">
+                        <div class="topic-card__icon">54</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte de Hakone 3</span>
+                            <span class="lang-ja" style="display:none">箱根美術館 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneB4.html">
+                        <div class="topic-card__icon">55</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte de Hakone 4</span>
+                            <span class="lang-ja" style="display:none">箱根美術館 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=atamiB.html">
+                        <div class="topic-card__icon">56</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte de Atami</span>
+                            <span class="lang-ja" style="display:none">熱海美術館</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=buxtukyouB.html">
+                        <div class="topic-card__icon">57</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Museu de Arte Budista</span>
+                            <span class="lang-ja" style="display:none">仏教美術館</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=bizyutuhin.html">
+                        <div class="topic-card__icon">58</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O milagre da coleção de obras de arte</span>
+                            <span class="lang-ja" style="display:none">美術品蒐集の奇蹟</span>
+                        </div>
+                    </a>
+                    <div class="group-spacer"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKEIRIN1.html">
+                        <div class="topic-card__icon">59</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Construção e Plano Divino 1</span>
+                            <span class="lang-ja" style="display:none">建設と経綸 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKEIRIN2.html">
+                        <div class="topic-card__icon">60</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Construção e Plano Divino 2</span>
+                            <span class="lang-ja" style="display:none">建設と経綸 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kensetuKYOUSEN.html">
+                        <div class="topic-card__icon">61</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O progresso da construção e a expansão da doutrina</span>
+                            <span class="lang-ja" style="display:none">建設の進展と教線の発展</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata1.html">
+                        <div class="topic-card__icon">62</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O significado do modelo do Paraíso na Terra 1</span>
+                            <span class="lang-ja" style="display:none">地上天国の型の意義 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata2.html">
+                        <div class="topic-card__icon">63</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O significado do modelo do Paraíso na Terra 2</span>
+                            <span class="lang-ja" style="display:none">地上天国の型の意義 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata3.html">
+                        <div class="topic-card__icon">64</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O significado do modelo do Paraíso na Terra 3</span>
+                            <span class="lang-ja" style="display:none">地上天国の型の意義 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kata4.html">
+                        <div class="topic-card__icon">65</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O significado do modelo do Paraíso na Terra 4</span>
+                            <span class="lang-ja" style="display:none">地上天国の型の意義 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hakoneSENDEN.html">
+                        <div class="topic-card__icon">66</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O efeito publicitário do Museu de Arte de Hakone</span>
+                            <span class="lang-ja" style="display:none">箱根美術館の宣伝効果</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTsenden1.html">
+                        <div class="topic-card__icon">67</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O efeito publicitário do Paraíso na Terra 1</span>
+                            <span class="lang-ja" style="display:none">地上天国の宣伝効果 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTsenden2.html">
+                        <div class="topic-card__icon">68</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O efeito publicitário do Paraíso na Terra 2</span>
+                            <span class="lang-ja" style="display:none">地上天国の宣伝効果 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=TTtamasii.html">
+                        <div class="topic-card__icon">69</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O Paraíso na Terra eleva a alma</span>
+                            <span class="lang-ja" style="display:none">地上天国は魂を高める</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sidou.html">
+                        <div class="topic-card__icon">70</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A salvação da classe dirigente</span>
+                            <span class="lang-ja" style="display:none">指導階級の救い</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-2">
+                        <span class="lang-pt">Incompreensão dos de fora</span>
+                        <span class="lang-ja" style="display:none">外野の無理解</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI1.html">
+                        <div class="topic-card__icon">71</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ataques da mídia 1</span>
+                            <span class="lang-ja" style="display:none">マスコミからの攻撃 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI2.html">
+                        <div class="topic-card__icon">72</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ataques da mídia 2</span>
+                            <span class="lang-ja" style="display:none">マスコミからの攻撃 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI3.html">
+                        <div class="topic-card__icon">73</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ataques da mídia 3</span>
+                            <span class="lang-ja" style="display:none">マスコミからの攻撃 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI4.html">
+                        <div class="topic-card__icon">74</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ataques da mídia 4</span>
+                            <span class="lang-ja" style="display:none">マスコミからの攻撃 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKOUGEKI5.html">
+                        <div class="topic-card__icon">75</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ataques da mídia 5</span>
+                            <span class="lang-ja" style="display:none">マスコミからの攻撃 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiHIKYOURYOKU.html">
+                        <div class="topic-card__icon">76</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A postura não cooperativa da mídia</span>
+                            <span class="lang-ja" style="display:none">マスコミの非協力的姿勢</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=masukomiKYOURYOKU.html">
+                        <div class="topic-card__icon">77</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A cooperação da mídia</span>
+                            <span class="lang-ja" style="display:none">マスコミの協力</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yusuri.html">
+                        <div class="topic-card__icon">78</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ameaças de extorsão</span>
+                            <span class="lang-ja" style="display:none">ユスリの恐喝</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sonotaBOUGAI.html">
+                        <div class="topic-card__icon">79</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Outras obstruções</span>
+                            <span class="lang-ja" style="display:none">その他の妨害</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sisan.html">
+                        <div class="topic-card__icon">80</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A situação financeira da organização religiosa</span>
+                            <span class="lang-ja" style="display:none">教団の資産状況</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-3">
+                        <span class="lang-pt">Coleção de Fragmentos Religiosos</span>
+                        <span class="lang-ja" style="display:none">宗教断片集</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=norito.html">
+                        <div class="topic-card__icon">81</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Oração Norito</span>
+                            <span class="lang-ja" style="display:none">祝 詞</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=noritoMONGON.html">
+                        <div class="topic-card__icon">82</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As palavras da oração Norito</span>
+                            <span class="lang-ja" style="display:none">祝詞の文言</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zengensanzi.html">
+                        <div class="topic-card__icon">83</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Zengen Sanshi</span>
+                            <span class="lang-ja" style="display:none">善言讃詞</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zengensanziMONGON.html">
+                        <div class="topic-card__icon">84</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">As palavras da Zengen Sanshi</span>
+                            <span class="lang-ja" style="display:none">善言讃詞の文言</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kamunagara.html">
+                        <div class="topic-card__icon">85</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Kannagara Tamachi Haemase</span>
+                            <span class="lang-ja" style="display:none">惟神霊幸倍坐せ</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=amanokazuuta.html">
+                        <div class="topic-card__icon">86</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Amatsu Kazoeuta</span>
+                            <span class="lang-ja" style="display:none">天数歌</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=amatukanagi.html">
+                        <div class="topic-card__icon">87</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Amatsu Kanagi</span>
+                            <span class="lang-ja" style="display:none">天津金木</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonriki.html">
+                        <div class="topic-card__icon">88</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O poder de Kannon</span>
+                            <span class="lang-ja" style="display:none">観音力</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=guseKANNON.html">
+                        <div class="topic-card__icon">89</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Kannon, a Salvadora do Mundo</span>
+                            <span class="lang-ja" style="display:none">救世観音</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=asakusa.html">
+                        <div class="topic-card__icon">90</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Kannon-sama de Asakusa</span>
+                            <span class="lang-ja" style="display:none">浅草の観音様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonSAMA.html">
+                        <div class="topic-card__icon">91</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Kannon-sama</span>
+                            <span class="lang-ja" style="display:none">観音様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kannonZOU.html">
+                        <div class="topic-card__icon">92</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Estátua de Kannon</span>
+                            <span class="lang-ja" style="display:none">観音像</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=567daikoku.html">
+                        <div class="topic-card__icon">93</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Miroku Daikokuten</span>
+                            <span class="lang-ja" style="display:none">みろく大黒天</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikoku.html">
+                        <div class="topic-card__icon">94</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Daikoku-sama</span>
+                            <span class="lang-ja" style="display:none">大黒様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuEBISU.html">
+                        <div class="topic-card__icon">95</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Daikoku-sama e Ebisu-sama</span>
+                            <span class="lang-ja" style="display:none">大黒様と恵比寿様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuHOUSAI.html">
+                        <div class="topic-card__icon">96</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Consagração de Daikoku-sama</span>
+                            <span class="lang-ja" style="display:none">大黒様の御奉斎</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuREIHAI.html">
+                        <div class="topic-card__icon">97</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Adoração a Daikoku-sama</span>
+                            <span class="lang-ja" style="display:none">大黒様の礼拝</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daikokuSAHOU.html">
+                        <div class="topic-card__icon">98</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Etiqueta para Daikoku-sama</span>
+                            <span class="lang-ja" style="display:none">大黒様の作法</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sintou.html">
+                        <div class="topic-card__icon">99</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Xinto ísmo</span>
+                            <span class="lang-ja" style="display:none">神 道</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zinzya.html">
+                        <div class="topic-card__icon">100</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Santu ário</span>
+                            <span class="lang-ja" style="display:none">神 社</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kamidana.html">
+                        <div class="topic-card__icon">101</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Kamida na</span>
+                            <span class="lang-ja" style="display:none">神 棚</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uzigami.html">
+                        <div class="topic-card__icon">102</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ujigami-sama</span>
+                            <span class="lang-ja" style="display:none">氏神様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zizou.html">
+                        <div class="topic-card__icon">103</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ojizō-sama</span>
+                            <span class="lang-ja" style="display:none">お地蔵様</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN1.html">
+                        <div class="topic-card__icon">104</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 1</span>
+                            <span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN2.html">
+                        <div class="topic-card__icon">105</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 2</span>
+                            <span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=gosintaiSHOBUN3.html">
+                        <div class="topic-card__icon">106</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de objetos sagrados de outras religiões 3</span>
+                            <span class="lang-ja" style="display:none">他宗教の御神体等の処分方法 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ohudaSHOBUN.html">
+                        <div class="topic-card__icon">107</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de ofuda, shinpu, omamori e gohei</span>
+                            <span class="lang-ja" style="display:none">お札、神符、お守り、御幣の処分方法</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ryuuzinSHOBUN.html">
+                        <div class="topic-card__icon">108</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de Ryūjin, etc.</span>
+                            <span class="lang-ja" style="display:none">龍神の処分方法等</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=toukenSHOBUN.html">
+                        <div class="topic-card__icon">109</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de espadas</span>
+                            <span class="lang-ja" style="display:none">刀剣の処分方法</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=sonotaSHOBUN.html">
+                        <div class="topic-card__icon">110</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método de descarte de outros objetos possuídos, etc.</span>
+                            <span class="lang-ja" style="display:none">その他の憑霊物の処分方法等</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen1.html">
+                        <div class="topic-card__icon">111</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos Religiosos 1</span>
+                            <span class="lang-ja" style="display:none">宗教断片集 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen2.html">
+                        <div class="topic-card__icon">112</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos Religiosos 2</span>
+                            <span class="lang-ja" style="display:none">宗教断片集 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen3.html">
+                        <div class="topic-card__icon">113</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos Religiosos 3</span>
+                            <span class="lang-ja" style="display:none">宗教断片集 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen4.html">
+                        <div class="topic-card__icon">114</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos Religiosos 4 (Cristianismo)</span>
+                            <span class="lang-ja" style="display:none">宗教断片集 4（キリスト教）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Sdanpen5.html">
+                        <div class="topic-card__icon">115</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos Religiosos 5 (Budismo)</span>
+                            <span class="lang-ja" style="display:none">宗教断片集 5（仏教）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zabieru.html">
+                        <div class="topic-card__icon">116</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Xavier</span>
+                            <span class="lang-ja" style="display:none">ザビエル</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi1.html">
+                        <div class="topic-card__icon">117</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Visão Espiritual 1</span>
+                            <span class="lang-ja" style="display:none">霊 視 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi2.html">
+                        <div class="topic-card__icon">118</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Visão Espiritual 2</span>
+                            <span class="lang-ja" style="display:none">霊 視 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reisi3.html">
+                        <div class="topic-card__icon">119</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Visão Espiritual 3 (Visão Espiritual e Espíritos de Raposa)</span>
+                            <span class="lang-ja" style="display:none">霊 視 3（霊視と狐霊）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reiSHASIN.html">
+                        <div class="topic-card__icon">120</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fotografia Espírita</span>
+                            <span class="lang-ja" style="display:none">霊写真</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kourei.html">
+                        <div class="topic-card__icon">121</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fenômenos de Comunicação Espiritual</span>
+                            <span class="lang-ja" style="display:none">交霊現象</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=hikiyose.html">
+                        <div class="topic-card__icon">122</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fenômeno de Aporte de Objetos</span>
+                            <span class="lang-ja" style="display:none">物品引き寄せ現象</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reibai.html">
+                        <div class="topic-card__icon">123</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Médi um</span>
+                            <span class="lang-ja" style="display:none">霊 媒</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen1.html">
+                        <div class="topic-card__icon">124</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos de Espiritologia 1</span>
+                            <span class="lang-ja" style="display:none">霊学断片集 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen2.html">
+                        <div class="topic-card__icon">125</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos de Espiritologia 2</span>
+                            <span class="lang-ja" style="display:none">霊学断片集 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=Rdanpen3.html">
+                        <div class="topic-card__icon">126</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Coletânea de Fragmentos de Espiritologia 3</span>
+                            <span class="lang-ja" style="display:none">霊学断片集 3</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-4">
+                        <span class="lang-pt">Análise de Todas as Coisas da Natureza</span>
+                        <span class="lang-ja" style="display:none">森羅万象の解析</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=genrei.html">
+                        <div class="topic-card__icon">127</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Análise de Kotodama e Caracteres</span>
+                            <span class="lang-ja" style="display:none">言霊、文字の解析</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suuzi.html">
+                        <div class="topic-card__icon">128</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Análise dos Números</span>
+                            <span class="lang-ja" style="display:none">数字の解析</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=iro.html">
+                        <div class="topic-card__icon">129</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sobre as Cores</span>
+                            <span class="lang-ja" style="display:none">色について</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasou1.html">
+                        <div class="topic-card__icon">130</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Geomancia e Direções 1</span>
+                            <span class="lang-ja" style="display:none">家相方位 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasou2.html">
+                        <div class="topic-card__icon">131</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Geomancia e Direções 2</span>
+                            <span class="lang-ja" style="display:none">家相方位 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ninsou.html">
+                        <div class="topic-card__icon">132</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fisiono mia</span>
+                            <span class="lang-ja" style="display:none">人 相</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ningenseiHANDAN.html">
+                        <div class="topic-card__icon">133</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Método para Julgar a Natureza Humana</span>
+                            <span class="lang-ja" style="display:none">人間性判断法</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku1.html">
+                        <div class="topic-card__icon">134</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Onomancia 1</span>
+                            <span class="lang-ja" style="display:none">姓名学 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku2.html">
+                        <div class="topic-card__icon">135</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Onomancia 2</span>
+                            <span class="lang-ja" style="display:none">姓名学 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=seimeigaku3.html">
+                        <div class="topic-card__icon">136</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Onomancia 3</span>
+                            <span class="lang-ja" style="display:none">姓名学 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yume.html">
+                        <div class="topic-card__icon">137</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sobre Sonhos</span>
+                            <span class="lang-ja" style="display:none">夢について</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeKAIKOU.html">
+                        <div class="topic-card__icon">138</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Encontro em Sonhos (kaikou)</span>
+                            <span class="lang-ja" style="display:none">夢での邂逅（かいこう）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHURIKAE.html">
+                        <div class="topic-card__icon">139</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Substituição através de Sonhos</span>
+                            <span class="lang-ja" style="display:none">夢による振り替え</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN1.html">
+                        <div class="topic-card__icon">140</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 1 (Bons Presságios / Maus Presságios)</span>
+                            <span class="lang-ja" style="display:none">夢判断 1（吉兆凶兆）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN2.html">
+                        <div class="topic-card__icon">141</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 2 (Fé)</span>
+                            <span class="lang-ja" style="display:none">夢判断 2（信仰）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN3.html">
+                        <div class="topic-card__icon">142</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 3 (O Juízo Final)</span>
+                            <span class="lang-ja" style="display:none">夢判断 3（最後の審判）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN4.html">
+                        <div class="topic-card__icon">143</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 4（Espíritos Ancestrais）</span>
+                            <span class="lang-ja" style="display:none">夢判断 4（祖霊）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN5.html">
+                        <div class="topic-card__icon">144</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 5（Deuses DragõesEspíritos de Serpente）</span>
+                            <span class="lang-ja" style="display:none">夢判断 5（龍神蛇霊）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN6.html">
+                        <div class="topic-card__icon">145</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 6（Animais）</span>
+                            <span class="lang-ja" style="display:none">夢判断 6（動物）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeHANDAN7.html">
+                        <div class="topic-card__icon">146</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Interpretação de Sonhos 7（Outros）</span>
+                            <span class="lang-ja" style="display:none">夢判断 7（その他）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yumeAKURYOU.html">
+                        <div class="topic-card__icon">147</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sonhos e Espíritos Malignos</span>
+                            <span class="lang-ja" style="display:none">夢と悪霊</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kixtuchou.html">
+                        <div class="topic-card__icon">148</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Bons Presságios</span>
+                            <span class="lang-ja" style="display:none">吉 兆</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kyouchou.html">
+                        <div class="topic-card__icon">149</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Maus Presságios</span>
+                            <span class="lang-ja" style="display:none">凶 兆</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=udonge.html">
+                        <div class="topic-card__icon">150</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Flor de Udonge</span>
+                            <span class="lang-ja" style="display:none">うどんげの花</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shuuzoku.html">
+                        <div class="topic-card__icon">151</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Costumes</span>
+                            <span class="lang-ja" style="display:none">習 俗</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=setubun.html">
+                        <div class="topic-card__icon">152</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Setsubun e Risshun</span>
+                            <span class="lang-ja" style="display:none">節分と立春</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=denshou.html">
+                        <div class="topic-card__icon">153</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Lendas</span>
+                            <span class="lang-ja" style="display:none">伝 承</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yogen.html">
+                        <div class="topic-card__icon">154</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Profecias</span>
+                            <span class="lang-ja" style="display:none">予 言</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uchuu.html">
+                        <div class="topic-card__icon">155</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Universo</span>
+                            <span class="lang-ja" style="display:none">宇 宙</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=uchuuZIN.html">
+                        <div class="topic-card__icon">156</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Extraterrestres</span>
+                            <span class="lang-ja" style="display:none">宇宙人</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zisin.html">
+                        <div class="topic-card__icon">157</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Terremotos</span>
+                            <span class="lang-ja" style="display:none">地 震</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=huusuigai.html">
+                        <div class="topic-card__icon">158</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Danos por Vento e Água</span>
+                            <span class="lang-ja" style="display:none">風水害</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=rakurai.html">
+                        <div class="topic-card__icon">159</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Queda de Raios</span>
+                            <span class="lang-ja" style="display:none">落 雷</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=reigai.html">
+                        <div class="topic-card__icon">160</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Danos por Frio</span>
+                            <span class="lang-ja" style="display:none">冷 害</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasai.html">
+                        <div class="topic-card__icon">161</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Incêndios</span>
+                            <span class="lang-ja" style="display:none">火 災</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kasaiRYUUZIN.html">
+                        <div class="topic-card__icon">162</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Incêndios e Deuses Dragões</span>
+                            <span class="lang-ja" style="display:none">火災と龍神</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=atamiTAIKA.html">
+                        <div class="topic-card__icon">163</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O Grande Incêndio de Atami</span>
+                            <span class="lang-ja" style="display:none">熱海の大火</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tigaku.html">
+                        <div class="topic-card__icon">164</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Geologia</span>
+                            <span class="lang-ja" style="display:none">地 学</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kishou.html">
+                        <div class="topic-card__icon">165</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fenômenos Estranhos</span>
+                            <span class="lang-ja" style="display:none">奇 象</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=siranui.html">
+                        <div class="topic-card__icon">166</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Shiranui</span>
+                            <span class="lang-ja" style="display:none">不知火</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zinruiREKISI.html">
+                        <div class="topic-card__icon">167</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A História da Humanidade</span>
+                            <span class="lang-ja" style="display:none">人類の歴史</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=nihonZENSEIKI.html">
+                        <div class="topic-card__icon">168</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">O Século Anterior do Japão</span>
+                            <span class="lang-ja" style="display:none">日本の前世紀</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zintai1.html">
+                        <div class="topic-card__icon">169</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Corpo Humano 1（O Ser Humano é um Microcosmo）</span>
+                            <span class="lang-ja" style="display:none">人 体 1（人間は小宇宙）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zintai2.html">
+                        <div class="topic-card__icon">170</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Corpo Humano 2</span>
+                            <span class="lang-ja" style="display:none">人 体 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ningen.html">
+                        <div class="topic-card__icon">171</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Seres Humanos</span>
+                            <span class="lang-ja" style="display:none">人 間</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=kinzyuu.html">
+                        <div class="topic-card__icon">172</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Aves, Feras, Insetos e Peixes</span>
+                            <span class="lang-ja" style="display:none">禽獣虫魚</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=shokubutu.html">
+                        <div class="topic-card__icon">173</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Plantas</span>
+                            <span class="lang-ja" style="display:none">植 物</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=youkai.html">
+                        <div class="topic-card__icon">174</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Yōkai</span>
+                            <span class="lang-ja" style="display:none">妖 怪</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=yousei.html">
+                        <div class="topic-card__icon">175</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fadas</span>
+                            <span class="lang-ja" style="display:none">妖 精</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari1.html">
+                        <div class="topic-card__icon">176</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Maldição 1（Maldição de Espíritos Humanos）</span>
+                            <span class="lang-ja" style="display:none">祟 り 1（人霊の祟り）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari2.html">
+                        <div class="topic-card__icon">177</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Maldição 2（Maldição de Espíritos de Animais）</span>
+                            <span class="lang-ja" style="display:none">祟 り 2（動物霊の祟り）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari3.html">
+                        <div class="topic-card__icon">178</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Maldição 3（Maldição da Terra）</span>
+                            <span class="lang-ja" style="display:none">祟 り 3（土地の祟り）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=tatari4.html">
+                        <div class="topic-card__icon">179</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Maldição 4（Outras Maldições）</span>
+                            <span class="lang-ja" style="display:none">祟 り 4（その他の祟り）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zyuso.html">
+                        <div class="topic-card__icon">180</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Feitiços</span>
+                            <span class="lang-ja" style="display:none">呪 詛</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-5">
+                        <span class="lang-pt">Sobre a Arte</span>
+                        <span class="lang-ja" style="display:none">芸術について</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuSIMEI.html">
+                        <div class="topic-card__icon">181</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">A Missão da Arte</span>
+                            <span class="lang-ja" style="display:none">芸術の使命</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuZINKAKU.html">
+                        <div class="topic-card__icon">182</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Arte e Personalidade</span>
+                            <span class="lang-ja" style="display:none">芸術と人格</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH1.html">
+                        <div class="topic-card__icon">183</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ensaio de Crítica de Arte 1（A Arte Japonesa e seu Futuro）</span>
+                            <span class="lang-ja" style="display:none">美術評論文 1（日本美術とその将来）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH2.html">
+                        <div class="topic-card__icon">184</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ensaio de Crítica de Arte 2（Reflexões sobre a Arte Oriental）</span>
+                            <span class="lang-ja" style="display:none">美術評論文 2（東洋美術雑感）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH3.html">
+                        <div class="topic-card__icon">185</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ensaio de Crítica de Arte 3（A Razão do Desaparecimento dos
+                                Mestres）</span>
+                            <span class="lang-ja" style="display:none">美術評論文 3（名人の失くなった理由）</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH4.html">
+                        <div class="topic-card__icon">186</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ensaio de Crítica de Arte 4</span>
+                            <span class="lang-ja" style="display:none">美術評論文 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BH5.html">
+                        <div class="topic-card__icon">187</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Ensaio de Crítica de Arte 5</span>
+                            <span class="lang-ja" style="display:none">美術評論文 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK1.html">
+                        <div class="topic-card__icon">188</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Discurso sobre Arte 1</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK2.html">
+                        <div class="topic-card__icon">189</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Discurso sobre Arte 2</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK3.html">
+                        <div class="topic-card__icon">190</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Discurso sobre Arte 3</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK4.html">
+                        <div class="topic-card__icon">191</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Discurso sobre Arte 4</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK5.html">
+                        <div class="topic-card__icon">192</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 5</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK6.html">
+                        <div class="topic-card__icon">193</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 6</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 6</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK7.html">
+                        <div class="topic-card__icon">194</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 7</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 7</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK8.html">
+                        <div class="topic-card__icon">195</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 8</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 8</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK9.html">
+                        <div class="topic-card__icon">196</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 9</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 9</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK10.html">
+                        <div class="topic-card__icon">197</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 10</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 10</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BK11.html">
+                        <div class="topic-card__icon">198</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Sermões sobre Arte 11</span>
+                            <span class="lang-ja" style="display:none">美術に関する御講話 11</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS1.html">
+                        <div class="topic-card__icon">199</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Orientações sobre Arte 1</span>
+                            <span class="lang-ja" style="display:none">美術に関する御垂示 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS2.html">
+                        <div class="topic-card__icon">200</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Orientações sobre Arte 2</span>
+                            <span class="lang-ja" style="display:none">美術に関する御垂示 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS3.html">
+                        <div class="topic-card__icon">201</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Orientações sobre Arte 3</span>
+                            <span class="lang-ja" style="display:none">美術に関する御垂示 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=BS4.html">
+                        <div class="topic-card__icon">202</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Orientações sobre Arte 4</span>
+                            <span class="lang-ja" style="display:none">美術に関する御垂示 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuKA1.html">
+                        <div class="topic-card__icon">203</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Artistas, Entertainers, Escritores 1</span>
+                            <span class="lang-ja" style="display:none">芸術家、芸能家、文学者 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=geizyutuKA2.html">
+                        <div class="topic-card__icon">204</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Artistas, Entertainers, Escritores 2</span>
+                            <span class="lang-ja" style="display:none">芸術家、芸能家、文学者 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=picaso1.html">
+                        <div class="topic-card__icon">205</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Picasso 1</span>
+                            <span class="lang-ja" style="display:none">ピカソ 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=picaso2.html">
+                        <div class="topic-card__icon">206</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Picasso 2</span>
+                            <span class="lang-ja" style="display:none">ピカソ 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=ongaku.html">
+                        <div class="topic-card__icon">207</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Mú sica</span>
+                            <span class="lang-ja" style="display:none">音 楽</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=eiga.html">
+                        <div class="topic-card__icon">208</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Fil me</span>
+                            <span class="lang-ja" style="display:none">映 画</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div class="section-header" id="section-6">
+                        <span class="lang-pt">Sobre a Situação Atual</span>
+                        <span class="lang-ja" style="display:none">時局について</span>
+                    </div>
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku1.html">
+                        <div class="topic-card__icon">209</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 1</span>
+                            <span class="lang-ja" style="display:none">時 局 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku2.html">
+                        <div class="topic-card__icon">210</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 2</span>
+                            <span class="lang-ja" style="display:none">時 局 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku3.html">
+                        <div class="topic-card__icon">211</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 3</span>
+                            <span class="lang-ja" style="display:none">時 局 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku4.html">
+                        <div class="topic-card__icon">212</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 4</span>
+                            <span class="lang-ja" style="display:none">時 局 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku5.html">
+                        <div class="topic-card__icon">213</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 5</span>
+                            <span class="lang-ja" style="display:none">時 局 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku6.html">
+                        <div class="topic-card__icon">214</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 6</span>
+                            <span class="lang-ja" style="display:none">時 局 6</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=zikyoku7.html">
+                        <div class="topic-card__icon">215</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Atu alidades 7</span>
+                            <span class="lang-ja" style="display:none">時 局 7</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai1.html">
+                        <div class="topic-card__icon">216</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Previsões do Futuro 1</span>
+                            <span class="lang-ja" style="display:none">未来予想 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai2.html">
+                        <div class="topic-card__icon">217</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Previsões do Futuro 2</span>
+                            <span class="lang-ja" style="display:none">未来予想 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai3.html">
+                        <div class="topic-card__icon">218</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Previsões do Futuro 3</span>
+                            <span class="lang-ja" style="display:none">未来予想 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=mirai4.html">
+                        <div class="topic-card__icon">219</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Previsões do Futuro 4</span>
+                            <span class="lang-ja" style="display:none">未来予想 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daitoua1.html">
+                        <div class="topic-card__icon">220</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Estratégia da Guerra da Grande Ásia Oriental 1</span>
+                            <span class="lang-ja" style="display:none">大東亜戦争戦略論 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=daitoua2.html">
+                        <div class="topic-card__icon">221</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Estratégia da Guerra da Grande Ásia Oriental 2</span>
+                            <span class="lang-ja" style="display:none">大東亜戦争戦略論 2</span>
+                        </div>
+                    </a>
+                    <hr style="border:none; border-top:1px solid var(--border); margin: 32px 0; opacity: 0.5;" />
+                    <div style="height: 12px;"></div>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho1.html">
+                        <div class="topic-card__icon">222</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Literatura Tola 1</span>
+                            <span class="lang-ja" style="display:none">阿呆文学 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho2.html">
+                        <div class="topic-card__icon">223</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Literatura Tola 2</span>
+                            <span class="lang-ja" style="display:none">阿呆文学 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=aho3.html">
+                        <div class="topic-card__icon">224</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Literatura Tola 3</span>
+                            <span class="lang-ja" style="display:none">阿呆文学 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu1.html">
+                        <div class="topic-card__icon">225</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 1</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 1</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu2.html">
+                        <div class="topic-card__icon">226</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 2</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 2</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu3.html">
+                        <div class="topic-card__icon">227</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 3</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 3</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu4.html">
+                        <div class="topic-card__icon">228</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 4</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 4</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu5.html">
+                        <div class="topic-card__icon">229</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 5</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 5</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu6.html">
+                        <div class="topic-card__icon">230</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 6</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 6</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu7.html">
+                        <div class="topic-card__icon">231</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 7</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 7</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu8.html">
+                        <div class="topic-card__icon">232</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 8</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 8</span>
+                        </div>
+                    </a>
+                    <a class="topic-card" href="../reader.html?vol=shumeic4&amp;file=suntetu9.html">
+                        <div class="topic-card__icon">233</div>
+                        <div class="topic-card__title">
+                            <span class="lang-pt">Epi grama 9</span>
+                            <span class="lang-ja" style="display:none">寸 鉄 9</span>
+                        </div>
+                    </a>
+                    <!-- Stats Footer -->
+                    <div class="volume-stats-footer">
+                        <div class="stats-header">
+                            <span class="stats-title">
+                                <span class="lang-pt">Estatísticas do Volume</span>
+                                <span class="lang-ja" style="display:none">巻の統計</span>
+                            </span>
+                            <div class="stats-totals">
+                                <div class="stats-total-item">
+                                    <span class="stats-total-number">7</span>
+                                    <span class="stats-total-label"><span class="lang-pt">Categorias</span><span
+                                            class="lang-ja" style="display:none">カテゴリ</span></span>
+                                </div>
+                                <div class="stats-total-item">
+                                    <span class="stats-total-number">233</span>
+                                    <span class="stats-total-label"><span class="lang-pt">Ensinamentos</span><span
+                                            class="lang-ja" style="display:none">刊行物</span></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Os Feitos de
+                                        Meishu-Sama</span><span class="lang-ja"
+                                        style="display:none">明主様の御事跡</span></span><span
+                                    class="stat-section-count">39</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Construção do
+                                        Protótipo do Paraíso Terrestre</span><span class="lang-ja"
+                                        style="display:none">地上天国の雛形建設</span></span><span
+                                    class="stat-section-count">31</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Incompreensão
+                                        dos de fora</span><span class="lang-ja"
+                                        style="display:none">外野の無理解</span></span><span
+                                    class="stat-section-count">10</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Coleção de
+                                        Fragmentos Religiosos</span><span class="lang-ja"
+                                        style="display:none">宗教断片集</span></span><span
+                                    class="stat-section-count">46</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Análise de Todas
+                                        as Coisas da Natureza</span><span class="lang-ja"
+                                        style="display:none">万物の分析</span></span><span
+                                    class="stat-section-count">54</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Sobre a
+                                        Arte</span><span class="lang-ja" style="display:none">芸術について</span></span><span
+                                    class="stat-section-count">28</span></div>
+                            <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Sobre a Situação
+                                        Atual</span><span class="lang-ja" style="display:none">時局について</span></span><span
+                                    class="stat-section-count">25</span></div>
                         </div>
                     </div>
                 </div>
-                <div class="stats-grid">
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Os Feitos de Meishu-Sama</span><span class="lang-ja" style="display:none">明主様の御事跡</span></span><span class="stat-section-count">39</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Construção do Protótipo do Paraíso Terrestre</span><span class="lang-ja" style="display:none">地上天国の雛形建設</span></span><span class="stat-section-count">31</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Incompreensão dos de fora</span><span class="lang-ja" style="display:none">外野の無理解</span></span><span class="stat-section-count">10</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Coleção de Fragmentos Religiosos</span><span class="lang-ja" style="display:none">宗教断片集</span></span><span class="stat-section-count">46</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Análise de Todas as Coisas da Natureza</span><span class="lang-ja" style="display:none">万物の分析</span></span><span class="stat-section-count">54</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Sobre a Arte</span><span class="lang-ja" style="display:none">芸術について</span></span><span class="stat-section-count">28</span></div>
-                    <div class="stat-row"><span class="stat-section-name"><span class="lang-pt">Sobre a Situação Atual</span><span class="lang-ja" style="display:none">時局について</span></span><span class="stat-section-count">25</span></div>
-                </div>
             </div>
-</div>
-</div>
-</div>
-</main>
+        </div>
+    </main>
     <div class="search-modal-overlay" id="historyModal">
         <div class="search-modal">
             <div class="search-header">
@@ -1794,27 +1825,29 @@
     </div>
 
 
-<div class="search-modal-overlay" id="searchModal">
-<div class="search-modal">
-<div class="search-header">
-<div class="search-input-row">
-<input autocomplete="off" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..." type="text"/>
-<button class="search-close" id="searchClose">×</button>
-</div>
-<div class="search-filters">
-<label class="filter-label"><input checked="" name="searchFilter" type="radio" value="all"/>
+    <div class="search-modal-overlay" id="searchModal">
+        <div class="search-modal">
+            <div class="search-header">
+                <div class="search-input-row">
+                    <input autocomplete="off" class="search-input" id="searchInput"
+                        placeholder="Buscar nos ensinamentos..." type="text" />
+                    <button class="search-close" id="searchClose">×</button>
+                </div>
+                <div class="search-filters">
+                    <label class="filter-label"><input checked="" name="searchFilter" type="radio" value="all" />
                         Tudo</label>
-<label class="filter-label"><input name="searchFilter" type="radio" value="title"/> Só Título</label>
-<label class="filter-label"><input name="searchFilter" type="radio" value="content"/> Só
+                    <label class="filter-label"><input name="searchFilter" type="radio" value="title" /> Só
+                        Título</label>
+                    <label class="filter-label"><input name="searchFilter" type="radio" value="content" /> Só
                         Conteúdo</label>
-</div>
-</div>
-<ul class="search-results" id="searchResults"></ul>
-</div>
-</div>
+                </div>
+            </div>
+            <ul class="search-results" id="searchResults"></ul>
+        </div>
+    </div>
 
 
-<script>
+    <script>
 
         (function () {
             const checkAuth = () => {
@@ -1862,4 +1895,5 @@
 
     </script>
 </body>
+
 </html>
