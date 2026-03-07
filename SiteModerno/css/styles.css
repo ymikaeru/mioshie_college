@@ -1085,30 +1085,31 @@ select[data-tooltip]::after {
 
   /* --- Main layout --- */
   .main {
-    padding: var(--nav-height) 0 100px;
-    width: 100%;
-    margin: 0;
-    /* Removed overflow-x: hidden as it breaks sticky header on some mobile browsers */
+    padding: var(--nav-height) 32px 100px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    display: block !important;
   }
 
   /* --- Glass pane: no card look on mobile --- */
   .glass-pane {
-    padding: 24px 48px;
+    padding: 24px 0 !important;
     background: transparent;
     border: none;
     box-shadow: none;
     border-radius: 0;
-    width: 100%;
-    max-width: 100%;
-    box-sizing: border-box;
-    margin: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
   }
 
   .content-wrapper {
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    padding: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
   }
 
   /* --- Index page --- */
@@ -1238,11 +1239,15 @@ select[data-tooltip]::after {
     font-size: inherit;
   }
 
+  .main {
+    padding: calc(var(--nav-height) + 10px) 24px 100px !important;
+  }
+
   .glass-pane {
-    padding: 20px 32px;
+    padding: 16px 0 !important;
     min-width: 0;
-    width: 100%;
-    box-sizing: border-box;
+    width: 100% !important;
+    box-sizing: border-box !important;
     overflow-x: hidden;
   }
 
