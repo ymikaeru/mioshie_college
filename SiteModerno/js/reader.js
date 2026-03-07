@@ -106,10 +106,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const backBtn = document.getElementById('backToIndexBtn');
         if (backBtn) {
             let indexUrl = 'index.html';
-            if (volId === 'shumeic1') indexUrl = 'index2.html';
+            if (volId === 'shumeic1') indexUrl = 'shumeic1/index.html';
             else if (volId === 'shumeic2') indexUrl = 'shumeic2/index.html';
             else if (volId === 'shumeic3') indexUrl = 'shumeic3/index.html';
-            else if (volId === 'shumeic4') indexUrl = 'shumeic4/index2.html';
+            else if (volId === 'shumeic4') indexUrl = 'shumeic4/index.html';
 
             // Adjust path if needed (though reader.html is currently root-level)
             backBtn.href = indexUrl;
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         const bl = { pt: { home: 'Início', volume: 'Volume' }, ja: { home: 'トップ', volume: '巻' } }[lang] || { home: 'Início', volume: 'Volume' };
-        const volPath = volId === 'shumeic1' ? 'index2.html' : `${volId}/index.html`;
+        const volPath = `${volId}/index.html`;
 
         container.innerHTML = `
             <nav class="breadcrumbs">
