@@ -7,6 +7,8 @@ const APP_SHELL = [
   './js/toggle.js',
   './js/reader.js',
   './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
   './manifest.json'
 ];
 
