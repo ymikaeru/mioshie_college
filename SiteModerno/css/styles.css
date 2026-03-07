@@ -275,6 +275,10 @@ html {
   max-width: 100%;
 }
 
+.mobile-br {
+  display: none;
+}
+
 .section-label {
   display: block;
   font-size: 12px;
@@ -1238,9 +1242,7 @@ select[data-tooltip]::after {
   }
 }
 
-.mobile-br {
-  display: none;
-}
+
 
 /* --- Premium Unified Toolbar --- */
 .reader-toolbar {
