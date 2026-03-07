@@ -337,7 +337,7 @@ function setLanguage(lang, triggerRender = true) {
         // Translate common nav terms
         if (lang === 'ja') {
           if (text.includes('Início') || text.includes('⌂')) text = 'トップ';
-          else if (text.includes('Vol 1') || a.href.includes('index2.html')) text = '巻 1';
+          else if (text.includes('Vol 1') || a.href.includes('shumeic1')) text = '巻 1';
           else if (text.includes('Vol 2') || a.href.includes('shumeic2')) text = '巻 2';
           else if (text.includes('Vol 3') || a.href.includes('shumeic3')) text = '巻 3';
           else if (text.includes('Vol 4') || a.href.includes('shumeic4')) text = '巻 4';
