@@ -127,9 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="toolbar-tooltip">${isFavorited ? fl.saved : fl.save}</span>
                 </button>
                 <div class="toolbar-divider"></div>
-                <div class="reader-nav-select-container" style="display:none" id="readerTopicSelectContainer">
-                    <select id="readerTopicSelect" class="reader-nav-select"></select>
-                </div>
                 <button class="btn-zen" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
                      <span class="toolbar-tooltip">${fl.top}</span>
@@ -243,31 +240,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Dropdown Setup
-        const navSelect = document.getElementById('readerTopicSelect');
-        const navSelectContainer = document.getElementById('readerTopicSelectContainer');
-        if (navSelect && topicsFound.length > 1) {
-            navSelect.innerHTML = '<option value="">Publicações</option>';
-            topicsFound.forEach((t, i) => {
-                let pTitle = isPt ? (t.publication_title_pt || t.title_ptbr || t.title_pt) : t.title_ja;
-                pTitle = pTitle || t.title || `Parte ${i + 1}`;
-                const op = document.createElement('option');
-                op.value = `#topic-${i}`;
-                op.textContent = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de Meishu-Sama\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
-                navSelect.appendChild(op);
-            });
-            navSelectContainer.style.display = 'block';
-            navSelect.onchange = (e) => {
-                const target = document.querySelector(e.target.value);
-                if (target) {
-                    const offset = target.getBoundingClientRect().top + window.pageYOffset - (document.querySelector('.header')?.offsetHeight || 80) - 20;
-                    window.scrollTo({ top: offset, behavior: 'smooth' });
-                }
-            };
-            // Mobile hamburger nav update
-            if (typeof window._updateMobileNavTopics === 'function') {
-                const opts = Array.from(navSelect.options).filter(o => o.value).map(o => ({ value: o.value, text: o.textContent }));
+        // Update mobile nav topics if multiple exist
+        if (typeof window._updateMobileNavTopics === 'function') {
+            if (topicsFound.length > 1) {
+                const opts = topicsFound.map((t, i) => {
+                    let pTitle = isPt ? (t.publication_title_pt || t.title_ptbr || t.title_pt) : t.title_ja;
+                    pTitle = pTitle || t.title || `Parte ${i + 1}`;
+                    const cleanedTitle = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de Meishu-Sama\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
+                    return { value: `#topic-${i}`, text: cleanedTitle };
+                });
                 window._updateMobileNavTopics('Publicações deste ensinamento', opts);
+            } else {
+                window._updateMobileNavTopics('', []);
             }
         }
     }
