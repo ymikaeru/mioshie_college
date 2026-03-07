@@ -1093,7 +1093,7 @@ select[data-tooltip]::after {
 
   /* --- Glass pane: no card look on mobile --- */
   .glass-pane {
-    padding: 24px 32px;
+    padding: 24px 48px;
     background: transparent;
     border: none;
     box-shadow: none;
@@ -1137,7 +1137,7 @@ select[data-tooltip]::after {
   }
 
   .topic-card {
-    padding: 14px 16px;
+    padding: 14px 20px;
   }
 
   /* Volume index: hide select dropdown in nav */
@@ -1239,7 +1239,7 @@ select[data-tooltip]::after {
   }
 
   .glass-pane {
-    padding: 20px 24px;
+    padding: 20px 32px;
     min-width: 0;
     width: 100%;
     box-sizing: border-box;
