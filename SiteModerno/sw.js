@@ -2,12 +2,14 @@ const CACHE_NAME = 'shumei-pwa-v2';
 const APP_SHELL = [
   './',
   './index.html',
-  './index2.html',
   './reader.html',
   './css/styles.css',
   './js/toggle.js',
   './js/reader.js',
   './favicon.svg',
+  './icon-192.png',
+  './icon-512.png',
+  './icon-1024.png',
   './manifest.json'
 ];
 
