@@ -1,59 +1,64 @@
-const CACHE_NAME = 'shumei-cache-v1';
-
-// Recursos mínimos da estrutura (App Shell)
-const urlsToCache = [
+const CACHE_NAME = 'shumei-pwa-v2';
+const APP_SHELL = [
   './',
   './index.html',
+  './index2.html',
+  './reader.html',
   './css/styles.css',
   './js/toggle.js',
-  './js/reader.js'
+  './js/reader.js',
+  './favicon.svg',
+  './manifest.json'
 ];
 
-// Instalação: Cacheia arquivos fundamentais
+// Install: Cache App Shell
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll(urlsToCache);
-    })
+    caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL))
   );
   self.skipWaiting();
 });
 
-// Ativação: Limpa caches velhos se atualizar a versão
+// Activate: Cleanup old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.filter(name => name !== CACHE_NAME).map(name => caches.delete(name))
-      );
-    })
+    caches.keys().then(keys => Promise.all(
+      keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k))
+    ))
   );
   self.clients.claim();
 });
 
-// Fetch: Tenta buscar rede e salvar no log, caso offline usa cache (ou Stale-While-Revalidate)
+// Fetch Strategy
 self.addEventListener('fetch', event => {
-  // Ignora chamadas de extensão ou fora do GET
   if (event.request.method !== 'GET') return;
-  if (!event.request.url.startsWith(self.location.origin)) return;
+  const url = new URL(event.request.url);
 
+  // Strategy: Network-First for HTML and JSON (ensures updates)
+  if (url.pathname.endsWith('.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.includes('/shumeic')) {
+    event.respondWith(
+      fetch(event.request)
+        .then(res => {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          return res;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // Strategy: Stale-While-Revalidate for CSS, JS, Images
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
-      // Estratégia "Stale-While-Revalidate" modificada: 
-      // Retorna do cache instantaneamente e faz request em background para atualizar.
-      // Se não tem no cache, aguarda a request da rede.
-      const fetchPromise = fetch(event.request).then(networkResponse => {
-         if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
-             const responseToCache = networkResponse.clone();
-             caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
-         }
-         return networkResponse;
-      }).catch(() => {
-          // Deu erro no fetch de rede (offline)
-          // Se for página web avulsa, exibe cache (handled automatically if cachedResponse is valid)
-      });
-      
-      return cachedResponse || fetchPromise;
+    caches.match(event.request).then(cached => {
+      const networked = fetch(event.request)
+        .then(res => {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          return res;
+        })
+        .catch(() => cached);
+      return cached || networked;
     })
   );
 });
