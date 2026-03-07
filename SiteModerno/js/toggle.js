@@ -913,3 +913,71 @@ function performSearch(query) {
     </a></li>`;
   }).join('');
 }
+
+// ============================================================
+// SMART HEADER — Hide on scroll down, show on scroll up/idle
+// ============================================================
+(function () {
+  let lastScrollY = window.pageYOffset;
+  let hideTimer = null;
+  const HIDE_DELAY = 4500; // 4.5 seconds of inactivity
+  const SCROLL_THRESHOLD = 10; // min scroll before hiding
+
+  function initSmartHeader() {
+    const header = document.querySelector('.header');
+    if (!header) return;
+
+    function showHeader() {
+      header.classList.remove('header--hidden');
+      resetTimer();
+    }
+
+    function hideHeader() {
+      // Don't hide if at the very top or if any menu is open
+      const isAtTop = window.pageYOffset < 50;
+      const anyOpen = document.querySelector(
+        '.search-modal-overlay.active, .history-modal-overlay.active, .favorites-modal-overlay.active, .mobile-nav-overlay.open'
+      );
+
+      if (!isAtTop && !anyOpen) {
+        header.classList.add('header--hidden');
+      }
+    }
+
+    function resetTimer() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(hideHeader, HIDE_DELAY);
+    }
+
+    window.addEventListener('scroll', () => {
+      const currentScrollY = window.pageYOffset;
+      const delta = currentScrollY - lastScrollY;
+
+      if (Math.abs(delta) > SCROLL_THRESHOLD) {
+        if (delta > 0 && currentScrollY > 100) {
+          // Scrolling down
+          hideHeader();
+        } else {
+          // Scrolling up
+          showHeader();
+        }
+      }
+      lastScrollY = currentScrollY;
+    }, { passive: true });
+
+    // Interactions that reveal the header
+    const wakeEvents = ['mousedown', 'touchstart', 'keydown', 'click'];
+    wakeEvents.forEach(evt => {
+      document.addEventListener(evt, showHeader, { passive: true });
+    });
+
+    // Initial timer
+    resetTimer();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initSmartHeader);
+  } else {
+    initSmartHeader();
+  }
+})();

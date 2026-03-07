@@ -17,7 +17,7 @@
   /* Layout */
   --max-width-content: 1024px;
   --container-width: 1040px;
-  --nav-height: 80px;
+  --nav-height: 60px;
   --radius: 16px;
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -68,8 +68,9 @@ html {
 
 /* --- Premium Header --- */
 .header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
   height: 60px;
   background: var(--surface-80);
@@ -1080,10 +1081,10 @@ select[data-tooltip]::after {
 
   /* --- Main layout --- */
   .main {
-    padding: 0 0 100px;
+    padding: var(--nav-height) 0 100px;
     width: 100%;
     margin: 0;
-    overflow-x: hidden;
+    /* Removed overflow-x: hidden as it breaks sticky header on some mobile browsers */
   }
 
   /* --- Glass pane: no card look on mobile --- */
