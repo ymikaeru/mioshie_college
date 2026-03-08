@@ -316,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof renderFavorites === 'function') renderFavorites();
     };
 
+    window.renderContent = () => initReader();
     initReader();
     window.addEventListener('popstate', () => initReader());
 });
