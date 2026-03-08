@@ -155,16 +155,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Norm & Format
             const DBLBR = '\x01DBLBR\x01';
+            const SGLBR = '\x03SGLBR\x03';
             let norm = rawContent
                 .replace(/<br\s*\/?>\n?<br\s*\/?>\n?<br\s*\/?>\n?/gi, DBLBR)
-                .replace(/([）)][^<\n]*)<br\s*\/?>\n?<br\s*\/?>\n?/gi, '$1' + DBLBR)
+                .replace(/([）)][^<\n]*)(?:<br\s*\/?>\n?|\n){2,}/gi, '$1' + DBLBR)
+                .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)*([（(])/gi, '$1' + SGLBR + '$2')
+                // Ensure colon after Q&A labels
+                .replace(/(Pergunta do fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
                 .replace(/(Pergunta do fiel|Orientação de Meishu-Sama)/gi, DBLBR + '$1')
                 .replace(/<br\s*\/?>\n?<br\s*\/?>\n?(?=\s*<(?:b>\s*)?<font\s+color)/gi, DBLBR)
                 .replace(/<br\s*\/?>\n<br\s*\/?>\n/gi, ' ')
                 .replace(/<br\s*\/?>\n/gi, ' ')
                 .replace(/<br\s*\/?>/gi, ' ')
                 .replace(/\n/g, ' ')
+                // No line break after comma: merge word that follows a comma at end of line
+                .replace(/,\s+/g, ', ')
                 .replace(/\x01DBLBR\x01/g, '\n\n\x02DBLBR\x02\n\n')
+                .replace(/\x03SGLBR\x03/g, '<br/>\n')
                 .replace(/[ \t]{2,}/g, ' ').trim();
 
             let formatted;
@@ -177,6 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).join('\n');
             }
             formatted = formatted.replace(/<p>\s*\x02DBLBR\x02\s*<\/p>/g, '<br>').replace(/\x02DBLBR\x02/g, '<br>');
+            // Merge paragraphs where previous <p> ends with comma (no line break after comma)
+            // Pattern 1: </p><p> directly
+            formatted = formatted.replace(/,\s*<\/p>\s*\n?\s*<p>/g, ', ');
+            // Pattern 2: </p><br><p> — happens when DBLBR separator is placed after a comma
+            formatted = formatted.replace(/,\s*<\/p>\s*\n?<br>\s*\n?<p>/g, ', ');
             formatted = formatted.replace(/\s(color|bgcolor|size)=["'][^"']*["']/gi, '').replace(/<font[^>]*>(.*?)<\/font>/gi, '$1');
 
             let bCount = 0;
