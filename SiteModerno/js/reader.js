@@ -245,14 +245,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof window._updateMobileNavTopics === 'function') {
             if (topicsFound.length > 1) {
                 const opts = topicsFound.map((t, i) => {
-                    const tTitle = isPt ? (t.publication_title_pt || t.title_ptbr || t.title_pt) : t.title_ja;
+                    const tTitle = isPt ? (t.title_ptbr || t.title_pt || t.publication_title_pt) : t.title_ja;
                     const pTitle = tTitle || t.title || `Parte ${i + 1}`;
 
                     const cleanedTitle = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
                     const sidebarText = `"${cleanedTitle}"`;
                     return { value: `#topic-${i}`, text: sidebarText };
                 });
-                window._updateMobileNavTopics('Publicações deste ensinamento', opts);
+                const sectionLabel = lang === 'ja' ? '刊行物：テーマ' : 'Publicações deste ensinamento';
+                window._updateMobileNavTopics(sectionLabel, opts);
             } else {
                 window._updateMobileNavTopics('', []);
             }
@@ -316,6 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof renderFavorites === 'function') renderFavorites();
     };
 
+    window.renderContent = () => initReader();
     initReader();
     window.addEventListener('popstate', () => initReader());
 });

@@ -299,9 +299,9 @@ html {
 .topic-card {
   display: flex;
   align-items: center;
-  padding: 24px;
   gap: 12px;
-  padding: 12px 16px;
+  padding: 16px 20px;
+  min-height: 64px;
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -311,7 +311,6 @@ html {
 
 .topic-card:hover {
   border-color: var(--accent);
-  transform: translateX(8px);
   box-shadow: var(--shadow-sm);
   background: var(--accent-soft);
 }
@@ -1618,5 +1617,11 @@ font.section-header,
   #scroll-to-top {
     bottom: 24px;
     right: 16px;
+  }
+}
+
+@media (max-width: 600px) {
+  .topic-list .topic-card .topic-card__icon {
+    display: none !important;
   }
 }
