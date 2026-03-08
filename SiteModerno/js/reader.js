@@ -59,7 +59,13 @@ document.addEventListener('DOMContentLoaded', () => {
         let indexTitles = {};
         try { indexTitles = window.GLOBAL_INDEX_TITLES || {}; } catch (e) { }
 
-        const indexTitle = (indexTitles[volId] && indexTitles[volId][filename]) ? indexTitles[volId][filename] : null;
+        const indexTitlesForVol = indexTitles[volId] || {};
+        let indexTitle = indexTitlesForVol[filename];
+        if (!indexTitle && filename) {
+            const baseFile = filename.split('/').pop().toLowerCase();
+            const matchingKey = Object.keys(indexTitlesForVol).find(k => k.toLowerCase() === baseFile || k.toLowerCase() === filename.toLowerCase());
+            if (matchingKey) indexTitle = indexTitlesForVol[matchingKey];
+        }
         const jaSpecificTitle = topicsFound[0].title_ja || topicsFound[0].title;
         const ptSpecificTitle = topicsFound[0].title_ptbr || topicsFound[0].title_pt || topicsFound[0].title;
 
@@ -70,25 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const hasJapanese = /[\u3040-\u309F\u30A0-\u30FF\u4E00-\u9FAF]/.test(mainTitleToDisplay);
             if (!hasJapanese && jaSpecificTitle && jaSpecificTitle !== mainTitleToDisplay) {
                 mainTitleToDisplay = jaSpecificTitle;
-            }
-        }
-
-        // Generic title promotion (peek into content)
-        if (!mainTitleToDisplay || genericRegex.test(mainTitleToDisplay)) {
-            for (let t of topicsFound) {
-                const raw = isPt ? (t.content_ptbr || t.content_pt || t.content) : t.content;
-                if (!raw || raw.length < 20) continue;
-                const doc = new DOMParser().parseFromString(raw, 'text/html');
-                const span = doc.querySelector('span, b, font');
-                if (span) {
-                    let text = span.textContent.trim();
-                    let quoteMatch = text.match(/[“"']([^”"']+)[”"']/);
-                    let extracted = quoteMatch ? quoteMatch[1] : text.replace(/Ensinamento de Meishu-Sama:\s*|Orientação de Meishu-Sama:\s*|Palestra de Meishu-Sama:\s*|明主様御垂示\s*|明主様御講話\s*/gi, '');
-                    if (extracted.length > 5 && extracted.length < 150) {
-                        mainTitleToDisplay = extracted;
-                        break;
-                    }
-                }
             }
         }
 
@@ -258,10 +245,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof window._updateMobileNavTopics === 'function') {
             if (topicsFound.length > 1) {
                 const opts = topicsFound.map((t, i) => {
-                    let pTitle = isPt ? (t.publication_title_pt || t.title_ptbr || t.title_pt) : t.title_ja;
-                    pTitle = pTitle || t.title || `Parte ${i + 1}`;
-                    const cleanedTitle = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de Meishu-Sama\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
-                    return { value: `#topic-${i}`, text: cleanedTitle };
+                    const tTitle = isPt ? (t.publication_title_pt || t.title_ptbr || t.title_pt) : t.title_ja;
+                    const pTitle = tTitle || t.title || `Parte ${i + 1}`;
+
+                    const cleanedTitle = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
+                    const sidebarText = `"${cleanedTitle}"`;
+                    return { value: `#topic-${i}`, text: sidebarText };
                 });
                 window._updateMobileNavTopics('Publicações deste ensinamento', opts);
             } else {
