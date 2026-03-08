@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
   let urlLang = urlParams.get('lang') || (urlParams.get('jp') !== null ? 'ja' : null);
   const savedLang = urlLang || localStorage.getItem('site_lang') || 'pt';
-  setLanguage(savedLang, false);
+  if (typeof setLanguage === 'function') setLanguage(savedLang, false);
 
   // -------------------------------------------------------
   // Mobile Hamburger Menu — injected dynamically
@@ -83,7 +83,7 @@ function _initMobileNav() {
       actions: 'AÇÕES',
       history: 'Histórico',
       saved: 'Salvos',
-      lang: `Mudar Idioma (${currentLang === 'pt' ? 'Português' : '日本語'})`,
+      lang: '日本語',
       theme: 'Mudar Tema',
       fontSize: 'Tamanho da Fonte'
     },
@@ -94,7 +94,7 @@ function _initMobileNav() {
       actions: '操作',
       history: '履歴',
       saved: 'お気に入り',
-      lang: `言語切替 (${currentLang === 'pt' ? 'Português' : '日本語'})`,
+      lang: 'Português',
       theme: 'テーマ切替',
       fontSize: 'フォントサイズ'
     }
@@ -180,9 +180,10 @@ function _initMobileNav() {
   const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
   // Only auto-populate if it's an index page select (not readerTopicSelect)
   if (headerNavSelect && headerNavSelect.id !== 'readerTopicSelect') {
-    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => ({ value: o.value, text: o.textContent }));
+    const currentLang = localStorage.getItem('site_lang') || 'pt';
+    const sectionLabel = currentLang === 'ja' ? '巻のテーマ' : 'Temas do Volume';
     if (opts.length > 0) {
-      window._updateMobileNavTopics('Temas do Volume', opts);
+      window._updateMobileNavTopics(sectionLabel, opts);
     }
   }
 }
@@ -209,16 +210,30 @@ window._updateMobileNavTopics = function (label, optionsList) {
   }
 
   const currentLang = localStorage.getItem('site_lang') || 'pt';
-  const label_to_use = currentLang === 'ja' ? '刊行物：テーマ' : 'Publicações deste ensinamento';
+  let label_to_use = label;
+  if (!label_to_use) {
+    label_to_use = currentLang === 'ja' ? '巻のテーマ' : 'Temas do Volume';
+  } else {
+    // Standard translate for labels
+    if (label === 'Temas do Volume' || label === '巻のテーマ') {
+      label_to_use = currentLang === 'ja' ? '巻のテーマ' : 'Temas do Volume';
+    } else if (label === 'Publicações deste ensinamento' || label === '刊行物：テーマ') {
+      label_to_use = currentLang === 'ja' ? '刊行物：テーマ' : 'Publicações deste ensinamento';
+    }
+  }
 
   let html = `
     <div class="mobile-nav-divider"></div>
     <div class="mobile-nav-section-label">${label_to_use}</div>
   `;
   optionsList.forEach(o => {
+    let cleanText = o.text;
+    // Special handling for the select options which might contain spans for translation
+    // In this context, _updateMobileNavTopics receives o.text which might be already formatted or a raw string
+    // Let's ensure we only show the text for the current language if it's a multi-lang string
     html += `<a href="${o.value}" class="mobile-nav-link" onclick="closeMobileNav()">
       <svg class="nav-icon" viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-      ${o.text}
+      ${cleanText}
     </a>`;
   });
   container.innerHTML = html;
@@ -364,12 +379,17 @@ function setLanguage(lang, triggerRender = true) {
   const desktopNav = document.querySelector('.header__nav');
   const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
   if (headerNavSelect && headerNavSelect.id !== 'readerTopicSelect') {
-    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => ({
-      value: o.value,
-      text: o.textContent
-    }));
+    const sectionLabel = lang === 'ja' ? '巻のテーマ' : 'Temas do Volume';
+    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => {
+      // Use data-pt or data-ja for the text to ensure it matches the language
+      const text = lang === 'ja' ? (o.getAttribute('data-ja') || o.textContent) : (o.getAttribute('data-pt') || o.textContent);
+      return {
+        value: o.value,
+        text: text
+      };
+    });
     if (opts.length > 0) {
-      window._updateMobileNavTopics('Temas do Volume', opts);
+      window._updateMobileNavTopics(sectionLabel, opts);
     }
   }
 

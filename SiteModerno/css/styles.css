@@ -311,7 +311,6 @@ html {
 
 .topic-card:hover {
   border-color: var(--accent);
-  transform: translateX(8px);
   box-shadow: var(--shadow-sm);
   background: var(--accent-soft);
 }
