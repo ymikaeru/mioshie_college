@@ -231,17 +231,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Search Highlighting
         if (searchQuery) {
-            const queryParts = searchQuery.trim().toLowerCase().split('&').map(p => p.trim()).filter(p => p.length >= 2);
+            const isCJK = (str) => /[\u3000-\u9FFF\uF900-\uFAFF\uAC00-\uD7AF]/.test(str);
+
+            // Separate query logic by language
+            const queryParts = searchQuery.trim().split('&').map(p => p.trim()).filter(p => {
+                if (isPt) {
+                    // In PT mode, skip CJK search terms and require length >= 2
+                    return !isCJK(p) && p.length >= 2;
+                } else {
+                    // In JA mode, allow single CJK characters, require 2 for Latin
+                    return isCJK(p) ? p.length >= 1 : p.length >= 2;
+                }
+            });
+
             if (queryParts.length > 0) {
-                const highlightRegex = new RegExp(`(${queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, 'gi');
+                // Use case-insensitive flag only for non-CJK queries
+                const regexFlags = queryParts.some(isCJK) ? 'g' : 'gi';
+                const highlightRegex = new RegExp(`(${queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|')})`, regexFlags);
+
                 container.querySelectorAll('.topic-content').forEach(block => {
                     const walker = document.createTreeWalker(block, NodeFilter.SHOW_TEXT, null, false);
                     let node;
                     const textNodes = [];
                     while (node = walker.nextNode()) textNodes.push(node);
+
                     textNodes.forEach(textNode => {
                         const val = textNode.nodeValue;
-                        if (queryParts.some(part => val.toLowerCase().includes(part)) && val.trim()) {
+                        if (!val.trim()) return;
+
+                        // Separate matching logic:
+                        // In PT mode, only highlight if the text itself ISN'T Japanese
+                        // In JA mode, only highlight if the text IS Japanese (unless we have a Latin query part)
+                        const textIsCJK = isCJK(val);
+                        if (isPt && textIsCJK) return;
+                        if (!isPt && !textIsCJK && !queryParts.some(p => !isCJK(p))) return;
+
+                        const matches = queryParts.some(part => {
+                            if (isCJK(part)) return val.includes(part);
+                            return val.toLowerCase().includes(part.toLowerCase());
+                        });
+
+                        if (matches) {
                             const span = document.createElement('span');
                             span.innerHTML = val.replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
                             textNode.parentNode.replaceChild(span, textNode);
