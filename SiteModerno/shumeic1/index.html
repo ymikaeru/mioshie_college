@@ -3182,8 +3182,15 @@
                 const submit = document.getElementById('login-submit');
                 const error = document.getElementById('login-error');
 
-                const attempt = () => {
-                    if (input.value === '567') {
+                const attempt = async () => {
+                    const pass = input.value;
+                    const encoder = new TextEncoder();
+                    const data = encoder.encode(pass);
+                    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+                    const hashArray = Array.from(new Uint8Array(hashBuffer));
+                    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+
+                    if (hashHex === '1e96752d590ab228b3ec4a6825c83cae7a6839aaec912ac23f7d14d7a8d052be') {
                         localStorage.setItem('shumei_auth', 'true');
                         overlay.remove();
                     } else {

@@ -3698,7 +3698,7 @@
                     const hashArray = Array.from(new Uint8Array(hashBuffer));
                     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 
-                    if (hashHex === '5abebed5a3bd47da696515d0ba962057a627daab731ea173d1ba1adca5215d5e') {
+                    if (hashHex === '1e96752d590ab228b3ec4a6825c83cae7a6839aaec912ac23f7d14d7a8d052be') {
                         localStorage.setItem('shumei_auth', 'true');
                         overlay.remove();
                     } else {
