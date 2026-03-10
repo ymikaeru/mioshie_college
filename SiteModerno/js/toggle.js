@@ -437,7 +437,7 @@ async function getSearchIndex() {
   } catch (err) {
     console.error(err);
     const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice.';
-    if (resultsEl) resultsEl.innerHTML = `< li class= "search-error" > ${errorMsg}</li > `;
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-error">${errorMsg}</li>`;
   } finally {
     isFetchingIndex = false;
   }
@@ -494,7 +494,7 @@ function renderHistory() {
     const fBase = item.file.replace('.html', '');
     const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
-    return `< li > <a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li > `;
+    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
 }
 
@@ -533,14 +533,14 @@ function renderFavorites() {
     const fBase = item.file.replace('.html', '');
     const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
-    return `< li >
+    return `<li>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
         <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">Salvo em ${date}</div></a>
         <button onclick="removeFavoriteFromModal('${item.vol}', '${item.file}')" style="background:none; border:none;  cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:var(--accent);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
         </button>
       </div>
-    </li > `;
+    </li>`;
   }).join('');
 }
 
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsEl = document.getElementById('searchResults');
     const currentLang = localStorage.getItem('site_lang') || 'pt';
     const searchingMsg = currentLang === 'ja' ? '検索中...' : 'Buscando...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-loading" > ${searchingMsg}</li > `;
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${searchingMsg}</li>`;
     searchTimeout = setTimeout(async () => {
       await getSearchIndex();
       performSearch(query);
@@ -726,7 +726,7 @@ function performSearch(query) {
   const activeLang = localStorage.getItem('site_lang') || 'pt';
   if (!query || query.trim().length < 2) {
     const minCharsMsg = activeLang === 'ja' ? '2文字以上入力してください...' : 'Digite pelo menos 2 caracteres...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${minCharsMsg}</li > `;
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${minCharsMsg}</li>`;
     return;
   }
 
@@ -739,7 +739,7 @@ function performSearch(query) {
   const queryParts = qLower.split('&').map(p => p.trim()).filter(p => p.length >= 2);
   if (queryParts.length === 0) {
     const invalidQueryMsg = activeLang === 'ja' ? '有効な検索ワードを入力してください...' : 'Digite termos de busca válidos...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${invalidQueryMsg}</li > `;
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${invalidQueryMsg}</li>`;
     return;
   }
 
@@ -827,7 +827,7 @@ function performSearch(query) {
 
   if (results.length === 0) {
     const noResultsMsg = activeLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${noResultsMsg}</li > `;
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${noResultsMsg}</li>`;
     return;
   }
 
@@ -841,10 +841,10 @@ function performSearch(query) {
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
       .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
-    return `< li > <a href="${href}" class="search-result-item" onclick="closeSearch()">
+    return `<li><a href="${href.replace(/\s+/g, '')}" class="search-result-item" onclick="closeSearch()">
         <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
         <div class="search-result-context">${highlight}</div>
-      </a></li > `;
+      </a></li>`;
   }).join('');
 }
 
