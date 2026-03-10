@@ -17,7 +17,7 @@ function showLoginModal() {
     overlay.innerHTML = `
         <div class="login-modal">
             <h2 style="font-family: var(--font-serif); color: var(--text-main); margin-top: 0;">Acesso Restrito</h2>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Por favor, insira a senha para acessar o acervo da Biblioteca Sagrada.</p>
+            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Por favor, insira a senha para acessar o acervo da Mioshie College.</p>
             <input type="password" id="accessPassword" class="login-input" placeholder="Senha de acesso" autofocus>
             <button class="login-button" onclick="verifyPassword()">Acessar</button>
             <p id="loginError" style="color: var(--accent); font-size: 13px; margin-top: 15px; display: none;">Senha incorreta. Tente novamente.</p>
@@ -26,7 +26,7 @@ function showLoginModal() {
     document.body.appendChild(overlay);
 
     const input = document.getElementById('accessPassword');
-    input.addEventListener('keypress', function(e) {
+    input.addEventListener('keypress', function (e) {
         if (e.key === 'Enter') verifyPassword();
     });
 }
@@ -35,7 +35,7 @@ async function verifyPassword() {
     const input = document.getElementById('accessPassword');
     const pwd = input.value;
     const hash = await sha256(pwd);
-    
+
     if (hash === PASS_HASH) {
         sessionStorage.setItem('shumei_access_granted', 'true');
         const overlay = document.querySelector('.login-overlay');
@@ -48,7 +48,7 @@ async function verifyPassword() {
         err.style.display = 'block';
         input.value = '';
         input.focus();
-        
+
         // Shake animation
         const modal = document.querySelector('.login-modal');
         modal.style.transform = 'translate(-50%, -50%) translateX(10px)';
