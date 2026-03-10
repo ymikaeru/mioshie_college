@@ -428,16 +428,16 @@ async function getSearchIndex() {
 
   try {
     const fetchPromises = volumes.map(vol => fetch(`${basePath}site_data/search_index_${vol}.json`).then(res => {
-      if (!res.ok) throw new Error(\`Falha ao carregar o índice ${vol}\`);
-        return res.json();
+      if (!res.ok) throw new Error(`Falha ao carregar o índice ${vol}`);
+      return res.json();
     }));
-    
+
     const results = await Promise.all(fetchPromises);
     searchIndex = results.flat();
   } catch (err) {
     console.error(err);
     const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice.';
-    if (resultsEl) resultsEl.innerHTML = `< li class= "search-error" > ${ errorMsg }</li > `;
+    if (resultsEl) resultsEl.innerHTML = `< li class= "search-error" > ${errorMsg}</li > `;
   } finally {
     isFetchingIndex = false;
   }
@@ -492,7 +492,7 @@ function renderHistory() {
   resultsEl.innerHTML = history.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${ basePath }reader.html#v${ vNum } / ${ fBase }`;
+    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `< li > <a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li > `;
   }).join('');
@@ -531,7 +531,7 @@ function renderFavorites() {
   resultsEl.innerHTML = favorites.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${ basePath }reader.html#v${ vNum } / ${ fBase }`;
+    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `< li >
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
@@ -635,7 +635,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultsEl = document.getElementById('searchResults');
     const currentLang = localStorage.getItem('site_lang') || 'pt';
     const searchingMsg = currentLang === 'ja' ? '検索中...' : 'Buscando...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-loading" > ${ searchingMsg }</li > `;
+    if (resultsEl) resultsEl.innerHTML = `< li class="search-loading" > ${searchingMsg}</li > `;
     searchTimeout = setTimeout(async () => {
       await getSearchIndex();
       performSearch(query);
@@ -670,7 +670,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const style = document.createElement('style');
     style.textContent = `
       .header, .reader - toolbar {
-      transition: opacity ${ FADE_MS }ms ease, transform ${ FADE_MS }ms ease!important;
+      transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease!important;
     }
       .header.immersed {
       opacity: 0;
@@ -726,7 +726,7 @@ function performSearch(query) {
   const activeLang = localStorage.getItem('site_lang') || 'pt';
   if (!query || query.trim().length < 2) {
     const minCharsMsg = activeLang === 'ja' ? '2文字以上入力してください...' : 'Digite pelo menos 2 caracteres...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${ minCharsMsg }</li > `;
+    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${minCharsMsg}</li > `;
     return;
   }
 
@@ -739,7 +739,7 @@ function performSearch(query) {
   const queryParts = qLower.split('&').map(p => p.trim()).filter(p => p.length >= 2);
   if (queryParts.length === 0) {
     const invalidQueryMsg = activeLang === 'ja' ? '有効な検索ワードを入力してください...' : 'Digite termos de busca válidos...';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${ invalidQueryMsg }</li > `;
+    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${invalidQueryMsg}</li > `;
     return;
   }
 
@@ -827,17 +827,17 @@ function performSearch(query) {
 
   if (results.length === 0) {
     const noResultsMsg = activeLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
-    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${ noResultsMsg }</li > `;
+    if (resultsEl) resultsEl.innerHTML = `< li class="search-empty" > ${noResultsMsg}</li > `;
     return;
   }
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
   // Escape all parts for regex
   const escapedParts = queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const highlightRegex = new RegExp(`(${ escapedParts.join('|') })`, 'gi');
+  const highlightRegex = new RegExp(`(${escapedParts.join('|')})`, 'gi');
 
   resultsEl.innerHTML = results.map(r => {
-    const href = `${ basePath } reader.html ? vol = ${ r.v }& file=${ r.f }& search=${ encodeURIComponent(q) } `;
+    const href = `${basePath} reader.html ? vol = ${r.v}& file=${r.f}& search=${encodeURIComponent(q)} `;
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
       .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
