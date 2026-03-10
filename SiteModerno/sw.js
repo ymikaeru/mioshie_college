@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shumei-pwa-v8';
+const CACHE_NAME = 'shumei-pwa-v9';
 const APP_SHELL = [
   './',
   './index.html',
@@ -36,6 +36,9 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
+
+  // Only cache HTTP/HTTPS requests (prevents NetworkError on chrome-extension:// or file://)
+  if (!url.protocol.startsWith('http')) return;
 
   // Skip cross-origin requests (e.g., Google Fonts) — let browser handle caching
   if (url.origin !== self.location.origin) return;
