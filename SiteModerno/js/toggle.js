@@ -1,4 +1,30 @@
 
+// --- Shared Translation Strings ---
+const MENU_TEXTS = {
+  pt: {
+    title: 'Biblioteca Sagrada',
+    close: 'Fechar menu',
+    navigation: 'Navegação',
+    actions: 'AÇÕES',
+    history: 'Histórico',
+    saved: 'Salvos',
+    lang: '日本語',
+    theme: 'Mudar Tema',
+    fontSize: 'Tamanho da Fonte'
+  },
+  ja: {
+    title: '御教え図書館',
+    close: 'メニューを閉じる',
+    navigation: 'ナビゲーション',
+    actions: '操作',
+    history: '履歴',
+    saved: 'お気に入り',
+    lang: 'Português',
+    theme: 'テーマ切替',
+    fontSize: 'フォントサイズ'
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // Theme Toggle Logic
   const savedTheme = localStorage.getItem('theme') || 'light';
@@ -75,31 +101,7 @@ function _initMobileNav() {
   }
 
   const currentLang = localStorage.getItem('site_lang') || 'pt';
-  const menuTexts = {
-    pt: {
-      title: 'Biblioteca Sagrada',
-      close: 'Fechar menu',
-      navigation: 'Navegação',
-      actions: 'AÇÕES',
-      history: 'Histórico',
-      saved: 'Salvos',
-      lang: '日本語',
-      theme: 'Mudar Tema',
-      fontSize: 'Tamanho da Fonte'
-    },
-    ja: {
-      title: '御教え図書館',
-      close: 'メニューを閉じる',
-      navigation: 'ナビゲーション',
-      actions: '操作',
-      history: '履歴',
-      saved: 'お気に入り',
-      lang: 'Português',
-      theme: 'テーマ切替',
-      fontSize: 'フォントサイズ'
-    }
-  };
-  const t = menuTexts[currentLang] || menuTexts.pt;
+  const t = MENU_TEXTS[currentLang] || MENU_TEXTS.pt;
 
   const mobileNavOverlay = document.createElement('div');
   mobileNavOverlay.className = 'mobile-nav-overlay';
@@ -296,31 +298,7 @@ function setLanguage(lang, triggerRender = true) {
   // Refresh mobile nav if it's open or exists
   const mobileNav = document.getElementById('mobileNavOverlay');
   if (mobileNav) {
-    const menuTexts = {
-      pt: {
-        title: 'Biblioteca Sagrada',
-        close: 'Fechar menu',
-        navigation: 'Navegação',
-        actions: 'AÇÕES',
-        history: 'Histórico',
-        saved: 'Salvos',
-        lang: '日本語',
-        theme: 'Mudar Tema',
-        fontSize: 'Tamanho da Fonte'
-      },
-      ja: {
-        title: '御教え図書館',
-        close: 'メニューを閉じる',
-        navigation: 'ナビゲーション',
-        actions: '操作',
-        history: '履歴',
-        saved: 'お気に入り',
-        lang: 'Português',
-        theme: 'テーマ切替',
-        fontSize: 'フォントサイズ'
-      }
-    };
-    const t = menuTexts[lang] || menuTexts.pt;
+    const t = MENU_TEXTS[lang] || MENU_TEXTS.pt;
 
     const updateLabel = (id, text) => {
       const el = document.getElementById(id);
@@ -446,11 +424,16 @@ async function getSearchIndex() {
   if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${loadingMsg}</li>`;
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+  const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
 
   try {
-    const response = await fetch(`${basePath}site_data/search_index.json`);
-    if (!response.ok) throw new Error('Falha ao carregar o índice');
-    searchIndex = await response.json();
+    const fetchPromises = volumes.map(vol => fetch(`${basePath}site_data/search_index_${vol}.json`).then(res => {
+      if (!res.ok) throw new Error(`Falha ao carregar o índice ${vol}`);
+      return res.json();
+    }));
+
+    const results = await Promise.all(fetchPromises);
+    searchIndex = results.flat();
   } catch (err) {
     console.error(err);
     const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice.';
@@ -477,77 +460,7 @@ window.closeSearch = function () {
   if (modal) modal.classList.remove('active');
 }
 
-function performSearch(query) {
-  const resultsEl = document.getElementById('searchResults');
-  const currentLang = localStorage.getItem('site_lang') || 'pt';
-  if (!query || query.trim().length < 3) {
-    const minCharsMsg = currentLang === 'ja' ? '3文字以上入力してください...' : 'Digite pelo menos 3 caracteres...';
-    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${minCharsMsg}</li>`;
-    return;
-  }
-
-  if (!searchIndex) return;
-
-  const q = query.toLowerCase().trim();
-  const filterNodes = document.querySelectorAll('input[name="searchFilter"]');
-  let filterMode = 'all';
-  for (const node of filterNodes) {
-    if (node.checked) {
-      filterMode = node.value;
-      break;
-    }
-  }
-
-  let results = [];
-  for (let item of searchIndex) {
-    let score = 0;
-    let matchTitle = item.t.toLowerCase().includes(q);
-    let matchContent = false;
-
-    if (item.t.toLowerCase() === q) score += 100;
-    else if (matchTitle) score += 50;
-
-    const cLower = item.c.toLowerCase();
-    const cIdx = cLower.indexOf(q);
-    if (cIdx !== -1) {
-      matchContent = true;
-      score += 10;
-      const start = Math.max(0, cIdx - 60);
-      const end = Math.min(item.c.length, cIdx + query.length + 60);
-      let snippet = item.c.substring(start, end);
-      if (start > 0) snippet = '...' + snippet;
-      if (end < item.c.length) snippet = snippet + '...';
-      item.snippet = snippet;
-    }
-
-    if (filterMode === 'title' && !matchTitle) continue;
-    if (filterMode === 'content' && !matchContent) continue;
-    if (score === 0) continue;
-
-    results.push({ ...item, score });
-  }
-
-  results.sort((a, b) => b.score - a.score);
-  results = results.slice(0, 50);
-
-  if (results.length === 0) {
-    const noResultsMsg = currentLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
-    if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${noResultsMsg}</li>`;
-    return;
-  }
-
-  const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-  resultsEl.innerHTML = results.map(r => {
-    const vNum = r.v.replace('shumeic', '');
-    const fBase = r.f.replace('.html', '');
-    // Using hash permalink: #v4/filename
-    const href = `${basePath}reader.html${query ? '?s=' + encodeURIComponent(query) : ''}#v${vNum}/${fBase}`;
-    // Escape query for regex
-    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const highlight = (r.snippet || '').replace(new RegExp(`(${escapedQuery})`, 'gi'), '<mark class="search-highlight">$1</mark>');
-    return `<li><a href="${href}" class="search-result-item"><div class="search-result-title">${r.t} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${highlight}</div></a></li>`;
-  }).join('');
-}
+// performSearch is defined below (bilingual version with JP support)
 
 // --- History Logic ---
 window.openHistory = function () {
@@ -579,7 +492,7 @@ function renderHistory() {
   resultsEl.innerHTML = history.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
@@ -618,7 +531,7 @@ function renderFavorites() {
   resultsEl.innerHTML = favorites.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `<li>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
@@ -756,19 +669,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject transition CSS once
     const style = document.createElement('style');
     style.textContent = `
-      .header, .reader-toolbar {
-        transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease !important;
-      }
+      .header, .reader - toolbar {
+      transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease!important;
+    }
       .header.immersed {
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(-8px);
-      }
-      .reader-toolbar.immersed {
-        opacity: 0;
-        pointer-events: none;
-        transform: translate(-50%, 12px);
-      }
+      opacity: 0;
+      pointer - events: none;
+      transform: translateY(-8px);
+    }
+      .reader - toolbar.immersed {
+      opacity: 0;
+      pointer - events: none;
+      transform: translate(-50 %, 12px);
+    }
     `;
     document.head.appendChild(style);
 
@@ -806,11 +719,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // ============================================================
-// JAPANESE SEARCH — update performSearch to use tj / cj fields
+// SEARCH — bilingual search with Japanese (tj/cj) field support
 // ============================================================
-// Override performSearch to also check Japanese title (tj) and content (cj)
-const _originalPerformSearch = performSearch;
-// Wrap performSearch to add Japanese field support
 function performSearch(query) {
   const resultsEl = document.getElementById('searchResults');
   const activeLang = localStorage.getItem('site_lang') || 'pt';
@@ -927,81 +837,15 @@ function performSearch(query) {
   const highlightRegex = new RegExp(`(${escapedParts.join('|')})`, 'gi');
 
   resultsEl.innerHTML = results.map(r => {
-    const href = `${basePath}reader.html?vol=${r.v}&file=${r.f}&search=${encodeURIComponent(q)}`;
+    const href = `${basePath} reader.html ? vol = ${r.v}& file=${r.f}& search=${encodeURIComponent(q)} `;
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
       .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
-    return `<li><a href="${href}" class="search-result-item" onclick="closeSearch()">
-      <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
-      <div class="search-result-context">${highlight}</div>
-    </a></li>`;
+    return `<li><a href="${href.replace(/\s+/g, '')}" class="search-result-item" onclick="closeSearch()">
+        <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
+        <div class="search-result-context">${highlight}</div>
+      </a></li>`;
   }).join('');
 }
 
-// ============================================================
-// SMART HEADER — Hide on scroll down, show on scroll up/idle
-// ============================================================
-(function () {
-  let lastScrollY = window.pageYOffset;
-  let hideTimer = null;
-  const HIDE_DELAY = 4500; // 4.5 seconds of inactivity
-  const SCROLL_THRESHOLD = 10; // min scroll before hiding
-
-  function initSmartHeader() {
-    const header = document.querySelector('.header');
-    if (!header) return;
-
-    function showHeader() {
-      header.classList.remove('header--hidden');
-      resetTimer();
-    }
-
-    function hideHeader() {
-      // Don't hide if at the very top or if any menu is open
-      const isAtTop = window.pageYOffset < 50;
-      const anyOpen = document.querySelector(
-        '.search-modal-overlay.active, .history-modal-overlay.active, .favorites-modal-overlay.active, .mobile-nav-overlay.open'
-      );
-
-      if (!isAtTop && !anyOpen) {
-        header.classList.add('header--hidden');
-      }
-    }
-
-    function resetTimer() {
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(hideHeader, HIDE_DELAY);
-    }
-
-    window.addEventListener('scroll', () => {
-      const currentScrollY = window.pageYOffset;
-      const delta = currentScrollY - lastScrollY;
-
-      if (Math.abs(delta) > SCROLL_THRESHOLD) {
-        if (delta > 0 && currentScrollY > 100) {
-          // Scrolling down
-          hideHeader();
-        } else {
-          // Scrolling up
-          showHeader();
-        }
-      }
-      lastScrollY = currentScrollY;
-    }, { passive: true });
-
-    // Interactions that reveal the header
-    const wakeEvents = ['mousedown', 'touchstart', 'keydown', 'click'];
-    wakeEvents.forEach(evt => {
-      document.addEventListener(evt, showHeader, { passive: true });
-    });
-
-    // Initial timer
-    resetTimer();
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initSmartHeader);
-  } else {
-    initSmartHeader();
-  }
-})();
+// Smart Header functionality is unified with Immersion Mode above

@@ -1,15 +1,16 @@
-const CACHE_NAME = 'shumei-pwa-v3';
+const CACHE_NAME = 'shumei-pwa-v9';
 const APP_SHELL = [
   './',
   './index.html',
   './reader.html',
-  './css/styles.css',
-  './js/toggle.js',
-  './js/reader.js',
+  './css/styles.min.css',
+  './js/toggle.min.js',
+  './js/reader.min.js',
+  './js/marked.min.js',
+  './site_data/global_index_titles.js',
   './favicon.svg',
   './icon-192.png',
   './icon-512.png',
-  './icon-1024.png',
   './manifest.json'
 ];
 
@@ -36,13 +37,20 @@ self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
 
+  // Only cache HTTP/HTTPS requests (prevents NetworkError on chrome-extension:// or file://)
+  if (!url.protocol.startsWith('http')) return;
+
+  // Skip cross-origin requests (e.g., Google Fonts) — let browser handle caching
+  if (url.origin !== self.location.origin) return;
+
   // Strategy: Network-First for HTML and JSON (ensures updates)
   if (url.pathname.endsWith('.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.includes('/shumeic')) {
     event.respondWith(
       fetch(event.request)
         .then(res => {
+          if (!res || res.status !== 200 || res.type !== 'basic') return res;
           const clone = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone).catch(err => console.warn('Cache put error:', err)));
           return res;
         })
         .catch(() => caches.match(event.request))
@@ -55,8 +63,9 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(cached => {
       const networked = fetch(event.request)
         .then(res => {
+          if (!res || res.status !== 200 || res.type !== 'basic') return res;
           const clone = res.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone).catch(err => console.warn('Cache put error:', err)));
           return res;
         })
         .catch(() => cached);
