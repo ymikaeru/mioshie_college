@@ -182,6 +182,10 @@ function _initMobileNav() {
   if (headerNavSelect && headerNavSelect.id !== 'readerTopicSelect') {
     const currentLang = localStorage.getItem('site_lang') || 'pt';
     const sectionLabel = currentLang === 'ja' ? '巻のテーマ' : 'Temas do Volume';
+    const opts = Array.from(headerNavSelect.options).filter(o => o.value).map(o => ({
+      value: o.value,
+      text: o.getAttribute('data-ja') && currentLang === 'ja' ? o.getAttribute('data-ja') : (o.getAttribute('data-pt') || o.textContent)
+    }));
     if (opts.length > 0) {
       window._updateMobileNavTopics(sectionLabel, opts);
     }
