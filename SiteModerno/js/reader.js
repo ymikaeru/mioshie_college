@@ -28,30 +28,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Main render function
-    function renderReader(volId, filename, json, searchQuery) {
+    function renderReader(volId, filename, json, allFiles, searchQuery) {
         const lang = localStorage.getItem('site_lang') || 'pt';
         const isPt = lang === 'pt';
         window._usedNavTitles = new Set();
 
-        // Find topics for this file
+        // Extract topics for this file (split format flattens them into the first theme)
         let topicsFound = [];
-        const allFiles = [];
-        json.themes.forEach(theme => {
-            theme.topics.forEach(topic => {
-                const f = topic.source_file || topic.filename || "";
-                if (f && !allFiles.includes(f)) allFiles.push(f);
-                if (f === filename || f.endsWith('/' + filename)) {
-                    topicsFound.push(topic);
+        if (json && json.themes) {
+            json.themes.forEach(theme => {
+                if (theme.topics) {
+                    theme.topics.forEach(topic => {
+                        topicsFound.push(topic);
+                    });
                 }
             });
-        });
+        }
 
         if (topicsFound.length === 0) {
             container.innerHTML = `<div class="error">Tópico não encontrado.</div>`;
             return;
         }
 
-        const currentIndex = allFiles.indexOf(filename);
+        const fnameOnly = filename.split('/').pop();
+        const currentIndex = allFiles.indexOf(fnameOnly);
         const prevFile = currentIndex > 0 ? allFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < allFiles.length - 1 ? allFiles[currentIndex + 1] : null;
 
@@ -317,40 +317,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            if (!window._volDataCache[volId]) {
-                const response = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}_data_bilingual.json`);
-
-                if (!response.ok) throw new Error('Network response was not ok');
-
-                const contentLength = response.headers.get('content-length');
-                if (!contentLength) {
-                    // Fallback if no content-length (rare for static files)
-                    window._volDataCache[volId] = await response.json();
+            // 1. Fetch Navigation Array (cached globally)
+            if (!window._volNavCache) window._volNavCache = {};
+            if (!window._volNavCache[volId]) {
+                const navRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}_nav.json`);
+                if (navRes.ok) {
+                    window._volNavCache[volId] = await navRes.json();
                 } else {
-                    const total = parseInt(contentLength, 10);
-                    let loaded = 0;
-                    const res = new Response(new ReadableStream({
-                        async start(controller) {
-                            const reader = response.body.getReader();
-                            const progressBar = document.getElementById('loadingProgressBar');
-
-                            while (true) {
-                                const { done, value } = await reader.read();
-                                if (done) break;
-                                loaded += value.byteLength;
-                                if (progressBar) {
-                                    const progress = (loaded / total) * 100;
-                                    progressBar.style.width = `${progress}%`;
-                                }
-                                controller.enqueue(value);
-                            }
-                            controller.close();
-                        }
-                    }));
-                    window._volDataCache[volId] = await res.json();
+                    window._volNavCache[volId] = [];
                 }
             }
-            renderReader(volId, filename, window._volDataCache[volId], searchQuery);
+
+            // 2. Fetch specific article JSON directly
+            const fnameOnly = filename.split('/').pop();
+            const articlePath = fnameOnly.endsWith('.json') ? fnameOnly : `${fnameOnly}.json`;
+            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}`);
+
+            if (!articleRes.ok) throw new Error('Network response was not ok');
+
+            // Show a simple loading indicator inside the container just in case
+            const progressBar = document.getElementById('loadingProgressBar');
+            if (progressBar) progressBar.style.width = `100%`;
+
+            const articleJson = await articleRes.json();
+            renderReader(volId, filename, articleJson, window._volNavCache[volId], searchQuery);
+
         } catch (err) {
             console.error("Reader Error:", err);
             container.innerHTML = `<div class="error">Erro ao carregar o ensinamento.</div>`;
