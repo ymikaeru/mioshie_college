@@ -81,7 +81,7 @@
   <script>
 
     (function () {
-      const PASS_HASH = '1e96752d590ab228b3ec4a6825c83cae7a6839aaec912ac23f7d14d7a8d052be';
+      const PASS_HASH = '97a6d21df7c51e8289ac1a8c026aaac143e15aa1957f54f42e30d8f8a85c3a55';
       async function sha256(message) {
         const msgBuffer = new TextEncoder().encode(message);
         const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
