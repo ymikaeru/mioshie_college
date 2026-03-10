@@ -2,7 +2,7 @@
 // --- Shared Translation Strings ---
 const MENU_TEXTS = {
   pt: {
-    title: 'Biblioteca Sagrada',
+    title: 'Mioshie College',
     close: 'Fechar menu',
     navigation: 'Navegação',
     actions: 'AÇÕES',
@@ -13,7 +13,7 @@ const MENU_TEXTS = {
     fontSize: 'Tamanho da Fonte'
   },
   ja: {
-    title: '御教え図書館',
+    title: '御教えカレッジ',
     close: 'メニューを閉じる',
     navigation: 'ナビゲーション',
     actions: '操作',
@@ -286,8 +286,8 @@ function setLanguage(lang, triggerRender = true) {
   // Update Header Title (Logo)
   const headerLogo = document.querySelector('.header__logo');
   if (headerLogo) {
-    const ptTitle = 'Biblioteca Sagrada';
-    const jaTitle = '御教え図書館';
+    const ptTitle = 'Mioshie College';
+    const jaTitle = '御教えカレッジ';
     // Preserve the logo-circle if it exists
     const logoCircle = headerLogo.querySelector('.logo-circle');
     headerLogo.innerHTML = '';

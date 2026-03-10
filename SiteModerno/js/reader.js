@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Update document state
         const cleanTitle = mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' ');
-        document.title = `Meishu-Sama: ${cleanTitle} - Biblioteca Sagrada`;
+        document.title = `Meishu-Sama: ${cleanTitle} - Mioshie College`;
         try {
             const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
             const filtered = history.filter(h => h.file !== filename || h.vol !== volId);
@@ -352,7 +352,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const { volId, filename } = getParams();
         let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
         const isSaved = favorites.some(f => f.vol === volId && f.file === filename);
-        const title = document.title.replace('Meishu-Sama: ', '').replace(' - Biblioteca Sagrada', '');
+        const title = document.title.replace('Meishu-Sama: ', '').replace(' - Mioshie College', '');
 
         if (isSaved) {
             favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));

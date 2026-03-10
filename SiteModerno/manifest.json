@@ -1,7 +1,7 @@
 {
-  "name": "Biblioteca Sagrada",
+  "name": "Mioshie College",
   "short_name": "Mioshie College",
-  "description": "Ensinamentos de Meishu-Sama — Biblioteca Sagrada",
+  "description": "Ensinamentos de Meishu-Sama — Mioshie College",
   "start_url": "index.html",
   "scope": ".",
   "display": "standalone",
