@@ -492,7 +492,7 @@ function renderHistory() {
   resultsEl.innerHTML = history.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
+    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
@@ -531,7 +531,7 @@ function renderFavorites() {
   resultsEl.innerHTML = favorites.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum} / ${fBase}`;
+    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
     const date = new Date(item.time).toLocaleString();
     return `<li>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
