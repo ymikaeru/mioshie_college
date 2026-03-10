@@ -1,15 +1,16 @@
-const CACHE_NAME = 'shumei-pwa-v3';
+const CACHE_NAME = 'shumei-pwa-v6';
 const APP_SHELL = [
   './',
   './index.html',
   './reader.html',
-  './css/styles.css',
-  './js/toggle.js',
-  './js/reader.js',
+  './css/styles.min.css',
+  './js/toggle.min.js',
+  './js/reader.min.js',
+  './js/marked.min.js',
+  './site_data/global_index_titles.js',
   './favicon.svg',
   './icon-192.png',
   './icon-512.png',
-  './icon-1024.png',
   './manifest.json'
 ];
 
@@ -35,6 +36,9 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   const url = new URL(event.request.url);
+
+  // Skip cross-origin requests (e.g., Google Fonts) — let browser handle caching
+  if (url.origin !== self.location.origin) return;
 
   // Strategy: Network-First for HTML and JSON (ensures updates)
   if (url.pathname.endsWith('.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.includes('/shumeic')) {
