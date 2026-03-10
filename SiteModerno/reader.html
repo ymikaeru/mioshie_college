@@ -66,7 +66,12 @@
   </header>
   <main class="main">
     <div class="glass-pane" id="readerContainer">
-      <div style="text-align:center; color:var(--text-muted)">Preparando leitura...</div>
+      <div style="text-align:center; color:var(--text-muted)">
+        Preparando leitura...
+        <div class="loading-progress" id="loadingProgress" style="display: block;">
+          <div class="loading-progress-bar" id="loadingProgressBar"></div>
+        </div>
+      </div>
     </div>
   </main>
   <script>

@@ -319,10 +319,40 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             if (!window._volDataCache[volId]) {
                 const response = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}_data_bilingual.json`);
-                window._volDataCache[volId] = await response.json();
+
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const contentLength = response.headers.get('content-length');
+                if (!contentLength) {
+                    // Fallback if no content-length (rare for static files)
+                    window._volDataCache[volId] = await response.json();
+                } else {
+                    const total = parseInt(contentLength, 10);
+                    let loaded = 0;
+                    const res = new Response(new ReadableStream({
+                        async start(controller) {
+                            const reader = response.body.getReader();
+                            const progressBar = document.getElementById('loadingProgressBar');
+
+                            while (true) {
+                                const { done, value } = await reader.read();
+                                if (done) break;
+                                loaded += value.byteLength;
+                                if (progressBar) {
+                                    const progress = (loaded / total) * 100;
+                                    progressBar.style.width = `${progress}%`;
+                                }
+                                controller.enqueue(value);
+                            }
+                            controller.close();
+                        }
+                    }));
+                    window._volDataCache[volId] = await res.json();
+                }
             }
             renderReader(volId, filename, window._volDataCache[volId], searchQuery);
         } catch (err) {
+            console.error("Reader Error:", err);
             container.innerHTML = `<div class="error">Erro ao carregar o ensinamento.</div>`;
         }
     }
