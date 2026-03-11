@@ -1008,12 +1008,36 @@ window.saveAllOffline = async function () {
   const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
 
   try {
-    const cache = await caches.open('shumei-pwa-v10');
+    const cache = await caches.open('shumei-pwa-v11');
     let totalCached = 0;
     let totalFiles = 0;
 
-    // First, count total files
-    const allUrls = [];
+    // Core app resources (HTML, CSS, JS, icons)
+    const coreUrls = [
+      `${basePath}index.html`,
+      `${basePath}reader.html`,
+      `${basePath}css/styles.css`,
+      `${basePath}css/styles.min.css`,
+      `${basePath}js/toggle.js`,
+      `${basePath}js/toggle.min.js`,
+      `${basePath}js/reader.js`,
+      `${basePath}js/reader.min.js`,
+      `${basePath}js/marked.min.js`,
+      `${basePath}js/login.js`,
+      `${basePath}site_data/global_index_titles.js`,
+      `${basePath}favicon.svg`,
+      `${basePath}icon-192.png`,
+      `${basePath}manifest.json`,
+    ];
+
+    // Nav JSON files + volume index pages
+    const allUrls = [...coreUrls];
+    for (const vol of volumes) {
+      allUrls.push(`${basePath}site_data/${vol}_nav.json`);
+      allUrls.push(`${basePath}${vol}/index.html`);
+    }
+
+    // Data files: fetch each _nav.json to discover article JSONs
     for (const vol of volumes) {
       try {
         const navRes = await fetch(`${basePath}site_data/${vol}_nav.json`);
@@ -1024,10 +1048,8 @@ window.saveAllOffline = async function () {
         console.warn(`Skipping ${vol}:`, e);
       }
     }
-    // Also cache volume index pages
-    volumes.forEach(v => allUrls.push(`${basePath}${v}/index.html`));
-    totalFiles = allUrls.length;
 
+    totalFiles = allUrls.length;
     if (label) label.textContent = currentLang === 'ja' ? `保存中 (0/${totalFiles})...` : `Salvando (0/${totalFiles})...`;
 
     for (const url of allUrls) {

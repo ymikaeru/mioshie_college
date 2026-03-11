@@ -1,6 +1,11 @@
 /* Google Fonts loaded via <link> in HTML for better performance */
 
 :root {
+  /* Typography — Google Fonts with system fallbacks for offline */
+  --font-ui: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Crimson Pro', 'Georgia', 'Times New Roman', serif;
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
   /* Color Palette - Sakura Zen (Light) */
   --bg-color: #F8F9F5;
   --surface: #FFFFFF;
