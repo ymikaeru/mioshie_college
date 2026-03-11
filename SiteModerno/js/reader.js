@@ -302,8 +302,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    window.navigateToReader = async function (volId, filename) {
-        const url = `reader.html?vol=${volId}&file=${filename}${window.location.search.includes('lang=ja') ? '&lang=ja' : ''}`;
+    window.navigateToReader = async function (volId, filename, searchQuery) {
+        let url = `reader.html?vol=${volId}&file=${filename}`;
+        if (window.location.search.includes('lang=ja')) url += '&lang=ja';
+        if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
         window.history.pushState({ volId, filename }, '', url);
         initReader(volId, filename);
         window.scrollTo(0, 0);
