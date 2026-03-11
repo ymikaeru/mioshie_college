@@ -19,7 +19,7 @@ def main():
     themes = data.get("themes", [])
     
     # 2. Gather all translated parts and index them by source_file
-    translated_map = {} # filename -> translated_data
+    translated_map = {} # filename -> list of translated_data
     translated_files = sorted(glob.glob(os.path.join(TRANSLATED_DIR, "*.json")))
     print(f"Found {len(translated_files)} translated parts.")
 
@@ -33,13 +33,17 @@ def main():
                 for item in translated_topics:
                     src_file = item.get("source_file")
                     if src_file:
-                        translated_map[src_file] = item
+                        if src_file not in translated_map:
+                            translated_map[src_file] = []
+                        translated_map[src_file].append(item)
             except json.JSONDecodeError:
                 print(f"Error reading JSON from {t_file}")
                 
-    # 3. Inject translated fields into original data using filename matching
+    # 3. Inject translated fields into original data using filename matching and ordering
     total_original_topics = 0
     total_translated_injected = 0
+    used_counts = {}
+    missing_translations = 0
     
     for theme in themes:
         original_topics = theme.get("topics", [])
@@ -48,16 +52,26 @@ def main():
         for orig in original_topics:
             filename = orig.get("filename")
             if filename in translated_map:
-                trans = translated_map[filename]
-                # Inject fields
-                for key in ["title_ptbr", "content_ptbr", "publication_title_ptbr"]:
-                    if key in trans:
-                        orig[key] = trans[key]
-                total_translated_injected += 1
+                possible_translations = translated_map[filename]
+                idx = used_counts.get(filename, 0)
+                
+                if idx < len(possible_translations):
+                    trans = possible_translations[idx]
+                    # Inject fields
+                    for key in ["title_ptbr", "content_ptbr", "publication_title_ptbr"]:
+                        if key in trans:
+                            orig[key] = trans[key]
+                    total_translated_injected += 1
+                    used_counts[filename] = idx + 1
+                else:
+                    missing_translations += 1
+            else:
+                missing_translations += 1
 
     print(f"\nMerge Summary:")
     print(f"Original Topics: {total_original_topics}")
     print(f"Translated Topics Injected: {total_translated_injected}")
+    print(f"Topics Missing Translations: {missing_translations}")
 
     # 4. Save the final bilingual JSON
     with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
