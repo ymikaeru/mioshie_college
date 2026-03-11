@@ -415,9 +415,10 @@ let searchTimeout = null;
 
 async function getSearchIndex() {
   if (searchIndex) return searchIndex;
+  
   if (isFetchingIndex) {
     while (isFetchingIndex) {
-      await new Promise(r => setTimeout(r, 100));
+      await new Promise(r => setTimeout(r, 200));
     }
     return searchIndex;
   }
@@ -425,23 +426,46 @@ async function getSearchIndex() {
   isFetchingIndex = true;
   const resultsEl = document.getElementById('searchResults');
   const currentLang = localStorage.getItem('site_lang') || 'pt';
+  
+  const updateLoadingMsg = (msg) => {
+    if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${msg}</li>`;
+  };
+
   const loadingMsg = currentLang === 'ja' ? '検索インデックスを読み込み中...' : 'Carregando índice de pesquisa...';
-  if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${loadingMsg}</li>`;
+  updateLoadingMsg(loadingMsg);
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+  // List of volumes to fetch
   const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
 
   try {
-    const fetchPromises = volumes.map(vol => fetch(`${basePath}site_data/search_index_${vol}.json`).then(res => {
-      if (!res.ok) throw new Error(`Falha ao carregar o índice ${vol}`);
-      return res.json();
-    }));
+    let loadedCount = 0;
+    const fetchPromises = volumes.map(async (vol) => {
+      try {
+        const res = await fetch(`${basePath}site_data/search_index_${vol}.json`);
+        if (!res.ok) throw new Error(`Falha ao carregar ${vol}`);
+        const json = await res.json();
+        loadedCount++;
+        const progressMsg = currentLang === 'ja' 
+          ? `インデックス読み込み中 (${loadedCount}/${volumes.length})...`
+          : `Carregando índice (${loadedCount}/${volumes.length})...`;
+        updateLoadingMsg(progressMsg);
+        return json;
+      } catch (e) {
+        console.warn(`Search index ${vol} failed:`, e);
+        return []; // Return empty if one fails, but let others proceed
+      }
+    });
 
     const results = await Promise.all(fetchPromises);
     searchIndex = results.flat();
+    
+    if (searchIndex.length === 0) {
+      throw new Error("Nenhum dado de pesquisa encontrado.");
+    }
   } catch (err) {
-    console.error(err);
-    const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice.';
+    console.error('Search index generic error:', err);
+    const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice de pesquisa. Verifique sua conexão.';
     if (resultsEl) resultsEl.innerHTML = `<li class="search-error">${errorMsg}</li>`;
   } finally {
     isFetchingIndex = false;

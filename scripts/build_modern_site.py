@@ -122,19 +122,28 @@ def build_search_index():
             for topic in theme.get('topics', []):
                 # Prefer PT title/content, fallback to original
                 title = topic.get('title_ptbr') or topic.get('title_pt') or topic.get('title', '')
-                content = topic.get('content_ptbr') or topic.get('content_pt') or topic.get('content', '')
+                content_raw = topic.get('content_ptbr') or topic.get('content_pt') or topic.get('content', '')
                 
                 # Japanese fields
                 title_ja = topic.get('title_ja') or ''
                 content_ja_raw = topic.get('content_ja') or topic.get('content', '')
                 
                 # Strip HTML from content for a clean search index
-                soup = BeautifulSoup(content, "html.parser")
+                soup = BeautifulSoup(content_raw, "html.parser")
+                # Remove script and style elements
+                for s in soup(['script', 'style']):
+                    s.decompose()
                 clean_text = soup.get_text(separator=" ", strip=True)
+                # Collapse all whitespace and newlines to single space
+                clean_text = re.sub(r'\s+', ' ', clean_text).strip()
                 
                 # Strip HTML from Japanese content
                 soup_ja = BeautifulSoup(content_ja_raw, "html.parser")
+                for s in soup_ja(['script', 'style']):
+                    s.decompose()
                 clean_text_ja = soup_ja.get_text(separator=" ", strip=True)
+                clean_text_ja = re.sub(r'\s+', ' ', clean_text_ja).strip()
+                
                 # Only store JA content if it's actually Japanese (not just a copy of PT)
                 if clean_text_ja == clean_text:
                     clean_text_ja = ''
@@ -147,11 +156,11 @@ def build_search_index():
                     entry = {
                         'v': vol_id,
                         'f': filename,
-                        't': index_title if index_title else title.strip(),
+                        't': (index_title if index_title else title).strip(),
                         'c': clean_text
                     }
                     # Only add Japanese fields if they have unique content (saves file size)
-                    if title_ja and title_ja != title.strip():
+                    if title_ja and title_ja.strip() != entry['t']:
                         entry['tj'] = title_ja.strip()
                     if clean_text_ja:
                         entry['cj'] = clean_text_ja
