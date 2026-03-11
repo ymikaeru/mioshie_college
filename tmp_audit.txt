@@ -1,0 +1,121 @@
+Found 30 suspicious translations.
+Vol: shumeic1_data_bilingual.json | File: yudaya1.html | Title: Referência - Ensinamento de Meishu-Sama - "Cultura judaica e cultura grega"
+  Ratio: 0.49 (PT: 269 chars, JA: 546 chars) | Ends with ... : False
+  Ending: ura grega. Qual seria o equilíbrio entre a cultura judaica e a cultura grega..."
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: nihon4YUUSHUU.html | Title: Ensinamento de Meishu-Sama: "Os Japoneses Podem Compreender Todas as Artes"
+  Ratio: 0.32 (PT: 279 chars, JA: 885 chars) | Ends with ... : False
+  Ending: ura mundial, mas de que forma ela contribuirá para a cultura mundial no futuro?"
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: mokuryuu1.html | Title: Ensinamento de Meishu-Sama: "Ofício em Memória das Árvores por Lenhadores Profissionais"
+  Ratio: 0.42 (PT: 320 chars, JA: 764 chars) | Ends with ... : False
+  Ending: uando vou à montanha cortar árvores, não consigo plantar árvores substitutas..."
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: aku3BU.html | Title: Diálogo entre Meishu-Sama e o Sr. Kojun Tamego
+  Ratio: 0.24 (PT: 362 chars, JA: 1533 chars) | Ends with ... : False
+  Ending: o, mas a Verdade, ou o ensinamento correto, não deveria ser apenas um no mundo?"
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: aku4BU.html | Title: Ensinamento de Meishu-Sama "Os Remédios e o Desenvolvimento da Cultura Material"
+  Ratio: 0.12 (PT: 104 chars, JA: 845 chars) | Ends with ... : False
+  Ending: ma "Os Remédios e o Desenvolvimento da Cultura Material" (1 de setembro de 1952)
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: SbyoubuIHAI.html | Title: Ensinamento de Meishu-Sama: "A Instalação Excessivamente Próxima da Imagem de Kannon em Biombo e das Tabuletas Memoriais Faz os Antepassados Sofrerem"
+  Ratio: 0.20 (PT: 172 chars, JA: 852 chars) | Ends with ... : False
+  Ending: bo e das Tabuletas Memoriais Faz os Antepassados Sofrerem" (1 de agosto de 1953)
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: SNheiyou.html | Title: Ensinamento de Meishu-Sama: 'Método de ofício religioso para bois'
+  Ratio: 0.40 (PT: 303 chars, JA: 761 chars) | Ends with ... : False
+  Ending: es humanos, isso se torna um mérito. Eles realmente se transformam dessa forma?"
+------------------------------------------------------------
+Vol: shumeic1_data_bilingual.json | File: Shaidoku4.html | Title: Ensinamento de Meishu-Sama: "Caso em que a Cobra Mãe Pediu a Salvação das Cobras Filhas"
+  Ratio: 0.30 (PT: 367 chars, JA: 1239 chars) | Ends with ... : False
+  Ending:  começaram a comer arroz cru, sentiam dores em várias partes do corpo e fugiam."
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: kirisuto1.html | Title: Sobre o Cristianismo 1 (Cristo é o Redentor)
+  Ratio: 0.10 (PT: 44 chars, JA: 439 chars) | Ends with ... : False
+  Ending: Sobre o Cristianismo 1 (Cristo é o Redentor)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: kirisuto2.html | Title: Sobre o Cristianismo 2 (A Origem do Bem e do Mal e o Cristianismo)
+  Ratio: 0.16 (PT: 66 chars, JA: 413 chars) | Ends with ... : False
+  Ending: Sobre o Cristianismo 2 (A Origem do Bem e do Mal e o Cristianismo)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: kirisuto2.html | Title: Ensinamento de Meishu-Sama: "Cristianismo"
+  Ratio: 0.28 (PT: 1153 chars, JA: 4066 chars) | Ends with ... : False
+  Ending: lhadamente a seguir sobre o porquê de Cristo ter nascido e sobre outros pontos."
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: kirisuto5.html | Title: Sobre o Cristianismo 5 (Sobre os erros da Bíblia, etc.)
+  Ratio: 0.13 (PT: 55 chars, JA: 437 chars) | Ends with ... : False
+  Ending: Sobre o Cristianismo 5 (Sobre os erros da Bíblia, etc.)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: oomoto3.html | Title: Sobre a Religião Oomoto 3
+  Ratio: 0.10 (PT: 25 chars, JA: 243 chars) | Ends with ... : False
+  Ending: Sobre a Religião Oomoto 3
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: koxtuka1.html | Title: Sobre a Teoria do Estado 1
+  Ratio: 0.01 (PT: 26 chars, JA: 1927 chars) | Ends with ... : False
+  Ending: Sobre a Teoria do Estado 1
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: koxtuka3.html | Title: Sobre a Teoria do Estado 3 (A Reconstrução da Alemanha e da Itália)
+  Ratio: 0.03 (PT: 67 chars, JA: 2627 chars) | Ends with ... : False
+  Ending: Sobre a Teoria do Estado 3 (A Reconstrução da Alemanha e da Itália)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: sekai1.html | Title: Sobre o Mundialismo 1 (Artigo Divino)
+  Ratio: 0.03 (PT: 37 chars, JA: 1398 chars) | Ends with ... : False
+  Ending: Sobre o Mundialismo 1 (Artigo Divino)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: sekai2.html | Title: Sobre o Universalismo 2 (Palestras e Ensinamentos Orais)
+  Ratio: 0.18 (PT: 56 chars, JA: 313 chars) | Ends with ... : False
+  Ending: Sobre o Universalismo 2 (Palestras e Ensinamentos Orais)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: daizyouSHOUZYOU2.html | Title: Sobre Daijo e Shojo 2
+  Ratio: 0.03 (PT: 21 chars, JA: 736 chars) | Ends with ... : False
+  Ending: Sobre Daijo e Shojo 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: kiseki2.html | Title: Sobre a Religião que Gera Milagres 2
+  Ratio: 0.18 (PT: 36 chars, JA: 200 chars) | Ends with ... : False
+  Ending: Sobre a Religião que Gera Milagres 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: hentai2.html | Title: Sobre os Fiéis Anormais 2 (Crítica às Religiões de Culto)
+  Ratio: 0.18 (PT: 57 chars, JA: 315 chars) | Ends with ... : False
+  Ending: Sobre os Fiéis Anormais 2 (Crítica às Religiões de Culto)
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: hentai2.html | Title: Infernais
+  Ratio: 0.08 (PT: 157 chars, JA: 2015 chars) | Ends with ... : False
+  Ending: o meio para polir a alma , a ponto de, no fim, fazerem do sofrimento um prazer ,
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: souou2.html | Title: Sobre o Princípio da Concordância 2
+  Ratio: 0.14 (PT: 35 chars, JA: 257 chars) | Ends with ... : False
+  Ending: Sobre o Princípio da Concordância 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: make2.html | Title: Sobre Perder é Ganhar 2
+  Ratio: 0.19 (PT: 23 chars, JA: 121 chars) | Ends with ... : False
+  Ending: Sobre Perder é Ganhar 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: tumi2.html | Title: Sobre o Pecado 2
+  Ratio: 0.15 (PT: 16 chars, JA: 108 chars) | Ends with ... : False
+  Ending: Sobre o Pecado 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: Nkouhuku.html | Title: Ensinamento de Meishu-Sama: "Como lidar com maldições"
+  Ratio: 0.45 (PT: 400 chars, JA: 880 chars) | Ends with ... : False
+  Ending: Resposta de Meishu-Sama "Se tiver a proteção de Kannon , não há problema algum."
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: sikakusha.html | Title: Ensinamento de Meishu-Sama: "Consegue-se Fiéis, Mas Não Colaboradores"
+  Ratio: 0.45 (PT: 302 chars, JA: 667 chars) | Ends with ... : False
+  Ending: eres humanos e Deus são diferentes. Entregue a Deus e faça as coisas com calma."
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: reihai.html | Title: Ensinamento de Meishu-Sama: "As Duas Reverências no Culto"
+  Ratio: 0.33 (PT: 424 chars, JA: 1272 chars) | Ends with ... : False
+  Ending: as reverências profundas, isso é o correto. Torna-se nove. É o culto de Miroku."
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: hihanKAIHI2.html | Title: Sobre como evitar as críticas da sociedade 2
+  Ratio: 0.14 (PT: 44 chars, JA: 313 chars) | Ends with ... : False
+  Ending: Sobre como evitar as críticas da sociedade 2
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: Gseisinbyou1.html | Title: Sobre a Entronização da Imagem da Luz Divina e a Doença Mental 1
+  Ratio: 0.27 (PT: 64 chars, JA: 233 chars) | Ends with ... : False
+  Ending: Sobre a Entronização da Imagem da Luz Divina e a Doença Mental 1
+------------------------------------------------------------
+Vol: shumeic3_data_bilingual.json | File: Osahou2.html | Title: Sobre a Etiqueta do Ohikari 2
+  Ratio: 0.17 (PT: 29 chars, JA: 173 chars) | Ends with ... : False
+  Ending: Sobre a Etiqueta do Ohikari 2
+------------------------------------------------------------
