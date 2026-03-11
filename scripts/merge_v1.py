@@ -6,9 +6,11 @@ import re
 BASE_DIR = "Data"
 MAIN_JSON = os.path.join(BASE_DIR, "shumeic1_data.json")
 TRANS_DIR = os.path.join(BASE_DIR, "v1_translated_parts")
-OUTPUT_JSON = os.path.join(BASE_DIR, "shumeic1_data_translated.json")
+# The site uses shumeic1_data_bilingual.json
+OUTPUT_JSON = os.path.join(BASE_DIR, "shumeic1_data_bilingual.json")
 
 def natural_sort_key(s):
+    # If the file is s01, s02, etc. we need to handle it
     return [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
 
 def main():
