@@ -1645,3 +1645,16 @@ font.section-header,
     display: none !important;
   }
 }
+
+/* Spin animation for loading states */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@media (max-width: 600px) {
+  .offline-save-btn {
+    bottom: 70px !important;
+    right: 16px !important;
+  }
+}
