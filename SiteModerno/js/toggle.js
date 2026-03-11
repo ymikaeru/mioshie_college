@@ -391,6 +391,11 @@ function setLanguage(lang, triggerRender = true) {
     });
   }
 
+  const searchClearText = document.getElementById('searchClearText');
+  if (searchClearText) {
+    searchClearText.textContent = lang === 'ja' ? '削除' : 'Apagar';
+  }
+
   // Trigger content re-rendering if the function exists
   if (triggerRender && typeof window.renderContent === 'function') {
     window.renderContent(lang);
@@ -442,7 +447,28 @@ async function getSearchIndex() {
     isFetchingIndex = false;
   }
 
+  // Update clear button visibility
+  const searchInput = document.getElementById('searchInput');
+  const clearBtn = document.getElementById('searchClear');
+  if (searchInput && clearBtn) {
+    clearBtn.style.display = searchInput.value.trim() ? 'flex' : 'none';
+  }
+
   return searchIndex;
+}
+
+window.clearSearch = function () {
+  const input = document.getElementById('searchInput');
+  const resultsEl = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+  if (resultsEl) resultsEl.innerHTML = '';
+  if (clearBtn) clearBtn.style.display = 'none';
+  sessionStorage.removeItem('searchQuery');
+  sessionStorage.removeItem('searchResultsHtml');
 }
 
 window.openSearch = function () {
@@ -450,7 +476,11 @@ window.openSearch = function () {
   const input = document.getElementById('searchInput');
   if (modal) {
     modal.classList.add('active');
-    if (input) input.focus();
+    if (input) {
+      input.focus();
+      const clearBtn = document.getElementById('searchClear');
+      if (clearBtn) clearBtn.style.display = input.value.trim() ? 'flex' : 'none';
+    }
     getSearchIndex();
   }
 }
@@ -462,13 +492,15 @@ window.closeSearch = function () {
 
 // performSearch is defined below (bilingual version with JP support)
 
-// --- History Logic ---
 window.openHistory = function () {
   const modal = document.getElementById('historyModal');
   const resultsEl = document.getElementById('historyResults');
   if (modal && resultsEl) {
     modal.classList.add('active');
     renderHistory();
+    const clearAllBtn = document.getElementById('historyClearAll');
+    const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
+    if (clearAllBtn) clearAllBtn.style.display = history.length > 0 ? 'block' : 'none';
   }
 }
 
@@ -486,6 +518,8 @@ function renderHistory() {
 
   if (history.length === 0) {
     resultsEl.innerHTML = '<li class="search-empty">Nenhum histórico.</li>';
+    const clearAllBtn = document.getElementById('historyClearAll');
+    if (clearAllBtn) clearAllBtn.style.display = 'none';
     return;
   }
 
@@ -496,6 +530,15 @@ function renderHistory() {
     const date = new Date(item.time).toLocaleString();
     return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
   }).join('');
+}
+
+window.clearAllHistory = function () {
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const confirmMsg = currentLang === 'ja' ? '履歴をすべて消去しますか？' : 'Tem certeza que deseja limpar todo o histórico?';
+  if (confirm(confirmMsg)) {
+    localStorage.removeItem('readHistory');
+    renderHistory();
+  }
 }
 
 // --- Favorites Logic ---
@@ -598,11 +641,9 @@ function _applyFontSize() {
 
 // --- DOM Initialization and Shared Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
-  const closeSearchBtn = document.getElementById('searchClose');
   const searchModal = document.getElementById('searchModal');
   const searchInput = document.getElementById('searchInput');
 
-  if (closeSearchBtn) closeSearchBtn.addEventListener('click', closeSearch);
   if (searchModal) searchModal.addEventListener('click', (e) => {
     if (e.target.id === 'searchModal') closeSearch();
   });
@@ -616,6 +657,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (favoritesModal) favoritesModal.addEventListener('click', (e) => {
     if (e.target.id === 'favoritesModal') closeFavorites();
   });
+
+  // Restore search state from sessionStorage
+  const savedQuery = sessionStorage.getItem('searchQuery');
+  const savedResults = sessionStorage.getItem('searchResultsHtml');
+  if (savedQuery && savedResults && searchInput) {
+    searchInput.value = savedQuery;
+    const resultsEl = document.getElementById('searchResults');
+    if (resultsEl) resultsEl.innerHTML = savedResults;
+    const clearBtn = document.getElementById('searchClear');
+    if (clearBtn) clearBtn.style.display = 'flex';
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -632,6 +684,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const triggerSearch = () => {
     clearTimeout(searchTimeout);
     const query = searchInput.value;
+    const clearBtn = document.getElementById('searchClear');
+    if (clearBtn) clearBtn.style.display = query.trim() ? 'flex' : 'none';
+
     const resultsEl = document.getElementById('searchResults');
     const currentLang = localStorage.getItem('site_lang') || 'pt';
     const searchingMsg = currentLang === 'ja' ? '検索中...' : 'Buscando...';
@@ -828,24 +883,35 @@ function performSearch(query) {
   if (results.length === 0) {
     const noResultsMsg = activeLang === 'ja' ? '結果が見つかりませんでした。' : 'Nenhum resultado.';
     if (resultsEl) resultsEl.innerHTML = `<li class="search-empty">${noResultsMsg}</li>`;
+    sessionStorage.removeItem('searchQuery');
+    sessionStorage.removeItem('searchResultsHtml');
     return;
   }
 
+  const isReaderPage = window.location.pathname.includes('reader.html');
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-  // Escape all parts for regex
   const escapedParts = queryParts.map(p => p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const highlightRegex = new RegExp(`(${escapedParts.join('|')})`, 'gi');
 
-  resultsEl.innerHTML = results.map(r => {
-    const href = `${basePath} reader.html ? vol = ${r.v}& file=${r.f}& search=${encodeURIComponent(q)} `;
+  const resultsHtml = results.map(r => {
+    const href = `${basePath}reader.html?vol=${r.v}&file=${r.f}&search=${encodeURIComponent(q)}`;
     const displayTitle = (activeLang === 'ja' && r.tj) ? r.tj : r.t;
     const highlight = (r.snippet || '')
       .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
-    return `<li><a href="${href.replace(/\s+/g, '')}" class="search-result-item" onclick="closeSearch()">
+
+    const navAttr = isReaderPage ? `onclick="if(typeof navigateToReader==='function'){ navigateToReader('${r.v}','${r.f}'); closeSearch(); return false; }"` : `onclick="closeSearch()"`;
+
+    return `<li><a href="${href.replace(/\s+/g, '')}" class="search-result-item" ${navAttr}>
         <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
         <div class="search-result-context">${highlight}</div>
       </a></li>`;
   }).join('');
+
+  resultsEl.innerHTML = resultsHtml;
+
+  // Persist search state
+  sessionStorage.setItem('searchQuery', query);
+  sessionStorage.setItem('searchResultsHtml', resultsHtml);
 }
 
 // Smart Header functionality is unified with Immersion Mode above
