@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shumei-pwa-v9';
+const CACHE_NAME = 'shumei-pwa-v10';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const APP_SHELL = [
   './js/toggle.min.js',
   './js/reader.min.js',
   './js/marked.min.js',
+  './js/login.js',
   './site_data/global_index_titles.js',
   './favicon.svg',
   './icon-192.png',

@@ -145,6 +145,11 @@ function _initMobileNav() {
           <span class="link-text">${t.theme}</span>
         </button>
 
+        <button class="mobile-nav-link" onclick="saveAllOffline()" id="mobileNavLinkOffline" style="display:${'serviceWorker' in navigator ? 'flex' : 'none'}">
+          <svg class="nav-icon" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          <span class="link-text" id="offlineSaveLabel">${localStorage.getItem('offline_saved_all') === 'true' ? (currentLang === 'ja' ? '✓ オフライン保存済み' : '✓ Salvo offline') : (currentLang === 'ja' ? 'オフライン保存' : 'Salvar offline')}</span>
+        </button>
+
         <div class="mobile-nav-divider"></div>
         <div class="mobile-nav-section-label" id="mobileNavLabelFont">${t.fontSize}</div>
         <div class="mobile-font-row">
@@ -414,7 +419,7 @@ let isFetchingIndex = false;
 let searchTimeout = null;
 
 async function getSearchIndex() {
-  if (searchIndex) return searchIndex;
+  if (searchIndex && searchIndex.length > 0 && !isFetchingIndex) return searchIndex;
   
   if (isFetchingIndex) {
     while (isFetchingIndex) {
@@ -435,43 +440,54 @@ async function getSearchIndex() {
   updateLoadingMsg(loadingMsg);
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
-  // List of volumes to fetch
-  const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
+  const allVolumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
+  
+  // Detect current volume to load it first (lazy loading)
+  const pathMatch = window.location.pathname.match(/shumeic(\d)/);
+  const urlParams = new URLSearchParams(window.location.search);
+  const volParam = urlParams.get('vol') || urlParams.get('v');
+  let currentVol = pathMatch ? `shumeic${pathMatch[1]}` : (volParam || null);
+  
+  // Prioritize current volume first, then load the rest
+  const prioritized = currentVol 
+    ? [currentVol, ...allVolumes.filter(v => v !== currentVol)]
+    : allVolumes;
 
   try {
-    let loadedCount = 0;
-    const fetchPromises = volumes.map(async (vol) => {
+    searchIndex = [];
+    for (let i = 0; i < prioritized.length; i++) {
+      const vol = prioritized[i];
       try {
         const res = await fetch(`${basePath}site_data/search_index_${vol}.json`);
         if (!res.ok) throw new Error(`Falha ao carregar ${vol}`);
         const json = await res.json();
-        loadedCount++;
+        searchIndex = searchIndex.concat(json);
+        
         const progressMsg = currentLang === 'ja' 
-          ? `インデックス読み込み中 (${loadedCount}/${volumes.length})...`
-          : `Carregando índice (${loadedCount}/${volumes.length})...`;
+          ? `インデックス読み込み中 (${i + 1}/${prioritized.length})...`
+          : `Carregando índice (${i + 1}/${prioritized.length})...`;
         updateLoadingMsg(progressMsg);
-        return json;
+        
+        // After loading the first volume, allow search to start
+        if (i === 0) {
+          isFetchingIndex = false;
+        }
       } catch (e) {
         console.warn(`Search index ${vol} failed:`, e);
-        return []; // Return empty if one fails, but let others proceed
       }
-    });
-
-    const results = await Promise.all(fetchPromises);
-    searchIndex = results.flat();
+    }
     
     if (searchIndex.length === 0) {
       throw new Error("Nenhum dado de pesquisa encontrado.");
     }
   } catch (err) {
-    console.error('Search index generic error:', err);
-    const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice de pesquisa. Verifique sua conexão.';
+    console.error('Search index error:', err);
+    const errorMsg = currentLang === 'ja' ? 'インデックスの読み込みに失敗しました。' : 'Erro ao carregar o índice. Verifique sua conexão.';
     if (resultsEl) resultsEl.innerHTML = `<li class="search-error">${errorMsg}</li>`;
   } finally {
     isFetchingIndex = false;
   }
 
-  // Update clear button visibility
   const searchInput = document.getElementById('searchInput');
   const clearBtn = document.getElementById('searchClear');
   if (searchInput && clearBtn) {
@@ -504,6 +520,16 @@ window.openSearch = function () {
       input.focus();
       const clearBtn = document.getElementById('searchClear');
       if (clearBtn) clearBtn.style.display = input.value.trim() ? 'flex' : 'none';
+      
+      // If we have a query but no rendered results (e.g., after page reload),
+      // re-trigger the search to generate results with correct onclick handlers
+      const resultsEl = document.getElementById('searchResults');
+      if (input.value.trim() && resultsEl && !resultsEl.querySelector('.search-result-item')) {
+        getSearchIndex().then(() => {
+          if (typeof performSearch === 'function') performSearch(input.value);
+        });
+        return;
+      }
     }
     getSearchIndex();
   }
@@ -682,13 +708,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.id === 'favoritesModal') closeFavorites();
   });
 
-  // Restore search state from sessionStorage
+  // Restore search query from sessionStorage (will re-search on open for correct handlers)
   const savedQuery = sessionStorage.getItem('searchQuery');
-  const savedResults = sessionStorage.getItem('searchResultsHtml');
-  if (savedQuery && savedResults && searchInput) {
+  if (savedQuery && searchInput) {
     searchInput.value = savedQuery;
-    const resultsEl = document.getElementById('searchResults');
-    if (resultsEl) resultsEl.innerHTML = savedResults;
     const clearBtn = document.getElementById('searchClear');
     if (clearBtn) clearBtn.style.display = 'flex';
   }
@@ -971,3 +994,61 @@ function performSearch(query) {
     }, { passive: true });
   });
 })();
+
+// ============================================================
+// OFFLINE SAVE — pre-cache ALL volumes for offline reading
+// ============================================================
+window.saveAllOffline = async function () {
+  if (!('serviceWorker' in navigator) || !('caches' in window)) return;
+  if (localStorage.getItem('offline_saved_all') === 'true') return;
+
+  const label = document.getElementById('offlineSaveLabel');
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+  const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
+
+  try {
+    const cache = await caches.open('shumei-pwa-v10');
+    let totalCached = 0;
+    let totalFiles = 0;
+
+    // First, count total files
+    const allUrls = [];
+    for (const vol of volumes) {
+      try {
+        const navRes = await fetch(`${basePath}site_data/${vol}_nav.json`);
+        const navFiles = await navRes.json();
+        navFiles.forEach(f => allUrls.push(`${basePath}site_data/${vol}/${f}.json`));
+        allUrls.push(`${basePath}site_data/search_index_${vol}.json`);
+      } catch (e) {
+        console.warn(`Skipping ${vol}:`, e);
+      }
+    }
+    // Also cache volume index pages
+    volumes.forEach(v => allUrls.push(`${basePath}${v}/index.html`));
+    totalFiles = allUrls.length;
+
+    if (label) label.textContent = currentLang === 'ja' ? `保存中 (0/${totalFiles})...` : `Salvando (0/${totalFiles})...`;
+
+    for (const url of allUrls) {
+      try {
+        await cache.add(url);
+        totalCached++;
+        if (totalCached % 50 === 0 && label) {
+          label.textContent = currentLang === 'ja'
+            ? `保存中 (${totalCached}/${totalFiles})...`
+            : `Salvando (${totalCached}/${totalFiles})...`;
+        }
+      } catch (e) { /* skip failures */ }
+    }
+
+    localStorage.setItem('offline_saved_all', 'true');
+    if (label) label.textContent = currentLang === 'ja' ? '✓ オフライン保存済み' : '✓ Salvo offline';
+  } catch (e) {
+    console.error('Offline save error:', e);
+    if (label) label.textContent = currentLang === 'ja' ? 'エラー' : 'Erro ao salvar';
+    setTimeout(() => {
+      if (label) label.textContent = currentLang === 'ja' ? 'オフライン保存' : 'Salvar offline';
+    }, 3000);
+  }
+};
