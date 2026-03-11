@@ -1000,7 +1000,13 @@ function performSearch(query) {
 // ============================================================
 window.saveAllOffline = async function () {
   if (!('serviceWorker' in navigator) || !('caches' in window)) return;
-  if (localStorage.getItem('offline_saved_all') === 'true') return;
+  // Use a constant for consistency with sw.js
+  const CACHE_NAME = 'shumei-pwa-v11';
+  
+  if (localStorage.getItem('offline_saved_all') === 'true') {
+     // Optional: allow re-sync or just return
+     // return; 
+  }
 
   const label = document.getElementById('offlineSaveLabel');
   const currentLang = localStorage.getItem('site_lang') || 'pt';
@@ -1008,19 +1014,16 @@ window.saveAllOffline = async function () {
   const volumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
 
   try {
-    const cache = await caches.open('shumei-pwa-v11');
+    const cache = await caches.open(CACHE_NAME);
     let totalCached = 0;
-    let totalFiles = 0;
 
-    // Core app resources (HTML, CSS, JS, icons)
+    // Core app resources: Must match exactly what HTML files request
     const coreUrls = [
+      `${basePath}`,
       `${basePath}index.html`,
       `${basePath}reader.html`,
-      `${basePath}css/styles.css`,
-      `${basePath}css/styles.min.css`,
-      `${basePath}js/toggle.js`,
+      `${basePath}css/styles.min.css`, // Minified is preferred now
       `${basePath}js/toggle.min.js`,
-      `${basePath}js/reader.js`,
       `${basePath}js/reader.min.js`,
       `${basePath}js/marked.min.js`,
       `${basePath}js/login.js`,
@@ -1030,42 +1033,74 @@ window.saveAllOffline = async function () {
       `${basePath}manifest.json`,
     ];
 
-    // Nav JSON files + volume index pages
-    const allUrls = [...coreUrls];
+    // Build the full list of URLs to cache
+    let allUrls = [...coreUrls];
+    
+    // Add volume indexes and navigation JSONs
     for (const vol of volumes) {
       allUrls.push(`${basePath}site_data/${vol}_nav.json`);
       allUrls.push(`${basePath}${vol}/index.html`);
     }
 
-    // Data files: fetch each _nav.json to discover article JSONs
+    // Update label to "Preparing..."
+    if (label) label.textContent = currentLang === 'ja' ? '準備中...' : 'Preparando...';
+
+    // Step 1: Fetch navigation JSONs to discover all topic files
+    const topicFiles = [];
     for (const vol of volumes) {
       try {
         const navRes = await fetch(`${basePath}site_data/${vol}_nav.json`);
-        const navFiles = await navRes.json();
-        navFiles.forEach(f => allUrls.push(`${basePath}site_data/${vol}/${f}.json`));
-        allUrls.push(`${basePath}site_data/search_index_${vol}.json`);
+        if (navRes.ok) {
+           const navData = await navRes.json();
+           const files = Array.isArray(navData) ? navData : (navData.topics || []);
+           files.forEach(f => topicFiles.push(`${basePath}site_data/${vol}/${f}.json`));
+        }
+        // Also cache the search index
+        topicFiles.push(`${basePath}site_data/search_index_${vol}.json`);
       } catch (e) {
-        console.warn(`Skipping ${vol}:`, e);
+        console.warn(`Error discovery topics for ${vol}:`, e);
       }
     }
+    
+    allUrls = allUrls.concat(topicFiles);
+    // Remove duplicates
+    allUrls = [...new Set(allUrls)];
 
-    totalFiles = allUrls.length;
+    const totalFiles = allUrls.length;
     if (label) label.textContent = currentLang === 'ja' ? `保存中 (0/${totalFiles})...` : `Salvando (0/${totalFiles})...`;
 
-    for (const url of allUrls) {
-      try {
-        await cache.add(url);
-        totalCached++;
-        if (totalCached % 50 === 0 && label) {
-          label.textContent = currentLang === 'ja'
-            ? `保存中 (${totalCached}/${totalFiles})...`
-            : `Salvando (${totalCached}/${totalFiles})...`;
+    // Process in batches to avoid overwhelming the browser/network
+    const batchSize = 10;
+    for (let i = 0; i < allUrls.length; i += batchSize) {
+      const batch = allUrls.slice(i, i + batchSize);
+      await Promise.all(batch.map(async (url) => {
+        try {
+          // Add to cache. We don't use cache.addAll because it fails entirely if one fails.
+          const response = await fetch(url);
+          if (response.ok) {
+            await cache.put(url, response);
+          }
+        } catch (e) { 
+          console.warn(`Failed to cache ${url}:`, e);
         }
-      } catch (e) { /* skip failures */ }
+        totalCached++;
+      }));
+      
+      if (label) {
+        label.textContent = currentLang === 'ja'
+          ? `保存中 (${Math.min(totalCached, totalFiles)}/${totalFiles})...`
+          : `Salvando (${Math.min(totalCached, totalFiles)}/${totalFiles})...`;
+      }
     }
 
     localStorage.setItem('offline_saved_all', 'true');
     if (label) label.textContent = currentLang === 'ja' ? '✓ オフライン保存済み' : '✓ Salvo offline';
+    
+    // Refresh the page or notify SW?
+    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+       navigator.serviceWorker.controller.postMessage({ type: 'OFFLINE_READY' });
+    }
+
   } catch (e) {
     console.error('Offline save error:', e);
     if (label) label.textContent = currentLang === 'ja' ? 'エラー' : 'Erro ao salvar';
