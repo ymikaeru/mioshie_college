@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)*([（(])/gi, '$1' + SGLBR + '$2')
                 // Ensure colon after Q&A labels
                 .replace(/(Pergunta do fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
-                .replace(/(Pergunta do fiel|Orientação de Meishu-Sama)/gi, DBLBR + '$1')
+                .replace(/(Pergunta do fiel|Orientação de Meishu-Sama|Ensinamento de Meishu-Sama)/gi, DBLBR + '$1')
                 .replace(/<br\s*\/?>\n?<br\s*\/?>\n?(?=\s*<(?:b>\s*)?<font\s+color)/gi, DBLBR)
                 .replace(/<br\s*\/?>\n<br\s*\/?>\n/gi, ' ')
                 .replace(/<br\s*\/?>\n/gi, ' ')
