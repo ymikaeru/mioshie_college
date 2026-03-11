@@ -43,7 +43,25 @@ self.addEventListener('fetch', event => {
   // Skip cross-origin requests (e.g., Google Fonts) — let browser handle caching
   if (url.origin !== self.location.origin) return;
 
-  // Strategy: Network-First for HTML and JSON (ensures updates)
+  // Strategy: Stale-While-Revalidate for Search Index (large files)
+  if (url.pathname.includes('search_index_')) {
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        const networked = fetch(event.request)
+          .then(res => {
+            if (!res || res.status !== 200 || res.type !== 'basic') return res;
+            const clone = res.clone();
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+            return res;
+          })
+          .catch(() => cached);
+        return cached || networked;
+      })
+    );
+    return;
+  }
+
+  // Strategy: Network-First for HTML and other JSON (ensures updates)
   if (url.pathname.endsWith('.html') || url.pathname.endsWith('.json') || url.pathname === '/' || url.pathname.includes('/shumeic')) {
     event.respondWith(
       fetch(event.request)
