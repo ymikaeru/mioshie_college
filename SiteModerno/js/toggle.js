@@ -923,7 +923,8 @@ function performSearch(query) {
     const highlight = (r.snippet || '')
       .replace(highlightRegex, '<mark class="search-highlight">$1</mark>');
 
-    const navAttr = isReaderPage ? `onclick="if(typeof navigateToReader==='function'){ navigateToReader('${r.v}','${r.f}'); closeSearch(); return false; }"` : `onclick="closeSearch()"`;
+    const escapedQ = q.replace(/'/g, "\\'");
+    const navAttr = isReaderPage ? `onclick="if(typeof navigateToReader==='function'){ navigateToReader('${r.v}','${r.f}','${escapedQ}'); closeSearch(); return false; }"` : `onclick="closeSearch()"`;
 
     return `<li><a href="${href.replace(/\s+/g, '')}" class="search-result-item" ${navAttr}>
         <div class="search-result-title">${displayTitle} <span style="font-size:0.8rem;color:var(--text-muted)">(Vol ${r.v.slice(-1)})</span></div>
@@ -939,3 +940,34 @@ function performSearch(query) {
 }
 
 // Smart Header functionality is unified with Immersion Mode above
+
+// ============================================================
+// SCROLL-TO-TOP BUTTON — injected dynamically on all pages
+// ============================================================
+(function () {
+  document.addEventListener('DOMContentLoaded', () => {
+    // Don't add on reader page (reader has its own progress bar)
+    if (window.location.pathname.includes('reader.html')) return;
+
+    const btn = document.createElement('button');
+    btn.id = 'scroll-to-top';
+    btn.setAttribute('aria-label', 'Voltar ao topo');
+    btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>`;
+    document.body.appendChild(btn);
+
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          btn.classList.toggle('visible', window.scrollY > 400);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+  });
+})();
