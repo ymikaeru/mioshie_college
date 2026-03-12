@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
-  <link href="css/styles.min.css?v=11" rel="stylesheet" />
+  <link href="css/styles.css" rel="stylesheet" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
   <!-- PWA / iOS Support -->
@@ -82,6 +82,7 @@
 
   <div class="search-modal-overlay" id="searchModal">
     <div class="search-modal">
+      <button class="modal-close-btn" onclick="closeSearch()">&times;</button>
       <div class="search-header">
         <div class="search-input-row">
           <input type="text" class="search-input" id="searchInput" placeholder="Buscar nos ensinamentos..."
@@ -102,13 +103,13 @@
 
   <div class="search-modal-overlay" id="historyModal">
     <div class="search-modal">
+      <button class="modal-close-btn" onclick="closeHistory()">&times;</button>
       <div class="search-header">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
           <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Histórico de Navegação</h2>
           <button class="btn-zen" id="historyClearAll" onclick="clearAllHistory()"
             style="padding: 4px 12px; font-size: 0.85rem; display: none;">Limpar Tudo</button>
         </div>
-        <button class="search-close" onclick="closeHistory()">&times;</button>
       </div>
       <ul class="search-results" id="historyResults"></ul>
     </div>
@@ -116,16 +117,16 @@
 
   <div class="search-modal-overlay" id="favoritesModal">
     <div class="search-modal">
+      <button class="modal-close-btn" onclick="closeFavorites()">&times;</button>
       <div class="search-header">
         <h2 style="font-size: 1.2rem; margin:0; color: var(--accent);">Ensinamentos Salvos</h2>
-        <button class="search-close" onclick="closeFavorites()">&times;</button>
       </div>
       <ul class="search-results" id="favoritesResults"></ul>
     </div>
   </div>
 
-  <script src="js/toggle.min.js?v=1772246363" defer></script>
-  <script src="js/reader.min.js?v=1772246363" defer></script>
+  <script src="js/toggle.js" defer></script>
+  <script src="js/reader.js" defer></script>
   <script>document.addEventListener('DOMContentLoaded', () => { if (typeof initFontSize === 'function') initFontSize(); });</script>
 
   <script>

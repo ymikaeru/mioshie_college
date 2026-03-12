@@ -24,7 +24,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (volId && !volId.startsWith('shumeic')) volId = `shumeic${volId}`;
         if (filename && !filename.endsWith('.html')) filename += '.html';
 
-        return { volId, filename, searchQuery: urlParams.get('search') || urlParams.get('s') };
+        const topicParam = urlParams.get('topic');
+        return { volId, filename, searchQuery: urlParams.get('search') || urlParams.get('s'), topicIdx: topicParam !== null ? parseInt(topicParam, 10) : null };
+    }
+
+    // Detect which topic div is most visible in the viewport
+    function getVisibleTopicIndex() {
+        const topics = container.querySelectorAll('.topic-content');
+        if (topics.length <= 1) return 0;
+        let bestIdx = 0, bestDist = Infinity;
+        const viewMid = window.innerHeight / 3; // bias toward top third
+        topics.forEach((el, i) => {
+            const rect = el.getBoundingClientRect();
+            // distance from element top to the "sweet spot" in viewport
+            const dist = Math.abs(rect.top - viewMid);
+            if (dist < bestDist) { bestDist = dist; bestIdx = i; }
+        });
+        return bestIdx;
     }
 
     // Main render function
@@ -79,13 +95,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        // Store topic metadata for favorites & history
+        window._currentTopics = topicsFound;
+        window._currentTotalTopics = topicsFound.length;
+
         // Update document state
         const cleanTitle = mainTitleToDisplay.replace(/<br\s*\/?>/gi, ' ');
         document.title = `Meishu-Sama: ${cleanTitle} - Mioshie College`;
         try {
             const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
             const filtered = history.filter(h => h.file !== filename || h.vol !== volId);
-            filtered.unshift({ title: cleanTitle, vol: volId, file: filename, time: Date.now() });
+            filtered.unshift({ title: cleanTitle, vol: volId, file: filename, time: Date.now(), topic: 0, totalTopics: topicsFound.length });
             localStorage.setItem('readHistory', JSON.stringify(filtered.slice(0, 20)));
         } catch (e) { }
 
@@ -115,6 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Toolbar HTML
         const fl = { pt: { saved: 'Salvo', save: 'Salvar', top: 'Topo' }, ja: { saved: '保存済み', save: '保存', top: 'トップ' } }[lang] || { saved: 'Salvo', save: 'Salvar', top: 'Topo' };
         const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+        // For the initial render, show filled bookmark if ANY topic of this file is favorited
         const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
         const favClass = isFavorited ? 'active' : '';
         const favIcon = isFavorited
@@ -300,6 +321,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 window._updateMobileNavTopics('', []);
             }
         }
+
+        // Auto-scroll to topic if specified via URL param
+        const { topicIdx } = getParams();
+        if (topicIdx !== null && topicIdx > 0) {
+            const targetEl = document.getElementById(`topic-${topicIdx}`);
+            if (targetEl) {
+                setTimeout(() => targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+            }
+        }
     }
 
     window.navigateToReader = async function (volId, filename, searchQuery) {
@@ -353,13 +383,42 @@ document.addEventListener('DOMContentLoaded', () => {
     window.toggleFavorite = function () {
         const { volId, filename } = getParams();
         let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-        const isSaved = favorites.some(f => f.vol === volId && f.file === filename);
+        const topicIndex = getVisibleTopicIndex();
         const title = document.title.replace('Meishu-Sama: ', '').replace(' - Mioshie College', '');
+        const totalTopics = window._currentTotalTopics || 1;
+
+        // Extract topic-specific title and snippet
+        let topicTitle = '';
+        let snippet = '';
+        const topics = window._currentTopics || [];
+        if (topics[topicIndex]) {
+            const lang = localStorage.getItem('site_lang') || 'pt';
+            const isPt = lang === 'pt';
+            topicTitle = isPt
+                ? (topics[topicIndex].title_ptbr || topics[topicIndex].title_pt || topics[topicIndex].title || '')
+                : (topics[topicIndex].title_ja || topics[topicIndex].title || '');
+            topicTitle = topicTitle.replace(/<[^>]+>/g, '').trim();
+            // Extract snippet from rendered topic div
+            const topicEl = document.getElementById(`topic-${topicIndex}`);
+            if (topicEl) {
+                const rawText = topicEl.textContent || '';
+                // Skip leading title text and get body content
+                const bodyStart = rawText.indexOf(topicTitle) !== -1 ? rawText.indexOf(topicTitle) + topicTitle.length : 0;
+                snippet = rawText.substring(bodyStart, bodyStart + 120).replace(/\s+/g, ' ').trim();
+                if (snippet.length >= 118) snippet += '…';
+            }
+        }
+
+        // Check if this exact topic is already saved
+        const isSaved = favorites.some(f => f.vol === volId && f.file === filename && (f.topic || 0) === topicIndex);
 
         if (isSaved) {
-            favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
+            favorites = favorites.filter(f => !(f.vol === volId && f.file === filename && (f.topic || 0) === topicIndex));
         } else {
-            favorites.unshift({ title, vol: volId, file: filename, time: Date.now() });
+            favorites.unshift({
+                title, vol: volId, file: filename, time: Date.now(),
+                topic: topicIndex, topicTitle, snippet, totalTopics
+            });
         }
         localStorage.setItem('savedFavorites', JSON.stringify(favorites));
 
@@ -385,4 +444,25 @@ document.addEventListener('DOMContentLoaded', () => {
     window.renderContent = () => initReader();
     initReader();
     window.addEventListener('popstate', () => initReader());
+
+    // Save reading position when leaving the page
+    function saveReadingPosition() {
+        try {
+            const { volId, filename } = getParams();
+            if (!volId || !filename) return;
+            const topicIndex = getVisibleTopicIndex();
+            const totalTopics = window._currentTotalTopics || 1;
+            const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
+            const existing = history.find(h => h.file === filename && h.vol === volId);
+            if (existing) {
+                existing.topic = topicIndex;
+                existing.totalTopics = totalTopics;
+                localStorage.setItem('readHistory', JSON.stringify(history));
+            }
+        } catch (e) { }
+    }
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') saveReadingPosition();
+    });
+    window.addEventListener('beforeunload', saveReadingPosition);
 });

@@ -565,9 +565,11 @@ function renderHistory() {
 
   const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
 
   if (history.length === 0) {
-    resultsEl.innerHTML = '<li class="search-empty">Nenhum histórico.</li>';
+    const emptyMsg = currentLang === 'ja' ? '履歴なし。' : 'Nenhum histórico.';
+    resultsEl.innerHTML = `<li class="search-empty">${emptyMsg}</li>`;
     const clearAllBtn = document.getElementById('historyClearAll');
     if (clearAllBtn) clearAllBtn.style.display = 'none';
     return;
@@ -576,9 +578,30 @@ function renderHistory() {
   resultsEl.innerHTML = history.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    let href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    // If we have a saved topic position, add it as a param
+    if (item.topic && item.topic > 0) {
+      href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}&topic=${item.topic}`;
+    }
     const date = new Date(item.time).toLocaleString();
-    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div></a></li>`;
+
+    // Progress indicator for multi-topic pages
+    let progressHtml = '';
+    if (item.totalTopics && item.totalTopics > 1) {
+      const topicNum = (item.topic || 0) + 1;
+      const pct = Math.round((topicNum / item.totalTopics) * 100);
+      const progressLabel = currentLang === 'ja'
+        ? `トピック ${topicNum}/${item.totalTopics}`
+        : `Tópico ${topicNum}/${item.totalTopics}`;
+      progressHtml = `<div style="display:flex; align-items:center; gap:8px; margin-top:4px;">
+        <div style="flex:1; height:4px; background:var(--border); border-radius:2px; overflow:hidden;">
+          <div style="width:${pct}%; height:100%; background:var(--accent); border-radius:2px; transition:width 0.3s;"></div>
+        </div>
+        <span style="font-size:0.75rem; color:var(--text-muted); white-space:nowrap;">${progressLabel}</span>
+      </div>`;
+    }
+
+    return `<li><a href="${href}" class="search-result-item" onclick="closeHistory()"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">${date}</div>${progressHtml}</a></li>`;
   }).join('');
 }
 
@@ -612,9 +635,11 @@ function renderFavorites() {
 
   const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
 
   if (favorites.length === 0) {
-    resultsEl.innerHTML = '<li class="search-empty">Nenhum ensinamento salvo.</li>';
+    const emptyMsg = currentLang === 'ja' ? '保存された教えはありません。' : 'Nenhum ensinamento salvo.';
+    resultsEl.innerHTML = `<li class="search-empty">${emptyMsg}</li>`;
     return;
   }
 
@@ -624,12 +649,40 @@ function renderFavorites() {
   resultsEl.innerHTML = favorites.map(item => {
     const vNum = item.vol.replace('shumeic', '');
     const fBase = item.file.replace('.html', '');
-    const href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    const topicIdx = item.topic || 0;
+    // Build link with topic param for auto-scroll
+    let href;
+    if (topicIdx > 0) {
+      href = `${basePath}reader.html?vol=${item.vol}&file=${item.file}&topic=${topicIdx}`;
+    } else {
+      href = `${basePath}reader.html#v${vNum}/${fBase}`;
+    }
     const date = new Date(item.time).toLocaleString();
+    const savedLabel = currentLang === 'ja' ? '保存日' : 'Salvo em';
+
+    // Topic badge for multi-topic pages
+    let topicBadge = '';
+    if (item.totalTopics && item.totalTopics > 1) {
+      const topicLabel = currentLang === 'ja'
+        ? `トピック ${topicIdx + 1}/${item.totalTopics}`
+        : `Tópico ${topicIdx + 1}/${item.totalTopics}`;
+      topicBadge = `<span style="display:inline-block; font-size:0.7rem; background:var(--accent); color:#fff; padding:1px 7px; border-radius:10px; margin-left:6px; vertical-align:middle;">${topicLabel}</span>`;
+    }
+
+    // Topic title and snippet
+    let topicInfo = '';
+    if (item.topicTitle && item.totalTopics > 1) {
+      const cleanedTitle = item.topicTitle.replace(/^(Ensinamento|Orienta\u00e7\u00e3o|Palestra) de (Meishu-Sama|Mois\u00e9s)\s*[-:]?\s*/i, '').replace(/^["'](.*?)["']$/, '$1').trim();
+      topicInfo += `<div style="font-size:0.85rem; color:var(--text-main); margin-top:3px; font-style:italic;">\u201c${cleanedTitle}\u201d</div>`;
+    }
+    if (item.snippet) {
+      topicInfo += `<div style="font-size:0.8rem; color:var(--text-muted); margin-top:2px; line-height:1.4; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">${item.snippet}</div>`;
+    }
+
     return `<li>
       <div style="display: flex; justify-content: space-between; align-items: center; padding-right: 24px; border-bottom: 1px solid var(--border);">
-        <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span></div><div class="search-result-context">Salvo em ${date}</div></a>
-        <button onclick="removeFavoriteFromModal('${item.vol}', '${item.file}')" style="background:none; border:none;  cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:var(--accent);">
+        <a href="${href}" class="search-result-item" onclick="closeFavorites()" style="flex: 1; border-bottom: none;"><div class="search-result-title">${item.title || item.file} <span style="font-size:0.8rem; color:var(--text-muted);">(Vol ${vNum})</span>${topicBadge}</div>${topicInfo}<div class="search-result-context">${savedLabel} ${date}</div></a>
+        <button onclick="removeFavoriteFromModal('${item.vol}', '${item.file}', ${topicIdx})" style="background:none; border:none;  cursor:pointer; padding:8px; display:flex; align-items:center; justify-content:center; border-radius:8px; color:var(--accent);">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
         </button>
       </div>
@@ -637,9 +690,14 @@ function renderFavorites() {
   }).join('');
 }
 
-window.removeFavoriteFromModal = function (volId, filename) {
+window.removeFavoriteFromModal = function (volId, filename, topicIdx) {
   let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-  favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
+  // Support both legacy (no topic) and new (with topic) formats
+  if (topicIdx !== undefined && topicIdx !== null) {
+    favorites = favorites.filter(f => !(f.vol === volId && f.file === filename && (f.topic || 0) === topicIdx));
+  } else {
+    favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
+  }
   localStorage.setItem('savedFavorites', JSON.stringify(favorites));
   renderFavorites(); // re-render the list
 
@@ -649,8 +707,16 @@ window.removeFavoriteFromModal = function (volId, filename) {
     const currentVol = params.get('vol');
     const currentFile = params.get('file');
     if (currentVol === volId && currentFile === filename) {
-      const btn = document.getElementById('favoriteBtn');
-      if (btn) btn.classList.remove('active');
+      // Only update button if no more favorites exist for this file
+      const remaining = favorites.filter(f => f.vol === volId && f.file === filename);
+      if (remaining.length === 0) {
+        const btn = document.getElementById('favoriteBtn');
+        if (btn) {
+          btn.classList.remove('active');
+          const svg = btn.querySelector('svg');
+          if (svg) svg.setAttribute('fill', 'none');
+        }
+      }
     }
   }
 }

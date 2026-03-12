@@ -552,6 +552,34 @@ html {
   max-height: 80vh;
   transform: translateY(-20px);
   transition: transform 0.3s var(--ease);
+  position: relative;
+}
+
+.modal-close-btn,
+.search-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s var(--ease);
+}
+
+.modal-close-btn:hover,
+.search-close:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
 }
 
 .search-modal-overlay.active .search-modal {
@@ -559,7 +587,7 @@ html {
 }
 
 .search-header {
-  padding: 16px 24px;
+  padding: 16px 48px 16px 24px;
   border-bottom: 1px solid var(--border);
   display: flex;
   flex-direction: column;
