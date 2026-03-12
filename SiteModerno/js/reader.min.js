@@ -173,8 +173,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pureTitle.length > 3 && pureTitle.length < 250 && !pureTitle.includes('。') && !pureTitle.includes('. ')) {
                     const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
                     if (quoteMatch) {
-                        const prefixMatch = pureTitle.match(/^([^:-]+)/);
-                        const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                        const prefixMatch = pureTitle.match(/^([^:]+)/); // Match up to colon instead of - to avoid breaking Meishu-Sama
+                        let prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                        // If there is a hyphen but no colon, and it's something like "Ensinamento de Meishu-Sama - Title"
+                        if(!pureTitle.includes(':') && pureTitle.includes(' - ')) {
+                            prefix = pureTitle.split(' - ')[0].trim();
+                        }
+                        
+                        // Clean up markdown asterisks from prefix if any leaked
+                        prefix = prefix.replace(/\*/g, '');
+
                         if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
                             pureTitle = `${prefix}: ${quoteMatch[1]}`;
                         } else {
@@ -185,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     
                     headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b><br/>(${dateText})<br/><br/>`;
-                    rawContent = rawContent.substring(headerMatch[0].length).replace(/^[\s\n]*<br\s*\/?>[\s\n]*/gi, '');
+                    rawContent = rawContent.substring(headerMatch[0].length).replace(/^([\s\n]*<br\s*\/?>[\s\n]*)+/gi, '');
                 }
             }
 
@@ -198,8 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         let pureTitle = activeTitle;
                         const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
                         if (quoteMatch) {
-                            const prefixMatch = pureTitle.match(/^([^:-]+)/);
-                            const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                            const prefixMatch = pureTitle.match(/^([^:]+)/);
+                            let prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                            if(!pureTitle.includes(':') && pureTitle.includes(' - ')) {
+                                prefix = pureTitle.split(' - ')[0].trim();
+                            }
+                            prefix = prefix.replace(/\*/g, '');
+
                             if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
                                 pureTitle = `${prefix}: ${quoteMatch[1]}`;
                             } else {
@@ -252,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Pattern 2: </p><br><p> — happens when DBLBR separator is placed after a comma
             formatted = formatted.replace(/,\s*<\/p>\s*\n?<br>\s*\n?<p>/g, ', ');
             formatted = formatted.replace(/\s(color|bgcolor|size)=["'][^"']*["']/gi, '').replace(/<font[^>]*>(.*?)<\/font>/gi, '$1');
+            // Remove empty tags left after font stripping (e.g. <p><b></b></p>, <b>\n<br>\n</b>)
+            formatted = formatted.replace(/<(b|strong|em|i|p)>\s*(<br\s*\/?>|\s|\n)*<\/\1>/gi, '').replace(/<(b|strong|em|i|p)>\s*<\/\1>/gi, '');
 
             let bCount = 0;
             formatted = formatted.replace(/<(b|strong)>(.*?)<\/\1>/gi, (match, tag, content) => {
@@ -439,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Fetch specific article JSON directly
             const fnameOnly = filename.split('/').pop();
             const articlePath = fnameOnly.endsWith('.json') ? fnameOnly : `${fnameOnly}.json`;
-            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}`);
+            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}?t=${Date.now()}`);
 
             if (!articleRes.ok) throw new Error('Network response was not ok');
 

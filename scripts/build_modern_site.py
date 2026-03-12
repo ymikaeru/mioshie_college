@@ -27,12 +27,8 @@ GLOBAL_INDEX_TITLES = {
     'shumeic4': {}
 }
 
-VOLUMES = [
-    {'id': 'shumeic1', 'file': 'shumeic1_data_bilingual.json'},
-    {'id': 'shumeic2', 'file': 'shumeic2_data_bilingual.json'},
-    {'id': 'shumeic3', 'file': 'shumeic3_data_bilingual.json'},
-    {'id': 'shumeic4', 'file': 'shumeic4_data_bilingual.json'}
-]
+VOLUMES = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4']
+SITE_DATA_DIR = os.path.join(OUTPUT_DIR, DATA_OUTPUT_DIR)
 
 
 def create_dirs():
@@ -95,9 +91,14 @@ def copy_assets():
     print(f"Copied {count} new image assets to assets/images/")
 
 def build_search_index():
-    """Generates a minimized JSON search index from all translation data."""
-    print("Building global search index...")
-    
+    """Generates a minimized JSON search index from individual split topic files in site_data/.
+
+    Reads directly from site_data/shumeicN/*.html.json (the same files the frontend uses),
+    so edits to individual topic files are automatically reflected without needing the
+    monolithic bilingual JSON files.
+    """
+    print("Building global search index from individual topic files...")
+
     # Write the GLOBAL_INDEX_TITLES to a dedicated JS file
     os.makedirs(os.path.join(OUTPUT_DIR, DATA_OUTPUT_DIR), exist_ok=True)
     global_titles_path = os.path.join(OUTPUT_DIR, DATA_OUTPUT_DIR, 'global_index_titles.js')
@@ -106,86 +107,97 @@ def build_search_index():
         f.write(injection)
 
     search_data = []
-    
-    for vol in VOLUMES:
-        vol_id = vol['id']
-        src = os.path.join(DATA_DIR, vol['file'])
-        if not os.path.exists(src): continue
-        
-        with open(src, 'r', encoding='utf-8') as f:
-            try:
-                data = json.load(f)
-            except json.JSONDecodeError:
+
+    for vol_id in VOLUMES:
+        vol_dir = os.path.join(SITE_DATA_DIR, vol_id)
+        if not os.path.isdir(vol_dir):
+            print(f"Warning: {vol_dir} not found, skipping.")
+            continue
+
+        # Read nav to preserve ordering
+        nav_path = os.path.join(SITE_DATA_DIR, f"{vol_id}_nav.json")
+        if os.path.exists(nav_path):
+            with open(nav_path, 'r', encoding='utf-8') as f:
+                nav_list = json.load(f)
+        else:
+            # Fallback: list all json files in the directory
+            nav_list = [fn.replace('.json', '') for fn in sorted(os.listdir(vol_dir)) if fn.endswith('.json')]
+
+        for filename in nav_list:
+            json_filename = filename if filename.endswith('.json') else f"{filename}.json"
+            topic_path = os.path.join(vol_dir, json_filename)
+            if not os.path.exists(topic_path):
                 continue
-                
-        for theme in data.get('themes', []):
-            for topic in theme.get('topics', []):
-                # Prefer PT title/content, fallback to original
-                title = topic.get('title_ptbr') or topic.get('title_pt') or topic.get('title', '')
-                content_raw = topic.get('content_ptbr') or topic.get('content_pt') or topic.get('content', '')
-                
-                # Japanese fields
-                title_ja = topic.get('title_ja') or ''
-                content_ja_raw = topic.get('content_ja') or topic.get('content', '')
-                
-                # Strip HTML from content for a clean search index
-                soup = BeautifulSoup(content_raw, "html.parser")
-                # Remove script and style elements
-                for s in soup(['script', 'style']):
-                    s.decompose()
-                clean_text = soup.get_text(separator=" ", strip=True)
-                # Collapse all whitespace and newlines to single space
-                clean_text = re.sub(r'\s+', ' ', clean_text).strip()
-                
-                # Strip HTML from Japanese content
-                soup_ja = BeautifulSoup(content_ja_raw, "html.parser")
-                for s in soup_ja(['script', 'style']):
-                    s.decompose()
-                clean_text_ja = soup_ja.get_text(separator=" ", strip=True)
-                clean_text_ja = re.sub(r'\s+', ' ', clean_text_ja).strip()
-                
-                # Only store JA content if it's actually Japanese (not just a copy of PT)
-                if clean_text_ja == clean_text:
-                    clean_text_ja = ''
-                
-                if clean_text:
-                    src_file = topic.get('source_file') or topic.get('filename') or ''
-                    filename = os.path.basename(src_file) if src_file else ''
-                    index_title = GLOBAL_INDEX_TITLES.get(vol_id, {}).get(filename, '')
-                    
-                    # Truncate content to max 300 chars for search index size optimization
-                    # Full text is still available in individual topic JSON files
-                    MAX_CONTENT_LEN = 300
-                    truncated_text = clean_text[:MAX_CONTENT_LEN]
-                    truncated_ja = clean_text_ja[:MAX_CONTENT_LEN] if clean_text_ja else ''
-                    
-                    entry = {
-                        'v': vol_id,
-                        'f': filename,
-                        't': (index_title if index_title else title).strip(),
-                        'c': truncated_text
-                    }
-                    # Only add Japanese fields if they have unique content (saves file size)
-                    if title_ja and title_ja.strip() != entry['t']:
-                        entry['tj'] = title_ja.strip()
-                    if truncated_ja:
-                        entry['cj'] = truncated_ja
-                    
-                    search_data.append(entry)
-                    
+
+            with open(topic_path, 'r', encoding='utf-8') as f:
+                try:
+                    file_data = json.load(f)
+                except json.JSONDecodeError:
+                    print(f"Warning: Could not parse {topic_path}")
+                    continue
+
+            for theme in file_data.get('themes', []):
+                for topic in theme.get('topics', []):
+                    # Prefer PT title/content, fallback to original
+                    title = topic.get('title_ptbr') or topic.get('title_pt') or topic.get('title', '')
+                    content_raw = topic.get('content_ptbr') or topic.get('content_pt') or topic.get('content', '')
+
+                    # Japanese fields
+                    title_ja = topic.get('title_ja') or ''
+                    content_ja_raw = topic.get('content_ja') or topic.get('content', '')
+
+                    # Strip HTML from content for a clean search index
+                    soup = BeautifulSoup(content_raw, "html.parser")
+                    for s in soup(['script', 'style']):
+                        s.decompose()
+                    clean_text = soup.get_text(separator=" ", strip=True)
+                    clean_text = re.sub(r'\s+', ' ', clean_text).strip()
+
+                    # Strip HTML from Japanese content
+                    soup_ja = BeautifulSoup(content_ja_raw, "html.parser")
+                    for s in soup_ja(['script', 'style']):
+                        s.decompose()
+                    clean_text_ja = soup_ja.get_text(separator=" ", strip=True)
+                    clean_text_ja = re.sub(r'\s+', ' ', clean_text_ja).strip()
+
+                    # Only store JA content if it's actually Japanese (not just a copy of PT)
+                    if clean_text_ja == clean_text:
+                        clean_text_ja = ''
+
+                    if clean_text:
+                        src_file = topic.get('source_file') or topic.get('filename') or ''
+                        fname = os.path.basename(src_file) if src_file else filename
+                        index_title = GLOBAL_INDEX_TITLES.get(vol_id, {}).get(fname, '')
+
+                        MAX_CONTENT_LEN = 300
+                        truncated_text = clean_text[:MAX_CONTENT_LEN]
+                        truncated_ja = clean_text_ja[:MAX_CONTENT_LEN] if clean_text_ja else ''
+
+                        entry = {
+                            'v': vol_id,
+                            'f': fname,
+                            't': (index_title if index_title else title).strip(),
+                            'c': truncated_text
+                        }
+                        if title_ja and title_ja.strip() != entry['t']:
+                            entry['tj'] = title_ja.strip()
+                        if truncated_ja:
+                            entry['cj'] = truncated_ja
+
+                        search_data.append(entry)
+
     index_path = os.path.join(OUTPUT_DIR, DATA_OUTPUT_DIR, 'search_index.json')
     with open(index_path, 'w', encoding='utf-8') as f:
-        # Saving without indentation to save space
         json.dump(search_data, f, ensure_ascii=False, separators=(',', ':'))
-    
+
     size_mb = os.path.getsize(index_path) / (1024 * 1024)
     print(f"Search index generated at {index_path} ({size_mb:.2f} MB)")
 
 if __name__ == "__main__":
     create_dirs()
-    # NOTE: We no longer copy the large bilingual JSON files (~360MB) to site_data/
-    # The frontend uses individual split JSON files generated by split_bilingual.py
-    # If you need to update the split files, run: python3 SiteModerno/scripts/split_bilingual.py
+    # The search index is now built from individual split files in site_data/.
+    # To edit content, modify files directly in SiteModerno/site_data/shumeicN/filename.html.json
+    # then re-run this script to update the search index.
     copy_assets()
     collect_index_titles()
     build_search_index()
