@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     
                     headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b><br/>(${dateText})<br/><br/>`;
-                    rawContent = rawContent.substring(headerMatch[0].length).replace(/^[\s\n]*<br\s*\/?>[\s\n]*/gi, '');
+                    rawContent = rawContent.substring(headerMatch[0].length).replace(/^([\s\n]*<br\s*\/?>[\s\n]*)+/gi, '');
                 }
             }
 
@@ -265,6 +265,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Pattern 2: </p><br><p> — happens when DBLBR separator is placed after a comma
             formatted = formatted.replace(/,\s*<\/p>\s*\n?<br>\s*\n?<p>/g, ', ');
             formatted = formatted.replace(/\s(color|bgcolor|size)=["'][^"']*["']/gi, '').replace(/<font[^>]*>(.*?)<\/font>/gi, '$1');
+            // Remove empty tags left after font stripping (e.g. <p><b></b></p>, <b>\n<br>\n</b>)
+            formatted = formatted.replace(/<(b|strong|em|i|p)>\s*(<br\s*\/?>|\s|\n)*<\/\1>/gi, '').replace(/<(b|strong|em|i|p)>\s*<\/\1>/gi, '');
 
             let bCount = 0;
             formatted = formatted.replace(/<(b|strong)>(.*?)<\/\1>/gi, (match, tag, content) => {

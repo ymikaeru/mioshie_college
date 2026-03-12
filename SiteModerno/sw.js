@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shumei-pwa-v11';
+const CACHE_NAME = 'shumei-pwa-v13';
 const APP_SHELL = [
   './',
   './index.html',
