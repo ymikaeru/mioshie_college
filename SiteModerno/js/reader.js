@@ -163,14 +163,55 @@ document.addEventListener('DOMContentLoaded', () => {
             let rawContent = isPt ? (topicData.content_ptbr || topicData.content_pt || topicData.content || "") : (topicData.content || "");
             const activeTitle = isPt ? (topicData.title_ptbr || topicData.title_pt || topicData.publication_title_pt || "") : (topicData.title_ja || topicData.title || "");
 
-            // Unified Title Injection
-            const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim());
-            if (activeTitle && rawContent.trim() && !genericRegex.test(activeTitle) && !contentAlreadyHasTitle) {
-                const cTitle = activeTitle.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
-                const cStart = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
-                if (cTitle.length > 5 && !cStart.includes(cTitle)) {
-                    const displayDate = topicData.date && topicData.date !== "Unknown" ? `<br/>\n(${topicData.date})` : "";
-                    rawContent = `<b><font size="+2">${activeTitle}</font></b>${displayDate}<br/><br/>` + rawContent;
+            let headerHTML = "";
+            const headerMatch = rawContent.match(/^([\s\S]{0,350}?)\(([^)]*\d+[^)]*)\)/);
+            if (headerMatch) {
+                let preText = headerMatch[1];
+                let dateText = headerMatch[2];
+                let pureTitle = preText.replace(/<[^>]+>/g, '').trim();
+                
+                if (pureTitle.length > 3 && pureTitle.length < 250 && !pureTitle.includes('。') && !pureTitle.includes('. ')) {
+                    const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
+                    if (quoteMatch) {
+                        const prefixMatch = pureTitle.match(/^([^:-]+)/);
+                        const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                        if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
+                            pureTitle = `${prefix}: ${quoteMatch[1]}`;
+                        } else {
+                            pureTitle = quoteMatch[1];
+                        }
+                    } else {
+                        pureTitle = pureTitle.replace(/\s+-\s+/, ': ').replace(/\s+:/, ':');
+                    }
+                    
+                    headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b><br/>(${dateText})<br/><br/>`;
+                    rawContent = rawContent.substring(headerMatch[0].length).replace(/^[\s\n]*<br\s*\/?>[\s\n]*/gi, '');
+                }
+            }
+
+            if (!headerHTML) {
+                const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim()) || /^\s*<font[\s>]/i.test(rawContent.trim());
+                if (activeTitle && rawContent.trim() && !genericRegex.test(activeTitle) && !contentAlreadyHasTitle) {
+                    const cTitle = activeTitle.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
+                    const cStart = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
+                    if (cTitle.length > 5 && !cStart.includes(cTitle)) {
+                        let pureTitle = activeTitle;
+                        const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
+                        if (quoteMatch) {
+                            const prefixMatch = pureTitle.match(/^([^:-]+)/);
+                            const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                            if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
+                                pureTitle = `${prefix}: ${quoteMatch[1]}`;
+                            } else {
+                                pureTitle = quoteMatch[1];
+                            }
+                        } else {
+                            pureTitle = pureTitle.replace(/\s+-\s+/, ': ').replace(/\s+:/, ':');
+                        }
+
+                        const displayDate = topicData.date && topicData.date !== "Unknown" ? `<br/>\n(${topicData.date})` : "";
+                        headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b>${displayDate}<br/><br/>`;
+                    }
                 }
             }
 
@@ -231,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return `src="assets/images/${s}"`;
             });
 
-            contentHtml += `<div id="${topicId}" class="topic-content" style="margin-top: ${index > 0 ? '40px' : '0'};">${formatted}</div>`;
+            contentHtml += `<div id="${topicId}" class="topic-content" style="margin-top: ${index > 0 ? '40px' : '0'};">\n${headerHTML}\n${formatted}\n</div>`;
         });
 
         const bl = { pt: { home: 'Início', volume: 'Volume' }, ja: { home: 'トップ', volume: '巻' } }[lang] || { home: 'Início', volume: 'Volume' };
