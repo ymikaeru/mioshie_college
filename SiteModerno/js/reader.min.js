@@ -236,8 +236,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 .replace(/([）)][^<\n]*)(?:<br\s*\/?>\n?|\n){2,}/gi, '$1' + DBLBR)
                 .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)*([（(])/gi, '$1' + SGLBR + '$2')
                 // Ensure colon after Q&A labels
-                .replace(/(Pergunta do fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
-                .replace(/(Pergunta do fiel|Orientação de Meishu-Sama|Ensinamento de Meishu-Sama)/gi, DBLBR + '$1')
+                .replace(/(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama|Palavras de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
+                .replace(/(\*{0,2})(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Ensinamento de Meishu-Sama|Resposta de Meishu-Sama|Comentário do [Ff]iel|Palavras de Meishu-Sama)/gi, DBLBR + '$1$2')
                 .replace(/<br\s*\/?>\n?<br\s*\/?>\n?(?=\s*<(?:b>\s*)?<font\s+color)/gi, DBLBR)
                 .replace(/<br\s*\/?>\n<br\s*\/?>\n/gi, ' ')
                 .replace(/<br\s*\/?>\n/gi, ' ')
@@ -259,6 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).join('\n');
             }
             formatted = formatted.replace(/<p>\s*\x02DBLBR\x02\s*<\/p>/g, '<br>').replace(/\x02DBLBR\x02/g, '<br>');
+            // Collapse consecutive <br> tags to avoid excessive spacing
+            formatted = formatted.replace(/(<br\s*\/?\s*>[\s\n]*){2,}/gi, '<br>');
             // Merge paragraphs where previous <p> ends with comma (no line break after comma)
             // Pattern 1: </p><p> directly
             formatted = formatted.replace(/,\s*<\/p>\s*\n?\s*<p>/g, ', ');
@@ -272,7 +274,7 @@ document.addEventListener('DOMContentLoaded', () => {
             formatted = formatted.replace(/<(b|strong)>(.*?)<\/\1>/gi, (match, tag, content) => {
                 bCount++;
                 const plain = content.replace(/<[^>]+>/g, '').trim();
-                if (bCount === 1 || /Ensinamento|Orientação|Palestra|Pergunta|Resposta|Salmo/i.test(plain)) return match;
+                if (bCount === 1 || /Ensinamento|Orientação|Palestra|Palavras|Pergunta|Resposta|Salmo/i.test(plain)) return match;
                 return content;
             });
 

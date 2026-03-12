@@ -115,16 +115,8 @@ function _initMobileNav() {
       </div>
       <div class="mobile-nav-body">
 
-        <div class="mobile-nav-section-label" id="mobileNavLabelNav">${t.navigation}</div>
-        <div id="mobileNavLinks">
-          ${linksHtml}
-        </div>
-
-        <div id="mobileDynamicTopics"></div>
-
-        <div class="mobile-nav-divider"></div>
         <div class="mobile-nav-section-label" id="mobileNavLabelActions">${t.actions}</div>
-        
+
         <button class="mobile-nav-link" onclick="openHistory(); closeMobileNav();" id="mobileNavLinkHistory">
           <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           <span class="link-text">${t.history}</span>
@@ -156,6 +148,14 @@ function _initMobileNav() {
           <button class="mobile-font-btn" id="mobileFontDown" onclick="changeFontSize(-1)">A-</button>
           <button class="mobile-font-btn" id="mobileFontUp" onclick="changeFontSize(1)">A+</button>
         </div>
+
+        <div class="mobile-nav-divider"></div>
+        <div class="mobile-nav-section-label" id="mobileNavLabelNav">${t.navigation}</div>
+        <div id="mobileNavLinks">
+          ${linksHtml}
+        </div>
+
+        <div id="mobileDynamicTopics"></div>
 
       </div>
     </div>`;
@@ -1067,7 +1067,7 @@ function performSearch(query) {
 window.saveAllOffline = async function () {
   if (!('serviceWorker' in navigator) || !('caches' in window)) return;
   // Use a constant for consistency with sw.js
-  const CACHE_NAME = 'shumei-pwa-v11';
+  const CACHE_NAME = 'shumei-pwa-v13';
   
   if (localStorage.getItem('offline_saved_all') === 'true') {
      // Optional: allow re-sync or just return
@@ -1135,27 +1135,76 @@ window.saveAllOffline = async function () {
     const totalFiles = allUrls.length;
     if (label) label.textContent = currentLang === 'ja' ? `保存中 (0/${totalFiles})...` : `Salvando (0/${totalFiles})...`;
 
+    // Collect image URLs from topic JSON content
+    const imageUrls = new Set();
+
     // Process in batches to avoid overwhelming the browser/network
     const batchSize = 10;
     for (let i = 0; i < allUrls.length; i += batchSize) {
       const batch = allUrls.slice(i, i + batchSize);
       await Promise.all(batch.map(async (url) => {
         try {
-          // Add to cache. We don't use cache.addAll because it fails entirely if one fails.
           const response = await fetch(url);
           if (response.ok) {
+            // Clone before consuming body — needed to parse JSON for images
+            const clone = response.clone();
             await cache.put(url, response);
+
+            // Parse topic JSON files to discover image references
+            if (url.endsWith('.json') && /\/shumeic\d\//.test(url)) {
+              try {
+                const data = await clone.json();
+                const themes = data.themes || [];
+                for (const theme of themes) {
+                  for (const topic of (theme.topics || [])) {
+                    const allContent = (topic.content || '') + (topic.content_ptbr || '');
+                    const imgRe = /src=["']([^"']+\.(?:jpg|jpeg|png|gif|webp|svg))["']/gi;
+                    let m;
+                    while ((m = imgRe.exec(allContent)) !== null) {
+                      const src = m[1];
+                      if (src.startsWith('http') || src.startsWith('data:')) continue;
+                      const imgPath = src.startsWith('assets/') ? src : `assets/images/${src}`;
+                      imageUrls.add(`${basePath}${imgPath}`);
+                    }
+                  }
+                }
+              } catch (e) { /* not a parseable topic JSON, skip */ }
+            }
           }
-        } catch (e) { 
+        } catch (e) {
           console.warn(`Failed to cache ${url}:`, e);
         }
         totalCached++;
       }));
-      
+
       if (label) {
         label.textContent = currentLang === 'ja'
           ? `保存中 (${Math.min(totalCached, totalFiles)}/${totalFiles})...`
           : `Salvando (${Math.min(totalCached, totalFiles)}/${totalFiles})...`;
+      }
+    }
+
+    // Cache discovered images
+    if (imageUrls.size > 0) {
+      const imgArray = [...imageUrls];
+      const imgTotal = imgArray.length;
+      let imgCached = 0;
+      if (label) label.textContent = currentLang === 'ja'
+        ? `画像保存中 (0/${imgTotal})...`
+        : `Salvando imagens (0/${imgTotal})...`;
+
+      for (let i = 0; i < imgArray.length; i += batchSize) {
+        const batch = imgArray.slice(i, i + batchSize);
+        await Promise.all(batch.map(async (url) => {
+          try {
+            const response = await fetch(url);
+            if (response.ok) await cache.put(url, response);
+          } catch (e) { console.warn(`Failed to cache image ${url}:`, e); }
+          imgCached++;
+        }));
+        if (label) label.textContent = currentLang === 'ja'
+          ? `画像保存中 (${Math.min(imgCached, imgTotal)}/${imgTotal})...`
+          : `Salvando imagens (${Math.min(imgCached, imgTotal)}/${imgTotal})...`;
       }
     }
 
