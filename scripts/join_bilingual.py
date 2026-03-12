@@ -94,18 +94,12 @@ def process_volume(vol_id):
                 not_found_count += 1
                 continue
 
-            # Match by position within the same file (title_idx or sequential)
-            title_idx = topic.get('title_idx', None)
+            # Match by title (title_idx is a global theme index, not a list index)
             matched = None
-
-            if title_idx is not None and title_idx < len(file_topics):
-                matched = file_topics[title_idx]
-            else:
-                # Fallback: match by title
-                for ft in file_topics:
-                    if ft.get('title') == topic.get('title'):
-                        matched = ft
-                        break
+            for ft in file_topics:
+                if ft.get('title') == topic.get('title'):
+                    matched = ft
+                    break
 
             if matched:
                 changed = False

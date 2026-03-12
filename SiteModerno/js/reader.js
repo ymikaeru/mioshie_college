@@ -452,7 +452,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Fetch specific article JSON directly
             const fnameOnly = filename.split('/').pop();
             const articlePath = fnameOnly.endsWith('.json') ? fnameOnly : `${fnameOnly}.json`;
-            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}`);
+            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}?t=${Date.now()}`);
 
             if (!articleRes.ok) throw new Error('Network response was not ok');
 
