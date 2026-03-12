@@ -173,8 +173,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (pureTitle.length > 3 && pureTitle.length < 250 && !pureTitle.includes('。') && !pureTitle.includes('. ')) {
                     const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
                     if (quoteMatch) {
-                        const prefixMatch = pureTitle.match(/^([^:-]+)/);
-                        const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                        const prefixMatch = pureTitle.match(/^([^:]+)/); // Match up to colon instead of - to avoid breaking Meishu-Sama
+                        let prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                        // If there is a hyphen but no colon, and it's something like "Ensinamento de Meishu-Sama - Title"
+                        if(!pureTitle.includes(':') && pureTitle.includes(' - ')) {
+                            prefix = pureTitle.split(' - ')[0].trim();
+                        }
+                        
+                        // Clean up markdown asterisks from prefix if any leaked
+                        prefix = prefix.replace(/\*/g, '');
+
                         if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
                             pureTitle = `${prefix}: ${quoteMatch[1]}`;
                         } else {
@@ -198,8 +206,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         let pureTitle = activeTitle;
                         const quoteMatch = pureTitle.match(/["”]([^"”]+)["”]/);
                         if (quoteMatch) {
-                            const prefixMatch = pureTitle.match(/^([^:-]+)/);
-                            const prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                            const prefixMatch = pureTitle.match(/^([^:]+)/);
+                            let prefix = prefixMatch ? prefixMatch[1].trim() : "";
+                            if(!pureTitle.includes(':') && pureTitle.includes(' - ')) {
+                                prefix = pureTitle.split(' - ')[0].trim();
+                            }
+                            prefix = prefix.replace(/\*/g, '');
+
                             if (prefix && prefix.toLowerCase() !== quoteMatch[1].toLowerCase()) {
                                 pureTitle = `${prefix}: ${quoteMatch[1]}`;
                             } else {
