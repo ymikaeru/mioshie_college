@@ -4,10 +4,13 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE_DATA_DIR = os.path.join(BASE_DIR, 'site_data')
+# Source bilingual JSONs live in the project-root Data/ directory (not in site_data/)
+PROJECT_ROOT = os.path.dirname(BASE_DIR)
+DATA_DIR = os.path.join(PROJECT_ROOT, 'Data')
 VOLUMES = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4']
 
 def process_volume(vol_id):
-    original_file = os.path.join(SITE_DATA_DIR, f"{vol_id}_data_bilingual.json")
+    original_file = os.path.join(DATA_DIR, f"{vol_id}_data_bilingual.json")
     if not os.path.exists(original_file):
         print(f"Skipping {vol_id}: File not found ({original_file})")
         return
