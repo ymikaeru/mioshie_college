@@ -308,12 +308,47 @@ document.addEventListener('DOMContentLoaded', () => {
         if (typeof window._updateMobileNavTopics === 'function') {
             if (topicsFound.length > 1) {
                 const opts = topicsFound.map((t, i) => {
-                    const tTitle = isPt ? (t.title_ptbr || t.title_pt || t.publication_title_pt) : t.title_ja;
-                    const pTitle = tTitle || t.title || `Parte ${i + 1}`;
+                    // Extract title from rendered HTML instead of JSON (JSON titles are often duplicated)
+                    const topicEl = document.getElementById(`topic-${i}`);
+                    let extractedTitle = '';
+                    if (topicEl) {
+                        // Strategy 1: Get the first <b> or <strong> text (usually the title line)
+                        const boldEl = topicEl.querySelector('b, strong');
+                        if (boldEl) {
+                            const boldText = boldEl.textContent.trim();
+                            // Extract text in quotes if present: 'Palestra de Meishu-Sama: "Title Here"'
+                            const quoteMatch = boldText.match(/[「"＂"](.*?)[」"＂"]/);
+                            if (quoteMatch) {
+                                extractedTitle = quoteMatch[1].trim();
+                            } else {
+                                // Remove common prefixes to get the unique part
+                                extractedTitle = boldText
+                                    .replace(/^(Ensinamento|Orientação|Palestra|Relato de Experiência)\s*(?:de\s+)?(Meishu-Sama|Moisés)?\s*[-:：]?\s*/i, '')
+                                    .trim();
+                            }
+                        }
+                        // Strategy 2: If no bold, try the first text content
+                        if (!extractedTitle) {
+                            const firstText = topicEl.textContent.substring(0, 200).trim();
+                            const quoteMatch = firstText.match(/[「"＂"](.*?)[」"＂"]/);
+                            if (quoteMatch) {
+                                extractedTitle = quoteMatch[1].trim();
+                            }
+                        }
+                    }
 
-                    const cleanedTitle = pTitle.replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]?\s*/i, '').replace(/^"(.*?)"$/, '$1').trim();
-                    const sidebarText = `"${cleanedTitle}"`;
-                    return { value: `#topic-${i}`, text: sidebarText };
+                    // Fallback to JSON title if HTML extraction failed
+                    if (!extractedTitle) {
+                        const tTitle = isPt ? (t.title_ptbr || t.title_pt || t.publication_title_pt) : t.title_ja;
+                        extractedTitle = (tTitle || t.title || `Parte ${i + 1}`)
+                            .replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]?\s*/i, '')
+                            .replace(/^"(.*?)"$/, '$1').trim();
+                    }
+
+                    // Truncate if too long
+                    if (extractedTitle.length > 60) extractedTitle = extractedTitle.substring(0, 57) + '…';
+
+                    return { value: `#topic-${i}`, text: `"${extractedTitle}"` };
                 });
                 const sectionLabel = lang === 'ja' ? '刊行物：テーマ' : 'Publicações deste ensinamento';
                 window._updateMobileNavTopics(sectionLabel, opts);
