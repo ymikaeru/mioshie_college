@@ -160,6 +160,10 @@ def build_search_index():
                     clean_text_ja = soup_ja.get_text(separator=" ", strip=True)
                     clean_text_ja = re.sub(r'\s+', ' ', clean_text_ja).strip()
 
+                    # Clean asterisks from Markdown-style formatting
+                    clean_text = clean_text.replace('*', '')
+                    clean_text_ja = clean_text_ja.replace('*', '')
+
                     # Only store JA content if it's actually Japanese (not just a copy of PT)
                     if clean_text_ja == clean_text:
                         clean_text_ja = ''
