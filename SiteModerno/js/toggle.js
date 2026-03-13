@@ -163,7 +163,17 @@ function _initMobileNav() {
   document.body.appendChild(mobileNavOverlay);
 
   // --- 4. Event listeners ---
-  hamburgerBtn.addEventListener('click', openMobileNav);
+  hamburgerBtn.addEventListener('click', () => {
+    const titleEl = document.getElementById('mobileMenuTitle');
+    if (titleEl) {
+      const lang = localStorage.getItem('site_lang') || 'pt';
+      const fallback = (MENU_TEXTS[lang] || MENU_TEXTS.pt).title;
+      const docTitle = document.title;
+      const match = docTitle.match(/^Meishu-Sama:\s*(.+?)\s*-\s*Mioshie College$/);
+      titleEl.textContent = match ? match[1] : fallback;
+    }
+    openMobileNav();
+  });
   document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
   document.getElementById('mobileNavBackdrop').addEventListener('click', closeMobileNav);
 
