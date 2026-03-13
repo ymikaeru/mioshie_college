@@ -828,60 +828,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================
-// IMMERSION MODE — auto-hide header & toolbar after inactivity
-// Only active on reader pages
-// ============================================================
-(function () {
-  // Only run on reader.html
-  if (!window.location.pathname.includes('reader.html')) return;
-
-  const HIDE_DELAY = 4000; // ms of inactivity before hiding
-  const FADE_MS = 400;  // CSS transition duration
-
-  // Add transition style to header and toolbar once DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.header');
-
-    // Inject transition CSS once
-    const style = document.createElement('style');
-    style.textContent = `
-      .reader-toolbar.immersed {
-        opacity: 0;
-        pointer-events: none;
-      }
-    `;
-    document.head.appendChild(style);
-
-    let hideTimer = null;
-
-    function showChrome() {
-      const toolbar = document.querySelector('.reader-toolbar');
-      if (toolbar) toolbar.classList.remove('immersed');
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(hideChrome, HIDE_DELAY);
-    }
-
-    function hideChrome() {
-      // Don't hide if any modal/drawer is open
-      const anyOpen = document.querySelector(
-        '.search-modal-overlay.active, .drawer-overlay.active, .mobile-nav-overlay.open'
-      );
-      if (anyOpen) {
-        showChrome();
-        return;
-      }
-      const toolbar = document.querySelector('.reader-toolbar');
-      if (toolbar) toolbar.classList.add('immersed');
-    }
-
-    // Events that reveal chrome
-    const wakeEvents = ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'keydown', 'click'];
-    wakeEvents.forEach(evt => document.addEventListener(evt, showChrome, { passive: true }));
-
-    // Start the timer
-    showChrome();
-  });
-})();
 
 // ============================================================
 // SEARCH — bilingual search with Japanese (tj/cj) field support

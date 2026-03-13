@@ -132,29 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Toolbar HTML
-        const fl = { pt: { saved: 'Salvo', save: 'Salvar', top: 'Topo' }, ja: { saved: '保存済み', save: '保存', top: 'トップ' } }[lang] || { saved: 'Salvo', save: 'Salvar', top: 'Topo' };
-        const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-        // For the initial render, show filled bookmark if ANY topic of this file is favorited
-        const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
-        const favClass = isFavorited ? 'active' : '';
-        const favIcon = isFavorited
-            ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`
-            : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
-
-        const toolbarHtml = `
-            <div class="reader-toolbar">
-                <button class="btn-zen ${favClass}" id="favoriteBtn" onclick="toggleFavorite()">
-                    ${favIcon}
-                    <span class="toolbar-tooltip">${isFavorited ? fl.saved : fl.save}</span>
-                </button>
-                <div class="toolbar-divider"></div>
-                <button class="btn-zen" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                     <span class="toolbar-tooltip">${fl.top}</span>
-                </button>
-            </div>
-        `;
 
         // Build main content innerHTML
         let contentHtml = "";
@@ -302,8 +279,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${contentHtml}
                 ${navFooter}
             </div>
-            ${toolbarHtml}
         `;
+
+        // Initialize header favorite button state
+        const headerFavBtn = document.getElementById('favoriteBtn');
+        if (headerFavBtn) {
+            const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+            const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
+            const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
+            headerFavBtn.title = isFavorited ? fl.saved : fl.save;
+            headerFavBtn.classList.toggle('active', isFavorited);
+            const svg = headerFavBtn.querySelector('svg');
+            if (svg) svg.setAttribute('fill', isFavorited ? 'currentColor' : 'none');
+        }
 
         // Search Highlighting
         if (searchQuery) {
@@ -516,16 +504,15 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btn) {
             btn.classList.toggle('active');
             const svg = btn.querySelector('svg');
-            const tooltip = btn.querySelector('.toolbar-tooltip');
             const lang = localStorage.getItem('site_lang') || 'pt';
             const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
 
             if (btn.classList.contains('active')) {
                 svg.setAttribute('fill', 'currentColor');
-                tooltip.textContent = fl.saved;
+                btn.title = fl.saved;
             } else {
                 svg.setAttribute('fill', 'none');
-                tooltip.textContent = fl.save;
+                btn.title = fl.save;
             }
         }
         if (typeof renderFavorites === 'function') renderFavorites();
