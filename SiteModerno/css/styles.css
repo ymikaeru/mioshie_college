@@ -478,6 +478,7 @@ html {
 }
 
 .btn-zen {
+  position: relative;
   padding: 8px 16px;
   border-radius: 24px;
   background: transparent;
@@ -573,6 +574,28 @@ html {
   justify-content: center;
   z-index: 10;
   transition: all 0.2s var(--ease);
+}
+
+.mobile-search-btn,
+.mobile-fav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s var(--ease);
+}
+
+.mobile-search-btn:active,
+.mobile-fav-btn:active {
+  opacity: 0.6;
+}
+
+.mobile-fav-btn#mobileFavoriteBtn.active {
+  color: var(--accent);
 }
 
 .modal-close-btn:hover,
@@ -790,6 +813,97 @@ mark.search-highlight {
 select[data-tooltip]::before,
 select[data-tooltip]::after {
   display: none !important;
+}
+
+/* --- Favorite Button overflow fix for badge --- */
+#favoriteBtn,
+#mobileFavoriteBtn {
+  overflow: visible;
+}
+
+/* --- Favorite Badge Counter --- */
+.fav-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  min-width: 15px;
+  height: 15px;
+  line-height: 15px;
+  text-align: center;
+  border-radius: 8px;
+  padding: 0 3px;
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.fav-badge.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* --- Saved Topic Dot --- */
+.saved-topic-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-left: 8px;
+  vertical-align: middle;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.saved-topic-dot.visible {
+  opacity: 0.8;
+  transform: scale(1);
+}
+
+/* --- Save Tooltip (click feedback) --- */
+.save-tooltip {
+  position: fixed;
+  top: 60px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-8px);
+  background: #1a1a1a;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+  text-align: center;
+  max-width: 260px;
+  z-index: 10000;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.save-tooltip.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.save-tooltip .save-tooltip-title {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.save-tooltip .save-tooltip-status {
+  font-size: 11px;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 /* ============================================================
@@ -1169,8 +1283,7 @@ select[data-tooltip]::after {
     margin-bottom: 32px;
   }
 
-  #backToIndexBtn .lang-pt,
-  #backToIndexBtn .lang-ja {
+  #backToIndexBtn {
     display: none !important;
   }
 
@@ -1309,87 +1422,7 @@ select[data-tooltip]::after {
 
 
 
-/* --- Premium Unified Toolbar --- */
-.reader-toolbar {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 8px;
-  background: rgba(var(--surface-rgb), 0.85);
-  backdrop-filter: saturate(180%) blur(30px);
-  -webkit-backdrop-filter: saturate(180%) blur(30px);
-  border: 1px solid var(--border);
-  border-radius: 40px;
-  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.12);
-  z-index: 3000;
-  transition: all 0.4s var(--ease);
-}
 
-.reader-toolbar .btn-zen {
-  padding: 0;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  position: relative;
-  transition: all 0.2s var(--ease);
-}
-
-.reader-toolbar .btn-zen svg {
-  width: 18px;
-  height: 18px;
-}
-
-.reader-toolbar .btn-zen:hover {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
-.reader-toolbar .btn-zen.active {
-  background: var(--accent);
-  color: white;
-  box-shadow: 0 4px 12px var(--accent-soft);
-}
-
-.reader-toolbar .toolbar-divider {
-  width: 1.5px;
-  height: 20px;
-  background: var(--border);
-  margin: 0 2px;
-}
-
-.toolbar-tooltip {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%) translateY(0);
-  background: #2c2c2c;
-  color: #fff;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 12px;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.2s var(--ease);
-  pointer-events: none;
-  white-space: nowrap;
-  margin-bottom: 8px;
-}
-
-.reader-toolbar .btn-zen:hover .toolbar-tooltip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateX(-50%) translateY(-8px);
-}
 
 /* --- Modern Side Drawer --- */
 .drawer-overlay {

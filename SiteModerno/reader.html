@@ -27,6 +27,12 @@
   <!-- Reading progress bar -->
   <div id="reading-progress"></div>
 
+  <!-- Save tooltip -->
+  <div class="save-tooltip" id="saveTooltip">
+    <div class="save-tooltip-title" id="saveTooltipTitle"></div>
+    <div class="save-tooltip-status" id="saveTooltipStatus"></div>
+  </div>
+
   <header class="header">
     <a href="index.html" class="header__logo">
       <div class="logo-circle">
@@ -61,6 +67,9 @@
       <button class="btn-zen" onclick="openHistory()" title="Histórico de Navegação">🕒</button>
       <button class="btn-zen" onclick="openFavorites()" title="Salvos">⭐</button>
       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
+      <button class="btn-zen" id="favoriteBtn" onclick="toggleFavorite()" title="Salvar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+      </button>
       <button class="btn-zen font-ctrl" id="fontDecrease" onclick="changeFontSize(-1)"
         title="Diminuir fonte">A−</button>
       <button class="btn-zen font-ctrl" id="fontIncrease" onclick="changeFontSize(1)" title="Aumentar fonte">A+</button>

@@ -132,29 +132,6 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Toolbar HTML
-        const fl = { pt: { saved: 'Salvo', save: 'Salvar', top: 'Topo' }, ja: { saved: '保存済み', save: '保存', top: 'トップ' } }[lang] || { saved: 'Salvo', save: 'Salvar', top: 'Topo' };
-        const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-        // For the initial render, show filled bookmark if ANY topic of this file is favorited
-        const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
-        const favClass = isFavorited ? 'active' : '';
-        const favIcon = isFavorited
-            ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`
-            : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>`;
-
-        const toolbarHtml = `
-            <div class="reader-toolbar">
-                <button class="btn-zen ${favClass}" id="favoriteBtn" onclick="toggleFavorite()">
-                    ${favIcon}
-                    <span class="toolbar-tooltip">${isFavorited ? fl.saved : fl.save}</span>
-                </button>
-                <div class="toolbar-divider"></div>
-                <button class="btn-zen" id="topBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})">
-                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>
-                     <span class="toolbar-tooltip">${fl.top}</span>
-                </button>
-            </div>
-        `;
 
         // Build main content innerHTML
         let contentHtml = "";
@@ -302,8 +279,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 ${contentHtml}
                 ${navFooter}
             </div>
-            ${toolbarHtml}
         `;
+
+        // Initialize header favorite button state (Desktop & Mobile)
+        window.updateFavIndicators = function () {
+            const favs = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+            const pageFavs = favs.filter(f => f.vol === volId && f.file === filename);
+            const count = pageFavs.length;
+            const hasFavs = count > 0;
+            const favLang = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
+
+            // Update buttons
+            [document.getElementById('favoriteBtn'), document.getElementById('mobileFavoriteBtn')].forEach(btn => {
+                if (!btn) return;
+                btn.title = hasFavs ? favLang.saved : favLang.save;
+                btn.classList.toggle('active', hasFavs);
+                const svg = btn.querySelector('svg');
+                if (svg) svg.setAttribute('fill', hasFavs ? 'currentColor' : 'none');
+                // Badge
+                let badge = btn.querySelector('.fav-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'fav-badge';
+                    btn.appendChild(badge);
+                }
+                badge.textContent = count;
+                badge.classList.toggle('visible', count > 1);
+            });
+
+            // Topic dots
+            const savedSet = new Set(pageFavs.map(f => f.topic || 0));
+            const totalTopics = window._currentTotalTopics || 1;
+            for (let i = 0; i < totalTopics; i++) {
+                const topicEl = document.getElementById(`topic-${i}`);
+                if (!topicEl) continue;
+                let dot = topicEl.querySelector('.saved-topic-dot');
+                if (!dot) {
+                    const titleEl = topicEl.querySelector('b');
+                    if (titleEl) {
+                        dot = document.createElement('span');
+                        dot.className = 'saved-topic-dot';
+                        titleEl.appendChild(dot);
+                    }
+                }
+                if (dot) dot.classList.toggle('visible', savedSet.has(i));
+            }
+        };
+        window.updateFavIndicators();
 
         // Search Highlighting
         if (searchQuery) {
@@ -512,23 +534,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem('savedFavorites', JSON.stringify(favorites));
 
-        const btn = document.getElementById('favoriteBtn');
-        if (btn) {
-            btn.classList.toggle('active');
-            const svg = btn.querySelector('svg');
-            const tooltip = btn.querySelector('.toolbar-tooltip');
-            const lang = localStorage.getItem('site_lang') || 'pt';
-            const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
-
-            if (btn.classList.contains('active')) {
-                svg.setAttribute('fill', 'currentColor');
-                tooltip.textContent = fl.saved;
-            } else {
-                svg.setAttribute('fill', 'none');
-                tooltip.textContent = fl.save;
-            }
-        }
+        const lang = localStorage.getItem('site_lang') || 'pt';
+        if (typeof window.updateFavIndicators === 'function') window.updateFavIndicators();
         if (typeof renderFavorites === 'function') renderFavorites();
+
+        // Show save tooltip
+        const tooltip = document.getElementById('saveTooltip');
+        if (tooltip) {
+            const tooltipTitle = document.getElementById('saveTooltipTitle');
+            const tooltipStatus = document.getElementById('saveTooltipStatus');
+            const statusText = { pt: { saved: 'salvo', removed: 'removido' }, ja: { saved: '保存済み', removed: '削除済み' } }[lang] || { saved: 'salvo', removed: 'removido' };
+            const rawTitle = topicTitle || title;
+            const cleanTitle = rawTitle.replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]\s*/i, '').replace(/^["'](.*?)["']$/, '$1').trim();
+            tooltipTitle.textContent = cleanTitle;
+            tooltipStatus.textContent = isSaved ? statusText.removed : statusText.saved;
+            tooltip.classList.add('show');
+            clearTimeout(window._saveTooltipTimer);
+            window._saveTooltipTimer = setTimeout(() => tooltip.classList.remove('show'), 1800);
+        }
     };
 
     window.renderContent = () => initReader();

@@ -191,6 +191,21 @@ function _initMobileNav() {
   searchBtn.addEventListener('click', () => openSearch());
   headerActions.insertBefore(searchBtn, hamburgerBtn);
 
+  // --- 5b. Inject favorites button to the RIGHT of search button ---
+  const favBtn = document.createElement('button');
+  favBtn.className = 'mobile-fav-btn';
+  favBtn.id = 'mobileFavoriteBtn';
+  favBtn.setAttribute('aria-label', 'Favoritar');
+  favBtn.style.display = window.location.pathname.includes('reader.html') ? 'flex' : 'none';
+  favBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+  </svg>`;
+  favBtn.addEventListener('click', () => {
+    if (typeof toggleFavorite === 'function') toggleFavorite();
+  });
+  headerActions.insertBefore(favBtn, hamburgerBtn);
+
   // --- 6. Initialize context-aware topics in the mobile nav ---
   const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
   // Only auto-populate if it's an index page select (not readerTopicSelect)
@@ -828,64 +843,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ============================================================
-// IMMERSION MODE — auto-hide header & toolbar after inactivity
-// Only active on reader pages
-// ============================================================
-(function () {
-  // Only run on reader.html
-  if (!window.location.pathname.includes('reader.html')) return;
-
-  const HIDE_DELAY = 4000; // ms of inactivity before hiding
-  const FADE_MS = 400;  // CSS transition duration
-
-  // Add transition style to header and toolbar once DOM is ready
-  document.addEventListener('DOMContentLoaded', () => {
-    const header = document.querySelector('.header');
-
-    // Inject transition CSS once
-    const style = document.createElement('style');
-    style.textContent = `
-      .reader-toolbar {
-        transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease !important;
-      }
-      .reader-toolbar.immersed {
-        opacity: 0;
-        pointer-events: none;
-        transform: translate(-50%, 12px);
-      }
-    `;
-    document.head.appendChild(style);
-
-    let hideTimer = null;
-
-    function showChrome() {
-      const toolbar = document.querySelector('.reader-toolbar');
-      if (toolbar) toolbar.classList.remove('immersed');
-      clearTimeout(hideTimer);
-      hideTimer = setTimeout(hideChrome, HIDE_DELAY);
-    }
-
-    function hideChrome() {
-      // Don't hide if any modal/drawer is open
-      const anyOpen = document.querySelector(
-        '.search-modal-overlay.active, .drawer-overlay.active, .mobile-nav-overlay.open'
-      );
-      if (anyOpen) {
-        showChrome();
-        return;
-      }
-      const toolbar = document.querySelector('.reader-toolbar');
-      if (toolbar) toolbar.classList.add('immersed');
-    }
-
-    // Events that reveal chrome
-    const wakeEvents = ['mousemove', 'mousedown', 'touchstart', 'touchmove', 'scroll', 'keydown', 'click'];
-    wakeEvents.forEach(evt => document.addEventListener(evt, showChrome, { passive: true }));
-
-    // Start the timer
-    showChrome();
-  });
-})();
 
 // ============================================================
 // SEARCH — bilingual search with Japanese (tj/cj) field support
