@@ -575,6 +575,28 @@ html {
   transition: all 0.2s var(--ease);
 }
 
+.mobile-search-btn,
+.mobile-fav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  padding: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s var(--ease);
+}
+
+.mobile-search-btn:active,
+.mobile-fav-btn:active {
+  opacity: 0.6;
+}
+
+.mobile-fav-btn#mobileFavoriteBtn.active {
+  color: var(--accent);
+}
+
 .modal-close-btn:hover,
 .search-close:hover {
   background: var(--accent-soft);

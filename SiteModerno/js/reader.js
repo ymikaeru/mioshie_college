@@ -281,17 +281,21 @@ document.addEventListener('DOMContentLoaded', () => {
             </div>
         `;
 
-        // Initialize header favorite button state
-        const headerFavBtn = document.getElementById('favoriteBtn');
-        if (headerFavBtn) {
-            const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-            const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
-            const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
-            headerFavBtn.title = isFavorited ? fl.saved : fl.save;
-            headerFavBtn.classList.toggle('active', isFavorited);
-            const svg = headerFavBtn.querySelector('svg');
-            if (svg) svg.setAttribute('fill', isFavorited ? 'currentColor' : 'none');
-        }
+        // Initialize header favorite button state (Desktop & Mobile)
+        const desktopFavBtn = document.getElementById('favoriteBtn');
+        const mobileFavBtn = document.getElementById('mobileFavoriteBtn');
+        const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+        const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
+        const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
+
+        [desktopFavBtn, mobileFavBtn].forEach(btn => {
+            if (btn) {
+                btn.title = isFavorited ? fl.saved : fl.save;
+                btn.classList.toggle('active', isFavorited);
+                const svg = btn.querySelector('svg');
+                if (svg) svg.setAttribute('fill', isFavorited ? 'currentColor' : 'none');
+            }
+        });
 
         // Search Highlighting
         if (searchQuery) {
@@ -500,21 +504,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem('savedFavorites', JSON.stringify(favorites));
 
-        const btn = document.getElementById('favoriteBtn');
-        if (btn) {
-            btn.classList.toggle('active');
-            const svg = btn.querySelector('svg');
-            const lang = localStorage.getItem('site_lang') || 'pt';
-            const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
+        const desktopFavBtn = document.getElementById('favoriteBtn');
+        const mobileFavBtn = document.getElementById('mobileFavoriteBtn');
+        const lang = localStorage.getItem('site_lang') || 'pt';
+        const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
 
-            if (btn.classList.contains('active')) {
-                svg.setAttribute('fill', 'currentColor');
-                btn.title = fl.saved;
-            } else {
-                svg.setAttribute('fill', 'none');
-                btn.title = fl.save;
+        [desktopFavBtn, mobileFavBtn].forEach(btn => {
+            if (btn) {
+                btn.classList.toggle('active');
+                const svg = btn.querySelector('svg');
+                if (btn.classList.contains('active')) {
+                    if (svg) svg.setAttribute('fill', 'currentColor');
+                    btn.title = fl.saved;
+                } else {
+                    if (svg) svg.setAttribute('fill', 'none');
+                    btn.title = fl.save;
+                }
             }
-        }
+        });
         if (typeof renderFavorites === 'function') renderFavorites();
     };
 

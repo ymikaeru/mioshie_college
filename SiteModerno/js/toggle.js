@@ -191,6 +191,21 @@ function _initMobileNav() {
   searchBtn.addEventListener('click', () => openSearch());
   headerActions.insertBefore(searchBtn, hamburgerBtn);
 
+  // --- 5b. Inject favorites button to the RIGHT of search button ---
+  const favBtn = document.createElement('button');
+  favBtn.className = 'mobile-fav-btn';
+  favBtn.id = 'mobileFavoriteBtn';
+  favBtn.setAttribute('aria-label', 'Favoritar');
+  favBtn.style.display = window.location.pathname.includes('reader.html') ? 'flex' : 'none';
+  favBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+  </svg>`;
+  favBtn.addEventListener('click', () => {
+    if (typeof toggleFavorite === 'function') toggleFavorite();
+  });
+  headerActions.insertBefore(favBtn, hamburgerBtn);
+
   // --- 6. Initialize context-aware topics in the mobile nav ---
   const headerNavSelect = desktopNav ? desktopNav.querySelector('select') : null;
   // Only auto-populate if it's an index page select (not readerTopicSelect)
