@@ -436,7 +436,6 @@ html {
 .topic-content {
   font-family: var(--font-serif);
   font-size: var(--reader-font-size);
-  line-height: 2.1;
   color: var(--text-main);
   font-weight: 400;
   word-break: break-word;
