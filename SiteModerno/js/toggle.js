@@ -845,13 +845,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject transition CSS once
     const style = document.createElement('style');
     style.textContent = `
-      .reader-toolbar {
-        transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease !important;
-      }
       .reader-toolbar.immersed {
         opacity: 0;
         pointer-events: none;
-        transform: translate(-50%, 12px);
       }
     `;
     document.head.appendChild(style);
