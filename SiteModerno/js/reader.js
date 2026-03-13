@@ -233,10 +233,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const SGLBR = '\x03SGLBR\x03';
             let norm = rawContent
                 .replace(/<br\s*\/?>/gi, DBLBR)
-                .replace(/([）)][^<\n]*)(?:\n){2,}/gi, '$1' + DBLBR)
-                .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)*([（(])/gi, '$1' + SGLBR + '$2')
-                .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)+([^（(\s<])/gi, '$1' + DBLBR + '$2')
-                .replace(/([）)])(?:\s|&nbsp;)+([^（(\s<])/gi, '$1' + DBLBR + '$2')
+                .replace(/^(\s*(?:<[^>]+>)*\s*[（(][^）)]*\d+[^）)]*[）)])(?:\s|&nbsp;)+([^（(\s<])/i, '$1' + DBLBR + '$2')
+                .replace(/^(\s*(?:<\/b>|<\/strong>|\*\*|<\/font>))(?:\s|&nbsp;)*([（(])/i, '$1' + SGLBR + '$2')
+                .replace(/^(\s*(?:<\/b>|<\/strong>|\*\*|<\/font>))(?:\s|&nbsp;)+([^（(\s<])/i, '$1' + DBLBR + '$2')
                 // Ensure colon after Q&A labels
                 .replace(/(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama|Palavras de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
                 .replace(/(\*{0,2})(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Ensinamento de Meishu-Sama|Resposta de Meishu-Sama|Comentário do [Ff]iel|Palavras de Meishu-Sama)/gi, DBLBR + '$1$2')
