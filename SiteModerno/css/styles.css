@@ -1191,8 +1191,7 @@ select[data-tooltip]::after {
     margin-bottom: 32px;
   }
 
-  #backToIndexBtn .lang-pt,
-  #backToIndexBtn .lang-ja {
+  #backToIndexBtn {
     display: none !important;
   }
 
