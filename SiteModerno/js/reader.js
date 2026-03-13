@@ -232,14 +232,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const DBLBR = '\x01DBLBR\x01';
             const SGLBR = '\x03SGLBR\x03';
             let norm = rawContent
-                .replace(/<br\s*\/?>\s*<br\s*\/?>/gi, DBLBR)
+                .replace(/<br\s*\/?>/gi, DBLBR)
                 .replace(/([）)][^<\n]*)(?:\n){2,}/gi, '$1' + DBLBR)
                 .replace(/(<\/b>|<\/strong>|\*\*|<\/font>)(?:\s|&nbsp;)*([（(])/gi, '$1' + SGLBR + '$2')
                 // Ensure colon after Q&A labels
                 .replace(/(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Comentário do [Ff]iel|Resposta de Meishu-Sama|Ensinamento de Meishu-Sama|Palavras de Meishu-Sama)(?!\s*[:：])/gi, '$1:')
                 .replace(/(\*{0,2})(Pergunta do? (?:um )?fiel|Orientação de Meishu-Sama|Ensinamento de Meishu-Sama|Resposta de Meishu-Sama|Comentário do [Ff]iel|Palavras de Meishu-Sama)/gi, DBLBR + '$1$2')
                 .replace(/<br\s*\/?>\n?<br\s*\/?>\n?(?=\s*<(?:b>\s*)?<font\s+color)/gi, DBLBR)
-                .replace(/<br\s*\/?>/gi, ' ')
                 .replace(/\n/g, ' ')
                 // No line break after comma: merge word that follows a comma at end of line
                 .replace(/,\s+/g, ', ')
@@ -253,10 +252,10 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 formatted = norm.split(/\n\n+/).filter(p => p.trim()).map(p => {
                     const t = p.trim();
-                    return t === '\x02DBLBR\x02' ? '<br><br>' : `<p>${t}</p>`;
+                    return t === '\x02DBLBR\x02' ? '<br>' : `<p>${t}</p>`;
                 }).join('\n');
             }
-            formatted = formatted.replace(/<p>\s*\x02DBLBR\x02\s*<\/p>/g, '<br><br>').replace(/\x02DBLBR\x02/g, '<br><br>');
+            formatted = formatted.replace(/<p>\s*\x02DBLBR\x02\s*<\/p>/g, '<br>').replace(/\x02DBLBR\x02/g, '<br>');
             // Consecutives handled by paragraph mapping
             // Merge paragraphs where previous <p> ends with comma (no line break after comma)
             // Pattern 1: </p><p> directly
