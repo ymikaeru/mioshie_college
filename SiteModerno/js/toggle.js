@@ -111,7 +111,6 @@ function _initMobileNav() {
     <div class="mobile-nav-panel">
       <div class="mobile-nav-header">
         <span id="mobileMenuTitle">${t.title}</span>
-        <button class="mobile-nav-close" id="mobileNavClose" aria-label="${t.close}">✕</button>
       </div>
       <div class="mobile-nav-body">
 
@@ -163,8 +162,19 @@ function _initMobileNav() {
   document.body.appendChild(mobileNavOverlay);
 
   // --- 4. Event listeners ---
-  hamburgerBtn.addEventListener('click', openMobileNav);
-  document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
+  hamburgerBtn.addEventListener('click', () => {
+    const titleEl = document.getElementById('mobileMenuTitle');
+    if (titleEl) {
+      const lang = localStorage.getItem('site_lang') || 'pt';
+      const fallback = (MENU_TEXTS[lang] || MENU_TEXTS.pt).title;
+      const docTitle = document.title;
+      const match = docTitle.match(/^Meishu-Sama:\s*(.+?)\s*-\s*Mioshie College$/);
+      titleEl.textContent = match ? match[1] : fallback;
+    }
+    openMobileNav();
+  });
+  const _closeBtn = document.getElementById('mobileNavClose');
+  if (_closeBtn) _closeBtn.addEventListener('click', closeMobileNav);
   document.getElementById('mobileNavBackdrop').addEventListener('click', closeMobileNav);
 
   // Close on Escape
