@@ -282,20 +282,50 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         // Initialize header favorite button state (Desktop & Mobile)
-        const desktopFavBtn = document.getElementById('favoriteBtn');
-        const mobileFavBtn = document.getElementById('mobileFavoriteBtn');
-        const favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
-        const isFavorited = favorites.some(f => f.vol === volId && f.file === filename);
-        const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
+        window.updateFavIndicators = function () {
+            const favs = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+            const pageFavs = favs.filter(f => f.vol === volId && f.file === filename);
+            const count = pageFavs.length;
+            const hasFavs = count > 0;
+            const favLang = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
 
-        [desktopFavBtn, mobileFavBtn].forEach(btn => {
-            if (btn) {
-                btn.title = isFavorited ? fl.saved : fl.save;
-                btn.classList.toggle('active', isFavorited);
+            // Update buttons
+            [document.getElementById('favoriteBtn'), document.getElementById('mobileFavoriteBtn')].forEach(btn => {
+                if (!btn) return;
+                btn.title = hasFavs ? favLang.saved : favLang.save;
+                btn.classList.toggle('active', hasFavs);
                 const svg = btn.querySelector('svg');
-                if (svg) svg.setAttribute('fill', isFavorited ? 'currentColor' : 'none');
+                if (svg) svg.setAttribute('fill', hasFavs ? 'currentColor' : 'none');
+                // Badge
+                let badge = btn.querySelector('.fav-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'fav-badge';
+                    btn.appendChild(badge);
+                }
+                badge.textContent = count;
+                badge.classList.toggle('visible', count > 1);
+            });
+
+            // Topic dots
+            const savedSet = new Set(pageFavs.map(f => f.topic || 0));
+            const totalTopics = window._currentTotalTopics || 1;
+            for (let i = 0; i < totalTopics; i++) {
+                const topicEl = document.getElementById(`topic-${i}`);
+                if (!topicEl) continue;
+                let dot = topicEl.querySelector('.saved-topic-dot');
+                if (!dot) {
+                    const titleEl = topicEl.querySelector('b');
+                    if (titleEl) {
+                        dot = document.createElement('span');
+                        dot.className = 'saved-topic-dot';
+                        titleEl.appendChild(dot);
+                    }
+                }
+                if (dot) dot.classList.toggle('visible', savedSet.has(i));
             }
-        });
+        };
+        window.updateFavIndicators();
 
         // Search Highlighting
         if (searchQuery) {
@@ -504,25 +534,24 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         localStorage.setItem('savedFavorites', JSON.stringify(favorites));
 
-        const desktopFavBtn = document.getElementById('favoriteBtn');
-        const mobileFavBtn = document.getElementById('mobileFavoriteBtn');
         const lang = localStorage.getItem('site_lang') || 'pt';
-        const fl = { pt: { saved: 'Salvo', save: 'Salvar' }, ja: { saved: '保存済み', save: '保存' } }[lang] || { saved: 'Salvo', save: 'Salvar' };
-
-        [desktopFavBtn, mobileFavBtn].forEach(btn => {
-            if (btn) {
-                btn.classList.toggle('active');
-                const svg = btn.querySelector('svg');
-                if (btn.classList.contains('active')) {
-                    if (svg) svg.setAttribute('fill', 'currentColor');
-                    btn.title = fl.saved;
-                } else {
-                    if (svg) svg.setAttribute('fill', 'none');
-                    btn.title = fl.save;
-                }
-            }
-        });
+        if (typeof window.updateFavIndicators === 'function') window.updateFavIndicators();
         if (typeof renderFavorites === 'function') renderFavorites();
+
+        // Show save tooltip
+        const tooltip = document.getElementById('saveTooltip');
+        if (tooltip) {
+            const tooltipTitle = document.getElementById('saveTooltipTitle');
+            const tooltipStatus = document.getElementById('saveTooltipStatus');
+            const statusText = { pt: { saved: 'salvo', removed: 'removido' }, ja: { saved: '保存済み', removed: '削除済み' } }[lang] || { saved: 'salvo', removed: 'removido' };
+            const rawTitle = topicTitle || title;
+            const cleanTitle = rawTitle.replace(/^(Ensinamento|Orientação|Palestra) de (Meishu-Sama|Moisés)\s*[-:]\s*/i, '').replace(/^["'](.*?)["']$/, '$1').trim();
+            tooltipTitle.textContent = cleanTitle;
+            tooltipStatus.textContent = isSaved ? statusText.removed : statusText.saved;
+            tooltip.classList.add('show');
+            clearTimeout(window._saveTooltipTimer);
+            window._saveTooltipTimer = setTimeout(() => tooltip.classList.remove('show'), 1800);
+        }
     };
 
     window.renderContent = () => initReader();
