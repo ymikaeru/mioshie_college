@@ -451,7 +451,7 @@ html {
 
 
 .topic-content p {
-  margin-bottom: 1.4rem;
+  margin-bottom: 0;
 }
 
 /* --- Loading Progress Bar --- */
