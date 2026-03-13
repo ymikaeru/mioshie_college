@@ -111,6 +111,7 @@ function _initMobileNav() {
     <div class="mobile-nav-panel">
       <div class="mobile-nav-header">
         <span id="mobileMenuTitle">${t.title}</span>
+        <button class="mobile-nav-close" id="mobileNavClose" aria-label="${t.close}">✕</button>
       </div>
       <div class="mobile-nav-body">
 
@@ -173,8 +174,7 @@ function _initMobileNav() {
     }
     openMobileNav();
   });
-  const _closeBtn = document.getElementById('mobileNavClose');
-  if (_closeBtn) _closeBtn.addEventListener('click', closeMobileNav);
+  document.getElementById('mobileNavClose').addEventListener('click', closeMobileNav);
   document.getElementById('mobileNavBackdrop').addEventListener('click', closeMobileNav);
 
   // Close on Escape
