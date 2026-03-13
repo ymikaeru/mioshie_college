@@ -142,10 +142,6 @@
         if (aboveThreshold) {
           if (bar) bar.style.opacity = '1';
         }
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(function () {
-          if (bar) bar.style.opacity = '0';
-        }, HIDE_AFTER);
       }
 
       window.addEventListener('scroll', function () {

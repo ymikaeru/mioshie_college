@@ -845,19 +845,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Inject transition CSS once
     const style = document.createElement('style');
     style.textContent = `
-      .header, .reader - toolbar {
-      transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease!important;
-    }
-      .header.immersed {
-      opacity: 0;
-      pointer - events: none;
-      transform: translateY(-8px);
-    }
-      .reader - toolbar.immersed {
-      opacity: 0;
-      pointer - events: none;
-      transform: translate(-50 %, 12px);
-    }
+      .reader-toolbar {
+        transition: opacity ${FADE_MS}ms ease, transform ${FADE_MS}ms ease !important;
+      }
+      .reader-toolbar.immersed {
+        opacity: 0;
+        pointer-events: none;
+        transform: translate(-50%, 12px);
+      }
     `;
     document.head.appendChild(style);
 
@@ -865,7 +860,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function showChrome() {
       const toolbar = document.querySelector('.reader-toolbar');
-      if (header) header.classList.remove('immersed');
       if (toolbar) toolbar.classList.remove('immersed');
       clearTimeout(hideTimer);
       hideTimer = setTimeout(hideChrome, HIDE_DELAY);
@@ -881,7 +875,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       const toolbar = document.querySelector('.reader-toolbar');
-      if (header) header.classList.add('immersed');
       if (toolbar) toolbar.classList.add('immersed');
     }
 
