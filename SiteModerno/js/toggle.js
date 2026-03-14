@@ -288,11 +288,11 @@ async function toggleTheme() {
   const current = document.documentElement.getAttribute('data-theme');
   const next = current === 'light' ? 'dark' : 'light';
   document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) { }
 }
 
 function setLanguage(lang, triggerRender = true) {
-  localStorage.setItem('site_lang', lang);
+  try { localStorage.setItem('site_lang', lang); } catch (e) { }
 
   // Update URL parameter without reloading (standard behavior for language stability)
   const url = new URL(window.location.href);
@@ -721,7 +721,7 @@ window.removeFavoriteFromModal = function (volId, filename, topicIdx) {
   } else {
     favorites = favorites.filter(f => !(f.vol === volId && f.file === filename));
   }
-  localStorage.setItem('savedFavorites', JSON.stringify(favorites));
+  try { localStorage.setItem('savedFavorites', JSON.stringify(favorites)); } catch (e) { }
   renderFavorites(); // re-render the list
 
   // Check if we are currently on the reader page for this item, and update the button if so
@@ -759,7 +759,7 @@ window.changeFontSize = function (delta) {
   if (_currentFontSizeIdx === null) _currentFontSizeIdx = 1;
   _currentFontSizeIdx = Math.max(0, Math.min(FONT_SIZES.length - 1, _currentFontSizeIdx + delta));
   _applyFontSize();
-  localStorage.setItem('reader_font_size', FONT_SIZES[_currentFontSizeIdx]);
+  try { localStorage.setItem('reader_font_size', FONT_SIZES[_currentFontSizeIdx]); } catch (e) { }
 };
 
 function _applyFontSize() {

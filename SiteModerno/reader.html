@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
-  <link href="css/styles.css" rel="stylesheet" />
+  <link href="css/styles.min.css?v=12" rel="stylesheet" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
   <!-- PWA / iOS Support -->
@@ -19,6 +19,13 @@
   <meta name="apple-mobile-web-app-title" content="Mioshie College">
   <link rel="apple-touch-icon" href="icon-192.png">
   <meta name="theme-color" content="#B8860B">
+  <!-- SEO -->
+  <meta name="description" content="Leitura dos ensinamentos de Meishu-Sama em português e japonês — Mioshie College.">
+  <meta name="robots" content="noindex, follow">
+  <meta property="og:title" content="Ensinamentos de Meishu-Sama | Mioshie College">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="icon-512.png">
+  <meta name="twitter:card" content="summary">
   <script src="js/marked.min.js" defer></script>
   <script src="site_data/global_index_titles.js" defer></script>
 </head>
@@ -69,6 +76,9 @@
       <button class="btn-zen" onclick="openSearch()" title="Buscar">🔍</button>
       <button class="btn-zen" id="favoriteBtn" onclick="toggleFavorite()" title="Salvar">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+      </button>
+      <button class="btn-zen" id="shareBtn" onclick="shareArticle()" title="Compartilhar" style="display:none">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
       </button>
       <button class="btn-zen font-ctrl" id="fontDecrease" onclick="changeFontSize(-1)"
         title="Diminuir fonte">A−</button>
