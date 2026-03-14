@@ -71,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const prevFile = currentIndex > 0 ? allFiles[currentIndex - 1] : null;
         const nextFile = currentIndex < allFiles.length - 1 ? allFiles[currentIndex + 1] : null;
 
+        // Store for swipe navigation
+        window._swipeNav = { vol: volId, prev: prevFile, next: nextFile };
+
         // Title Selection Logic
         let indexTitles = {};
         try { indexTitles = window.GLOBAL_INDEX_TITLES || {}; } catch (e) { }
@@ -169,13 +172,26 @@ document.addEventListener('DOMContentLoaded', () => {
                         pureTitle = pureTitle.replace(/\s+-\s+/, ': ').replace(/\s+:/, ':');
                     }
                     
-                    headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b><br/>(${dateText})<br/><br/>`;
+                    const pt0 = pureTitle.replace(/^\*\*|\*\*$/g, '');
+                    headerHTML = `<b><font size="+2">${pt0.charAt(0).toUpperCase() + pt0.slice(1)}</font></b><br/>(${dateText})<br/><br/>`;
                     rawContent = rawContent.substring(headerMatch[0].length).replace(/^([\s\n]*<br\s*\/?>[\s\n]*)+/gi, '');
                 }
             }
 
             if (!headerHTML) {
                 const contentAlreadyHasTitle = /^\s*<b[\s>]/i.test(rawContent.trim()) || /^\s*<font[\s>]/i.test(rawContent.trim());
+                if (contentAlreadyHasTitle) {
+                    // Extract inline title into headerHTML to prevent Q&A label regex from splitting it
+                    const titleMatch = rawContent.match(/^(\s*<b[^>]*>(?:<font[^>]*>)?([^<]*)(?:<\/font>)?<\/b>)\s*/);
+                    if (titleMatch && titleMatch[2].trim()) {
+                        const t = titleMatch[2].trim();
+                        const pureTitle = t.charAt(0).toUpperCase() + t.slice(1);
+                        headerHTML = `<b><font size="+2">${pureTitle}</font></b><br/>`;
+                        rawContent = rawContent.substring(titleMatch[0].length).replace(/^([\s\n]*<br\s*\/?>[\s\n]*)+/gi, '');
+                    } else {
+                        rawContent = rawContent.replace(/^(\s*<b[^>]*>(?:<font[^>]*>)?[^<]*(?:<\/font>)?<\/b>)\s+/, '$1<br/>');
+                    }
+                }
                 if (activeTitle && rawContent.trim() && !genericRegex.test(activeTitle) && !contentAlreadyHasTitle) {
                     const cTitle = activeTitle.replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
                     const cStart = rawContent.substring(0, 500).replace(/<[^>]+>/g, '').replace(/[\u3000\s\d\W]/g, '').toLowerCase();
@@ -200,7 +216,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
 
                         const displayDate = topicData.date && topicData.date !== "Unknown" ? `<br/>\n(${topicData.date})` : "";
-                        headerHTML = `<b><font size="+2">${pureTitle.replace(/^\*\*|\*\*$/g, '')}</font></b>${displayDate}<br/><br/>`;
+                        const pt1 = pureTitle.replace(/^\*\*|\*\*$/g, '');
+                        headerHTML = `<b><font size="+2">${pt1.charAt(0).toUpperCase() + pt1.slice(1)}</font></b>${displayDate}<br/><br/>`;
                     }
                 }
             }
@@ -283,7 +300,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Initialize header favorite button state (Desktop & Mobile)
         window.updateFavIndicators = function () {
-            const favs = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+            let favs = [];
+            try { favs = JSON.parse(localStorage.getItem('savedFavorites') || '[]'); } catch (e) { }
             const pageFavs = favs.filter(f => f.vol === volId && f.file === filename);
             const count = pageFavs.length;
             const hasFavs = count > 0;
@@ -296,15 +314,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 btn.classList.toggle('active', hasFavs);
                 const svg = btn.querySelector('svg');
                 if (svg) svg.setAttribute('fill', hasFavs ? 'currentColor' : 'none');
-                // Badge
+                // Count label (inline, after icon)
                 let badge = btn.querySelector('.fav-badge');
                 if (!badge) {
                     badge = document.createElement('span');
                     badge.className = 'fav-badge';
                     btn.appendChild(badge);
                 }
-                badge.textContent = count;
-                badge.classList.toggle('visible', count > 1);
+                badge.textContent = count > 0 ? count : '';
+                badge.classList.toggle('visible', count > 0);
             });
 
             // Topic dots
@@ -315,7 +333,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!topicEl) continue;
                 let dot = topicEl.querySelector('.saved-topic-dot');
                 if (!dot) {
-                    const titleEl = topicEl.querySelector('b');
+                    // Find first <b> with actual text content (avoid empty <b/> elements)
+                    const titleEl = Array.from(topicEl.querySelectorAll('b')).find(b => b.textContent.trim().length > 2);
                     if (titleEl) {
                         dot = document.createElement('span');
                         dot.className = 'saved-topic-dot';
@@ -475,7 +494,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // 2. Fetch specific article JSON directly
             const fnameOnly = filename.split('/').pop();
             const articlePath = fnameOnly.endsWith('.json') ? fnameOnly : `${fnameOnly}.json`;
-            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}?t=${Date.now()}`);
+            const articleRes = await fetch(`./${window.DATA_OUTPUT_DIR}/${volId}/${articlePath}`);
 
             if (!articleRes.ok) throw new Error('Network response was not ok');
 
@@ -494,7 +513,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.toggleFavorite = function () {
         const { volId, filename } = getParams();
-        let favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]');
+        let favorites = [];
+        try { favorites = JSON.parse(localStorage.getItem('savedFavorites') || '[]'); } catch (e) { }
         const topicIndex = getVisibleTopicIndex();
         const title = document.title.replace('Meishu-Sama: ', '').replace(' - Mioshie College', '');
         const totalTopics = window._currentTotalTopics || 1;
@@ -532,7 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 topic: topicIndex, topicTitle, snippet, totalTopics
             });
         }
-        localStorage.setItem('savedFavorites', JSON.stringify(favorites));
+        try { localStorage.setItem('savedFavorites', JSON.stringify(favorites)); } catch (e) { }
 
         const lang = localStorage.getItem('site_lang') || 'pt';
         if (typeof window.updateFavIndicators === 'function') window.updateFavIndicators();
@@ -555,6 +575,21 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.renderContent = () => initReader();
+
+    // Web Share API
+    const shareBtn = document.getElementById('shareBtn');
+    if (shareBtn && navigator.share) {
+        shareBtn.style.display = '';
+    }
+    window.shareArticle = async function () {
+        try {
+            await navigator.share({
+                title: document.title,
+                url: window.location.href
+            });
+        } catch (e) { /* user cancelled or not supported */ }
+    };
+
     initReader();
     window.addEventListener('popstate', () => initReader());
 
@@ -578,4 +613,20 @@ document.addEventListener('DOMContentLoaded', () => {
         if (document.visibilityState === 'hidden') saveReadingPosition();
     });
     window.addEventListener('beforeunload', saveReadingPosition);
+
+    // Swipe navigation (mobile)
+    let _touchStartX = 0, _touchStartY = 0;
+    document.addEventListener('touchstart', e => {
+        _touchStartX = e.changedTouches[0].clientX;
+        _touchStartY = e.changedTouches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', e => {
+        if (!window._swipeNav) return;
+        const dx = e.changedTouches[0].clientX - _touchStartX;
+        const dy = e.changedTouches[0].clientY - _touchStartY;
+        if (Math.abs(dx) < 80 || Math.abs(dy) > 60) return; // ignore small/vertical swipes
+        const { vol, prev, next } = window._swipeNav;
+        if (dx > 0 && prev) window.navigateToReader(vol, prev);
+        else if (dx < 0 && next) window.navigateToReader(vol, next);
+    }, { passive: true });
 });
