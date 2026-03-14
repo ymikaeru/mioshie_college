@@ -285,10 +285,102 @@ window._mobileSwitchLang = function (lang) {
 
 
 async function toggleTheme() {
-  const current = document.documentElement.getAttribute('data-theme');
-  const next = current === 'light' ? 'dark' : 'light';
-  document.documentElement.setAttribute('data-theme', next);
-  try { localStorage.setItem('theme', next); } catch (e) { }
+  openThemeModal();
+}
+
+function openThemeModal() {
+  let modal = document.getElementById('themeModal');
+  if (!modal) {
+    _createThemeModal();
+    modal = document.getElementById('themeModal');
+  }
+  
+  const currentLang = localStorage.getItem('site_lang') || 'pt';
+  const titleEl = document.getElementById('themeModalTitle');
+  if (titleEl) {
+    titleEl.textContent = currentLang === 'ja' ? 'テーマと設定' : 'Themes & Settings';
+  }
+  
+  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === currentTheme);
+  });
+
+  modal.classList.add('active');
+}
+
+function closeThemeModal() {
+  const modal = document.getElementById('themeModal');
+  if (modal) modal.classList.remove('active');
+}
+
+window.setAppTheme = function(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  try { localStorage.setItem('theme', theme); } catch (e) { }
+  
+  document.querySelectorAll('.theme-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-theme-val') === theme);
+  });
+};
+
+function _createThemeModal() {
+  const overlay = document.createElement('div');
+  overlay.className = 'theme-modal-overlay';
+  overlay.id = 'themeModal';
+  
+  // Inline SVG for icons
+  const iconDecrease = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>+`;
+  
+  overlay.innerHTML = `
+    <div class="theme-modal">
+      <div class="theme-modal-header">
+        <h3 class="theme-modal-title" id="themeModalTitle">Themes & Settings</h3>
+        <button class="search-close" onclick="closeThemeModal()" aria-label="Fechar" style="position:static;">
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      
+      <div class="theme-line-height-control">
+        <div class="theme-line-height-icon" title="Espaçamento de Linhas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+        </div>
+        <input type="range" min="1.2" max="2.4" step="0.1" class="theme-slider" id="themeLineHeightSlider" oninput="changeLineHeight(this.value)">
+      </div>
+      
+      <div class="theme-grid">
+        <div class="theme-btn" data-theme-val="light" onclick="setAppTheme('light')">
+          <div class="theme-btn-preview-text">Aa</div>
+          <div class="theme-btn-label">Original</div>
+        </div>
+        <div class="theme-btn" data-theme-val="quiet" onclick="setAppTheme('quiet')">
+          <div class="theme-btn-preview-text" style="color: #E5E5E5;">Aa</div>
+          <div class="theme-btn-label" style="color: #E5E5E5;">Quiet</div>
+        </div>
+        <div class="theme-btn" data-theme-val="paper" onclick="setAppTheme('paper')">
+          <div class="theme-btn-preview-text" style="color: #3C3B37;">Aa</div>
+          <div class="theme-btn-label" style="color: #3C3B37;">Paper</div>
+        </div>
+        <div class="theme-btn" data-theme-val="bold" onclick="setAppTheme('bold')">
+          <div class="theme-btn-preview-text">Aa</div>
+          <div class="theme-btn-label">Bold</div>
+        </div>
+        <div class="theme-btn" data-theme-val="calm" onclick="setAppTheme('calm')">
+          <div class="theme-btn-preview-text" style="color: #4A3A2A;">Aa</div>
+          <div class="theme-btn-label" style="color: #4A3A2A;">Calm</div>
+        </div>
+        <div class="theme-btn" data-theme-val="focus" onclick="setAppTheme('focus')">
+          <div class="theme-btn-preview-text" style="color: #FFFFFF;">Aa</div>
+          <div class="theme-btn-label" style="color: #FFFFFF;">Focus</div>
+        </div>
+      </div>
+    </div>
+  `;
+  
+  overlay.addEventListener('click', (e) => {
+    if (e.target.id === 'themeModal') closeThemeModal();
+  });
+  
+  document.body.appendChild(overlay);
 }
 
 function setLanguage(lang, triggerRender = true) {
@@ -777,6 +869,29 @@ function _applyFontSize() {
   if (mBtnMinus) mBtnMinus.disabled = (_currentFontSizeIdx === 0);
   if (mBtnPlus) mBtnPlus.disabled = (_currentFontSizeIdx === FONT_SIZES.length - 1);
 }
+
+// --- Line Height Control ---
+window.initLineHeight = function () {
+  const saved = parseFloat(localStorage.getItem('reader_line_height') || '1.6');
+  _applyLineHeight(saved);
+  const slider = document.getElementById('themeLineHeightSlider');
+  if (slider) slider.value = saved;
+};
+
+window.changeLineHeight = function (val) {
+  const num = parseFloat(val);
+  _applyLineHeight(num);
+  try { localStorage.setItem('reader_line_height', num); } catch (e) { }
+};
+
+function _applyLineHeight(val) {
+  document.documentElement.style.setProperty('--reader-line-height', val);
+}
+
+// Initialize on script load
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof initLineHeight === 'function') initLineHeight();
+});
 
 // --- DOM Initialization and Shared Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
