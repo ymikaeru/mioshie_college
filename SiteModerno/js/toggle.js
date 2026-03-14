@@ -340,9 +340,11 @@ function _createThemeModal() {
         </button>
       </div>
       
-      <div class="theme-font-controls">
-        <button class="theme-font-btn" onclick="changeFontSize(-1)">A</button>
-        <button class="theme-font-btn" onclick="changeFontSize(1)" style="font-size: 1.3rem;">A</button>
+      <div class="theme-line-height-control">
+        <div class="theme-line-height-icon" title="Espaçamento de Linhas">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"></line><line x1="4" y1="12" x2="20" y2="12"></line><line x1="4" y1="18" x2="20" y2="18"></line></svg>
+        </div>
+        <input type="range" min="1.2" max="2.4" step="0.1" class="theme-slider" id="themeLineHeightSlider" oninput="changeLineHeight(this.value)">
       </div>
       
       <div class="theme-grid">
@@ -867,6 +869,29 @@ function _applyFontSize() {
   if (mBtnMinus) mBtnMinus.disabled = (_currentFontSizeIdx === 0);
   if (mBtnPlus) mBtnPlus.disabled = (_currentFontSizeIdx === FONT_SIZES.length - 1);
 }
+
+// --- Line Height Control ---
+window.initLineHeight = function () {
+  const saved = parseFloat(localStorage.getItem('reader_line_height') || '1.6');
+  _applyLineHeight(saved);
+  const slider = document.getElementById('themeLineHeightSlider');
+  if (slider) slider.value = saved;
+};
+
+window.changeLineHeight = function (val) {
+  const num = parseFloat(val);
+  _applyLineHeight(num);
+  try { localStorage.setItem('reader_line_height', num); } catch (e) { }
+};
+
+function _applyLineHeight(val) {
+  document.documentElement.style.setProperty('--reader-line-height', val);
+}
+
+// Initialize on script load
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof initLineHeight === 'function') initLineHeight();
+});
 
 // --- DOM Initialization and Shared Listeners ---
 document.addEventListener('DOMContentLoaded', () => {
