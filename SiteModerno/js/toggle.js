@@ -20,7 +20,8 @@ const MENU_TEXTS = {
     wordSpacing: 'ESPAÇAMENTO DE PALAVRAS',
     margins: 'MARGENS',
     justify: 'Justificar Texto',
-    boldText: 'Texto em Negrito'
+    boldText: 'Texto em Negrito',
+    comparison: 'Comparação 日本語／PT'
   },
   ja: {
     title: '御教えカレッジ',
@@ -41,7 +42,8 @@ const MENU_TEXTS = {
     wordSpacing: '単語間隔',
     margins: '余白',
     justify: 'テキストを両端揃え',
-    boldText: '太字テキスト'
+    boldText: '太字テキスト',
+    comparison: '比較モード 日本語／PT'
   }
 };
 
@@ -344,6 +346,11 @@ function openThemeModal() {
   const slidersGroup = document.getElementById('themeSlidersGroup');
   if (customizeRow) customizeRow.style.display = isReaderPage ? '' : 'none';
   if (slidersGroup && !isReaderPage) slidersGroup.style.display = 'none';
+  const comparisonRow = document.getElementById('comparisonRow');
+  if (comparisonRow) comparisonRow.style.display = isReaderPage ? '' : 'none';
+  const savedComparison = localStorage.getItem('reader_comparison') === 'true';
+  const comparisonToggle = document.getElementById('themeComparisonToggle');
+  if (comparisonToggle) comparisonToggle.checked = savedComparison;
 
   // Initialize sliders/toggles with saved values
   if (typeof initLineHeight === 'function') initLineHeight();
@@ -483,6 +490,14 @@ function _createThemeModal() {
             <div class="theme-btn-preview-text">Aa</div>
             <div class="theme-btn-label">Focus</div>
           </div>
+        </div>
+
+        <div class="theme-custom-row" id="comparisonRow" style="margin-top:8px;">
+          <span class="theme-custom-row-title">${t.comparison}</span>
+          <label class="theme-toggle">
+            <input type="checkbox" id="themeComparisonToggle" onchange="toggleComparison(this.checked)">
+            <span class="theme-toggle-slider"></span>
+          </label>
         </div>
 
         <div class="theme-custom-row" id="customizeRow" style="margin-top:8px;">
@@ -1212,6 +1227,12 @@ window.toggleCustomize = function (isChecked) {
     setTimeout(() => { group.style.display = 'none'; group.style.maxHeight = ''; }, 300);
   }
   try { localStorage.setItem('reader_customize', isChecked); } catch (e) { }
+};
+
+window.toggleComparison = function(isChecked) {
+    localStorage.setItem('reader_comparison', isChecked);
+    if (typeof window.renderContent === 'function') window.renderContent();
+    if (typeof closeThemeModal === 'function') closeThemeModal();
 };
 
 // Internal Appliers
