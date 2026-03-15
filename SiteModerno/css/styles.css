@@ -207,7 +207,7 @@ body {
   font-family: var(--font-ui);
   background: var(--bg-color);
   color: var(--text-main);
-  line-height: var(--reader-line-height);
+  line-height: 1.6;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
   transition: background 0.5s var(--ease), color 0.5s var(--ease);
