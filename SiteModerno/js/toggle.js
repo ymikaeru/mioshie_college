@@ -434,13 +434,13 @@ function _createThemeModal() {
 
   overlay.innerHTML = `
     <div class="theme-modal" id="themeModalCard">
+      <div class="theme-modal-header">
+        <h3 class="theme-modal-title" id="themeModalTitle">Themes & Settings</h3>
+        <button class="search-close" onclick="closeThemeModal()" aria-label="Fechar" style="position:static;">
+           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
       <div class="theme-modal-content">
-        <div class="theme-modal-header">
-          <h3 class="theme-modal-title" id="themeModalTitle">Themes & Settings</h3>
-          <button class="search-close" onclick="closeThemeModal()" aria-label="Fechar" style="position:static;">
-             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-          </button>
-        </div>
 
         <div class="theme-mode-switcher">
           <button class="theme-mode-btn" id="modeLightBtn" onclick="setAppMode('light')">
@@ -451,7 +451,42 @@ function _createThemeModal() {
           </button>
         </div>
 
-        <div class="theme-sliders-group">
+        <div class="theme-grid">
+          <div class="theme-btn" data-theme-val="light" onclick="setAppTheme('light')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Original</div>
+          </div>
+          <div class="theme-btn" data-theme-val="quiet" onclick="setAppTheme('quiet')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Quiet</div>
+          </div>
+          <div class="theme-btn" data-theme-val="paper" onclick="setAppTheme('paper')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Paper</div>
+          </div>
+          <div class="theme-btn" data-theme-val="bold" onclick="setAppTheme('bold')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Bold</div>
+          </div>
+          <div class="theme-btn" data-theme-val="calm" onclick="setAppTheme('calm')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Calm</div>
+          </div>
+          <div class="theme-btn" data-theme-val="focus" onclick="setAppTheme('focus')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Focus</div>
+          </div>
+        </div>
+
+        <div class="theme-custom-row" id="customizeRow" style="margin-top:8px;">
+          <span class="theme-custom-row-title">${t.customize}</span>
+          <label class="theme-toggle">
+            <input type="checkbox" id="themeCustomizeToggle" onchange="toggleCustomize(this.checked)">
+            <span class="theme-toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="theme-sliders-group" id="themeSlidersGroup" style="display:none;">
           <div class="theme-slider-item">
             <span class="theme-slider-label">${t.lineSpacing}</span>
             <div class="theme-slider-row">
@@ -484,49 +519,23 @@ function _createThemeModal() {
               <span class="theme-slider-value" id="marginsValue">0%</span>
             </div>
           </div>
-        </div>
-
-        <div class="theme-grid">
-          <div class="theme-btn" data-theme-val="light" onclick="setAppTheme('light')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Original</div>
+          <div class="theme-slider-item">
+            <div class="theme-slider-row" style="justify-content:space-between;">
+              <span class="theme-custom-row-title tr-justify">${t.justify}</span>
+              <label class="theme-toggle">
+                <input type="checkbox" id="themeJustifyToggle" onchange="toggleJustify(this.checked)">
+                <span class="theme-toggle-slider"></span>
+              </label>
+            </div>
           </div>
-          <div class="theme-btn" data-theme-val="quiet" onclick="setAppTheme('quiet')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Quiet</div>
-          </div>
-          <div class="theme-btn" data-theme-val="paper" onclick="setAppTheme('paper')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Paper</div>
-          </div>
-          <div class="theme-btn" data-theme-val="bold" onclick="setAppTheme('bold')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Bold</div>
-          </div>
-          <div class="theme-btn" data-theme-val="calm" onclick="setAppTheme('calm')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Calm</div>
-          </div>
-          <div class="theme-btn" data-theme-val="focus" onclick="setAppTheme('focus')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Focus</div>
-          </div>
-        </div>
-
-        <div class="theme-toggles-group">
-          <div class="theme-custom-row">
-            <span class="theme-custom-row-title tr-justify">${t.justify}</span>
-            <label class="theme-toggle">
-              <input type="checkbox" id="themeJustifyToggle" onchange="toggleJustify(this.checked)">
-              <span class="theme-toggle-slider"></span>
-            </label>
-          </div>
-          <div class="theme-custom-row" style="margin-bottom:0">
-            <span class="theme-custom-row-title tr-boldtext">${t.boldText}</span>
-            <label class="theme-toggle">
-              <input type="checkbox" id="themeBoldToggle" onchange="toggleBoldText(this.checked)">
-              <span class="theme-toggle-slider"></span>
-            </label>
+          <div class="theme-slider-item">
+            <div class="theme-slider-row" style="justify-content:space-between;">
+              <span class="theme-custom-row-title tr-boldtext">${t.boldText}</span>
+              <label class="theme-toggle">
+                <input type="checkbox" id="themeBoldToggle" onchange="toggleBoldText(this.checked)">
+                <span class="theme-toggle-slider"></span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
@@ -1086,6 +1095,13 @@ window.initAdvancedOptions = function () {
   _applyBoldText(savedBold);
   const boldToggle = document.getElementById('themeBoldToggle');
   if (boldToggle) boldToggle.checked = savedBold;
+
+  // Customize toggle (show/hide sliders)
+  const savedCustomize = localStorage.getItem('reader_customize') === 'true';
+  const customizeToggle = document.getElementById('themeCustomizeToggle');
+  const slidersGroup = document.getElementById('themeSlidersGroup');
+  if (customizeToggle) customizeToggle.checked = savedCustomize;
+  if (slidersGroup) slidersGroup.style.display = savedCustomize ? '' : 'none';
 };
 
 // Functions mapped to HTML Inputs
@@ -1118,6 +1134,31 @@ window.toggleJustify = function (isChecked) {
 window.toggleBoldText = function (isChecked) {
   _applyBoldText(isChecked);
   try { localStorage.setItem('reader_bold', isChecked); } catch (e) { }
+};
+
+window.toggleCustomize = function (isChecked) {
+  const group = document.getElementById('themeSlidersGroup');
+  if (!group) return;
+  if (isChecked) {
+    group.style.display = '';
+    group.style.maxHeight = '0';
+    group.style.opacity = '0';
+    group.offsetHeight; // force reflow
+    group.style.maxHeight = group.scrollHeight + 'px';
+    group.style.opacity = '1';
+    setTimeout(() => {
+      group.style.maxHeight = '';
+      const row = document.getElementById('customizeRow');
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 310);
+  } else {
+    group.style.maxHeight = group.scrollHeight + 'px';
+    group.offsetHeight;
+    group.style.maxHeight = '0';
+    group.style.opacity = '0';
+    setTimeout(() => { group.style.display = 'none'; group.style.maxHeight = ''; }, 300);
+  }
+  try { localStorage.setItem('reader_customize', isChecked); } catch (e) { }
 };
 
 // Internal Appliers
