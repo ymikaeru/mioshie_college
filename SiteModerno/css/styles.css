@@ -29,7 +29,7 @@
   /* Reader Scaling */
   --reader-font-size: 21px;
   --reader-line-height: 1.6;
-  
+
   /* Advanced Reader Layout */
   --reader-letter-spacing: normal;
   --reader-word-spacing: normal;
@@ -39,7 +39,8 @@
 }
 
 /* --- Light Mode (Default) --- */
-[data-theme="dark"] { /* Keep legacy dark mapping to essentially Focus mode in dark */
+[data-theme="dark"] {
+  /* Keep legacy dark mapping to essentially Focus mode in dark */
   --bg-color: #000000;
   --surface: #111111;
   --surface-rgb: 17, 17, 17;
@@ -86,7 +87,11 @@
   letter-spacing: -0.01em;
 }
 
-[data-theme="bold"] h1, [data-theme="bold"] h2, [data-theme="bold"] h3, [data-theme="bold"] .topic-title-large, [data-theme="bold"] b {
+[data-theme="bold"] h1,
+[data-theme="bold"] h2,
+[data-theme="bold"] h3,
+[data-theme="bold"] .topic-title-large,
+[data-theme="bold"] b {
   font-weight: 900 !important;
 }
 
@@ -967,12 +972,16 @@ mark.search-highlight {
 /* --- Theme Settings Modal --- */
 .theme-modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.4);
   z-index: 99999;
   display: flex;
   justify-content: center;
-  align-items: flex-end; /* Mobile bottom sheet style or center */
+  align-items: flex-end;
+  /* Mobile bottom sheet style or center */
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease;
@@ -987,9 +996,9 @@ mark.search-highlight {
   background: var(--surface);
   width: 100%;
   max-width: 400px;
-  max-height: 60vh;
+  max-height: 48vh;
   border-radius: 24px 24px 0 0;
-  box-shadow: 0 -10px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   padding: 24px 0 0;
   transform: translateY(100%);
   transition: transform 0.3s var(--ease);
@@ -1003,6 +1012,7 @@ mark.search-highlight {
   .theme-modal-overlay {
     align-items: center;
   }
+
   .theme-modal {
     border-radius: var(--radius);
     transform: translateY(20px);
@@ -1050,7 +1060,7 @@ mark.search-highlight {
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
 
@@ -1060,7 +1070,7 @@ mark.search-highlight {
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   cursor: pointer;
 }
 
@@ -1107,14 +1117,43 @@ mark.search-highlight {
 }
 
 /* Specific Theme Button Colors — no strokes, rounded */
-.theme-btn[data-theme-val="light"] { background: #FFFFFF; color: #1C1C1E; }
-.theme-btn[data-theme-val="quiet"] { background: #5E5E60; color: #E5E5E5; }
-.theme-btn[data-theme-val="paper"] { background: #F4EEDF; color: #3C3B37; }
-.theme-btn[data-theme-val="bold"] { background: #FFFFFF; color: #000000; }
-.theme-btn[data-theme-val="bold"] .theme-btn-preview-text { font-weight: 800; }
-.theme-btn[data-theme-val="calm"] { background: #EADDC8; color: #4A3A2A; }
-.theme-btn[data-theme-val="focus"] { background: #FFFFFF; color: #000000; }
-.theme-btn[data-theme-val="focus"] .theme-btn-preview-text { font-family: var(--font-sans); }
+.theme-btn[data-theme-val="light"] {
+  background: #FFFFFF;
+  color: #1C1C1E;
+}
+
+.theme-btn[data-theme-val="quiet"] {
+  background: #5E5E60;
+  color: #E5E5E5;
+}
+
+.theme-btn[data-theme-val="paper"] {
+  background: #F4EEDF;
+  color: #3C3B37;
+}
+
+.theme-btn[data-theme-val="bold"] {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.theme-btn[data-theme-val="bold"] .theme-btn-preview-text {
+  font-weight: 800;
+}
+
+.theme-btn[data-theme-val="calm"] {
+  background: #EADDC8;
+  color: #4A3A2A;
+}
+
+.theme-btn[data-theme-val="focus"] {
+  background: #FFFFFF;
+  color: #000000;
+}
+
+.theme-btn[data-theme-val="focus"] .theme-btn-preview-text {
+  font-family: var(--font-sans);
+}
 
 
 /* --- Single-pane iBooks-style modal content --- */
@@ -1140,7 +1179,7 @@ mark.search-highlight {
   padding: 12px 0;
 }
 
-.theme-slider-item + .theme-slider-item {
+.theme-slider-item+.theme-slider-item {
   border-top: 1px solid var(--border);
 }
 
@@ -1217,7 +1256,10 @@ mark.search-highlight {
 .theme-toggle-slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-color: var(--border);
   transition: .4s;
   border-radius: 24px;
@@ -1233,14 +1275,15 @@ mark.search-highlight {
   background-color: white;
   transition: .4s;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-input:checked + .theme-toggle-slider {
-  background-color: #34C759; /* iOS Green */
+input:checked+.theme-toggle-slider {
+  background-color: #34C759;
+  /* iOS Green */
 }
 
-input:checked + .theme-toggle-slider:before {
+input:checked+.theme-toggle-slider:before {
   transform: translateX(20px);
 }
 
@@ -1294,18 +1337,21 @@ select[data-tooltip]::after {
   gap: 4px;
   transition: color 0.2s ease, background 0.2s ease;
 }
+
 #favoriteBtn:hover,
 #mobileFavoriteBtn:hover {
   background: var(--accent-soft);
   color: var(--accent);
   border: none;
 }
+
 #favoriteBtn.active,
 #mobileFavoriteBtn.active {
   background: var(--accent-soft);
   color: var(--accent);
   border: none;
 }
+
 #favoriteBtn.active svg,
 #mobileFavoriteBtn.active svg {
   fill: var(--accent);
@@ -1323,6 +1369,7 @@ select[data-tooltip]::after {
   opacity: 0;
   transition: opacity 0.2s ease;
 }
+
 .fav-badge.visible {
   opacity: 1;
 }
@@ -1340,6 +1387,7 @@ select[data-tooltip]::after {
   transform: scale(0);
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
+
 .saved-topic-dot.visible {
   opacity: 0.8;
   transform: scale(1);
@@ -1367,11 +1415,13 @@ select[data-tooltip]::after {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
+
 .save-tooltip.show {
   opacity: 1;
   visibility: visible;
   transform: translateX(-50%) translateY(0);
 }
+
 .save-tooltip .save-tooltip-title {
   font-weight: 600;
   font-size: 13px;
@@ -1380,6 +1430,7 @@ select[data-tooltip]::after {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
 .save-tooltip .save-tooltip-status {
   font-size: 11px;
   opacity: 0.6;
@@ -2196,8 +2247,13 @@ font.section-header,
 
 /* Spin animation for loading states */
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 600px) {
