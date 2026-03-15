@@ -519,22 +519,23 @@ function _createThemeModal() {
               <span class="theme-slider-value" id="marginsValue">0%</span>
             </div>
           </div>
-        </div>
-
-        <div class="theme-toggles-group">
-          <div class="theme-custom-row">
-            <span class="theme-custom-row-title tr-justify">${t.justify}</span>
-            <label class="theme-toggle">
-              <input type="checkbox" id="themeJustifyToggle" onchange="toggleJustify(this.checked)">
-              <span class="theme-toggle-slider"></span>
-            </label>
+          <div class="theme-slider-item">
+            <div class="theme-slider-row" style="justify-content:space-between;">
+              <span class="theme-custom-row-title tr-justify">${t.justify}</span>
+              <label class="theme-toggle">
+                <input type="checkbox" id="themeJustifyToggle" onchange="toggleJustify(this.checked)">
+                <span class="theme-toggle-slider"></span>
+              </label>
+            </div>
           </div>
-          <div class="theme-custom-row" style="margin-bottom:0">
-            <span class="theme-custom-row-title tr-boldtext">${t.boldText}</span>
-            <label class="theme-toggle">
-              <input type="checkbox" id="themeBoldToggle" onchange="toggleBoldText(this.checked)">
-              <span class="theme-toggle-slider"></span>
-            </label>
+          <div class="theme-slider-item">
+            <div class="theme-slider-row" style="justify-content:space-between;">
+              <span class="theme-custom-row-title tr-boldtext">${t.boldText}</span>
+              <label class="theme-toggle">
+                <input type="checkbox" id="themeBoldToggle" onchange="toggleBoldText(this.checked)">
+                <span class="theme-toggle-slider"></span>
+              </label>
+            </div>
           </div>
         </div>
       </div>
