@@ -338,6 +338,13 @@ function openThemeModal() {
   // Update theme card colors based on current mode
   _updateThemeCardColors(currentMode);
 
+  // Show customize options only on reader pages
+  const isReaderPage = !!document.getElementById('readerContainer');
+  const customizeRow = document.getElementById('customizeRow');
+  const slidersGroup = document.getElementById('themeSlidersGroup');
+  if (customizeRow) customizeRow.style.display = isReaderPage ? '' : 'none';
+  if (slidersGroup && !isReaderPage) slidersGroup.style.display = 'none';
+
   // Initialize sliders/toggles with saved values
   if (typeof initLineHeight === 'function') initLineHeight();
   if (typeof initAdvancedOptions === 'function') initAdvancedOptions();
