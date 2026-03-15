@@ -3,9 +3,10 @@
   "configurations": [
     {
       "name": "site",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "8000", "--directory", "SiteModerno"],
-      "port": 8000
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd SiteModerno && python3 nocache_server.py"],
+      "port": 8000,
+      "autoPort": true
     }
   ]
 }
