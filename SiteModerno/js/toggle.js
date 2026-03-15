@@ -478,7 +478,7 @@ function _createThemeModal() {
           </div>
         </div>
 
-        <div class="theme-custom-row">
+        <div class="theme-custom-row" id="customizeRow" style="margin-top:8px;">
           <span class="theme-custom-row-title">${t.customize}</span>
           <label class="theme-toggle">
             <input type="checkbox" id="themeCustomizeToggle" onchange="toggleCustomize(this.checked)">
@@ -1146,7 +1146,11 @@ window.toggleCustomize = function (isChecked) {
     group.offsetHeight; // force reflow
     group.style.maxHeight = group.scrollHeight + 'px';
     group.style.opacity = '1';
-    setTimeout(() => { group.style.maxHeight = ''; }, 300);
+    setTimeout(() => {
+      group.style.maxHeight = '';
+      const row = document.getElementById('customizeRow');
+      if (row) row.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 310);
   } else {
     group.style.maxHeight = group.scrollHeight + 'px';
     group.offsetHeight;
