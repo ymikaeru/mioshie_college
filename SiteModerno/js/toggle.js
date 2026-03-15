@@ -478,7 +478,15 @@ function _createThemeModal() {
           </div>
         </div>
 
-        <div class="theme-sliders-group">
+        <div class="theme-custom-row">
+          <span class="theme-custom-row-title">${t.customize}</span>
+          <label class="theme-toggle">
+            <input type="checkbox" id="themeCustomizeToggle" onchange="toggleCustomize(this.checked)">
+            <span class="theme-toggle-slider"></span>
+          </label>
+        </div>
+
+        <div class="theme-sliders-group" id="themeSlidersGroup" style="display:none;">
           <div class="theme-slider-item">
             <span class="theme-slider-label">${t.lineSpacing}</span>
             <div class="theme-slider-row">
@@ -1086,6 +1094,13 @@ window.initAdvancedOptions = function () {
   _applyBoldText(savedBold);
   const boldToggle = document.getElementById('themeBoldToggle');
   if (boldToggle) boldToggle.checked = savedBold;
+
+  // Customize toggle (show/hide sliders)
+  const savedCustomize = localStorage.getItem('reader_customize') === 'true';
+  const customizeToggle = document.getElementById('themeCustomizeToggle');
+  const slidersGroup = document.getElementById('themeSlidersGroup');
+  if (customizeToggle) customizeToggle.checked = savedCustomize;
+  if (slidersGroup) slidersGroup.style.display = savedCustomize ? '' : 'none';
 };
 
 // Functions mapped to HTML Inputs
@@ -1118,6 +1133,27 @@ window.toggleJustify = function (isChecked) {
 window.toggleBoldText = function (isChecked) {
   _applyBoldText(isChecked);
   try { localStorage.setItem('reader_bold', isChecked); } catch (e) { }
+};
+
+window.toggleCustomize = function (isChecked) {
+  const group = document.getElementById('themeSlidersGroup');
+  if (!group) return;
+  if (isChecked) {
+    group.style.display = '';
+    group.style.maxHeight = '0';
+    group.style.opacity = '0';
+    group.offsetHeight; // force reflow
+    group.style.maxHeight = group.scrollHeight + 'px';
+    group.style.opacity = '1';
+    setTimeout(() => { group.style.maxHeight = ''; }, 300);
+  } else {
+    group.style.maxHeight = group.scrollHeight + 'px';
+    group.offsetHeight;
+    group.style.maxHeight = '0';
+    group.style.opacity = '0';
+    setTimeout(() => { group.style.display = 'none'; group.style.maxHeight = ''; }, 300);
+  }
+  try { localStorage.setItem('reader_customize', isChecked); } catch (e) { }
 };
 
 // Internal Appliers

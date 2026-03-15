@@ -1132,6 +1132,8 @@ mark.search-highlight {
   border-radius: 16px;
   padding: 0 16px;
   margin-bottom: 24px;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
 }
 
 .theme-slider-item {
