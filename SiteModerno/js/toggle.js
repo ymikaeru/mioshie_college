@@ -1152,6 +1152,52 @@ window.toggleCustomize = function (isChecked) {
       if (row) row.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 310);
   } else {
+    // Reset all settings to defaults
+    _applyLineHeight(1.6);
+    _applyLetterSpacing(0);
+    _applyWordSpacing(0);
+    _applyMargins(0);
+    _applyJustify(false);
+    _applyBoldText(false);
+
+    // Reset slider UI values
+    const lhSlider = document.getElementById('themeLineHeightSlider');
+    if (lhSlider) lhSlider.value = 1.6;
+    const lhVal = document.getElementById('lineHeightValue');
+    if (lhVal) lhVal.textContent = '1.6';
+
+    const lsSlider = document.getElementById('themeLetterSpacingSlider');
+    if (lsSlider) lsSlider.value = 0;
+    const lsVal = document.getElementById('letterSpacingValue');
+    if (lsVal) lsVal.textContent = '0%';
+
+    const wsSlider = document.getElementById('themeWordSpacingSlider');
+    if (wsSlider) wsSlider.value = 0;
+    const wsVal = document.getElementById('wordSpacingValue');
+    if (wsVal) wsVal.textContent = '0%';
+
+    const mSlider = document.getElementById('themeMarginsSlider');
+    if (mSlider) mSlider.value = 0;
+    const mVal = document.getElementById('marginsValue');
+    if (mVal) mVal.textContent = '0%';
+
+    const justifyToggle = document.getElementById('themeJustifyToggle');
+    if (justifyToggle) justifyToggle.checked = false;
+
+    const boldToggle = document.getElementById('themeBoldToggle');
+    if (boldToggle) boldToggle.checked = false;
+
+    // Clear saved values
+    try {
+      localStorage.setItem('reader_line_height', 1.6);
+      localStorage.setItem('reader_letter_spacing', 0);
+      localStorage.setItem('reader_word_spacing', 0);
+      localStorage.setItem('reader_margins', 0);
+      localStorage.setItem('reader_justify', false);
+      localStorage.setItem('reader_bold', false);
+    } catch (e) { }
+
+    // Collapse the group
     group.style.maxHeight = group.scrollHeight + 'px';
     group.offsetHeight;
     group.style.maxHeight = '0';
