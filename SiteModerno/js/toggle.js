@@ -451,6 +451,33 @@ function _createThemeModal() {
           </button>
         </div>
 
+        <div class="theme-grid">
+          <div class="theme-btn" data-theme-val="light" onclick="setAppTheme('light')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Original</div>
+          </div>
+          <div class="theme-btn" data-theme-val="quiet" onclick="setAppTheme('quiet')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Quiet</div>
+          </div>
+          <div class="theme-btn" data-theme-val="paper" onclick="setAppTheme('paper')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Paper</div>
+          </div>
+          <div class="theme-btn" data-theme-val="bold" onclick="setAppTheme('bold')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Bold</div>
+          </div>
+          <div class="theme-btn" data-theme-val="calm" onclick="setAppTheme('calm')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Calm</div>
+          </div>
+          <div class="theme-btn" data-theme-val="focus" onclick="setAppTheme('focus')">
+            <div class="theme-btn-preview-text">Aa</div>
+            <div class="theme-btn-label">Focus</div>
+          </div>
+        </div>
+
         <div class="theme-sliders-group">
           <div class="theme-slider-item">
             <span class="theme-slider-label">${t.lineSpacing}</span>
@@ -483,33 +510,6 @@ function _createThemeModal() {
               <input type="range" min="0" max="100" step="5" value="0" class="theme-slider" id="themeMarginsSlider" oninput="changeMargins(this.value)">
               <span class="theme-slider-value" id="marginsValue">0%</span>
             </div>
-          </div>
-        </div>
-
-        <div class="theme-grid">
-          <div class="theme-btn" data-theme-val="light" onclick="setAppTheme('light')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Original</div>
-          </div>
-          <div class="theme-btn" data-theme-val="quiet" onclick="setAppTheme('quiet')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Quiet</div>
-          </div>
-          <div class="theme-btn" data-theme-val="paper" onclick="setAppTheme('paper')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Paper</div>
-          </div>
-          <div class="theme-btn" data-theme-val="bold" onclick="setAppTheme('bold')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Bold</div>
-          </div>
-          <div class="theme-btn" data-theme-val="calm" onclick="setAppTheme('calm')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Calm</div>
-          </div>
-          <div class="theme-btn" data-theme-val="focus" onclick="setAppTheme('focus')">
-            <div class="theme-btn-preview-text">Aa</div>
-            <div class="theme-btn-label">Focus</div>
           </div>
         </div>
 
