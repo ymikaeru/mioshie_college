@@ -996,7 +996,7 @@ mark.search-highlight {
   background: var(--surface);
   width: 100%;
   max-width: 400px;
-  max-height: 48vh;
+  max-height: 60vh;
   border-radius: 24px 24px 0 0;
   box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.1);
   padding: 24px 0 0;
@@ -1006,6 +1006,14 @@ mark.search-highlight {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* Isolate from reader settings */
+  line-height: 1.5;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-align: left;
+  font-weight: 400;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 @media (min-width: 600px) {
