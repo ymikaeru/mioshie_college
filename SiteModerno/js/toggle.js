@@ -9,7 +9,7 @@ const MENU_TEXTS = {
     history: 'Histórico',
     saved: 'Salvos',
     lang: '日本語',
-    theme: 'Mudar Tema',
+    theme: 'Themes & Settings',
     fontSize: 'Tamanho da Fonte',
     customize: 'Personalizar',
     accessibility: 'Acessibilidade & Layout',
@@ -350,7 +350,7 @@ function closeThemeModal() {
   if (modal) modal.classList.remove('active');
 }
 
-window.setAppTheme = function(theme) {
+window.setAppTheme = function (theme) {
   document.documentElement.setAttribute('data-theme', theme);
   try { localStorage.setItem('theme', theme); } catch (e) { }
 
@@ -360,7 +360,7 @@ window.setAppTheme = function(theme) {
 };
 
 // Light / Dark mode (day / night)
-window.setAppMode = function(mode) {
+window.setAppMode = function (mode) {
   document.documentElement.setAttribute('data-mode', mode);
   try { localStorage.setItem('site_mode', mode); } catch (e) { }
 
@@ -377,12 +377,12 @@ window.setAppMode = function(mode) {
 function _updateThemeCardColors(mode) {
   const isDark = mode === 'dark';
   const cardColors = {
-    light:  isDark ? { bg: '#1A1A1A', fg: '#D4D4D4' } : { bg: '#FFFFFF', fg: '#1C1C1E' },
-    quiet:  isDark ? { bg: '#38383A', fg: '#C8C8C8' } : { bg: '#5E5E60', fg: '#E5E5E5' },
-    paper:  isDark ? { bg: '#36332E', fg: '#C0B9A8' } : { bg: '#F4EEDF', fg: '#3C3B37' },
-    bold:   isDark ? { bg: '#151515', fg: '#FFFFFF' } : { bg: '#FFFFFF', fg: '#000000' },
-    calm:   isDark ? { bg: '#4A4032', fg: '#D4C4B0' } : { bg: '#EADDC8', fg: '#4A3A2A' },
-    focus:  isDark ? { bg: '#000000', fg: '#8A8A8C' } : { bg: '#FFFFFF', fg: '#000000' },
+    light: isDark ? { bg: '#1A1A1A', fg: '#D4D4D4' } : { bg: '#FFFFFF', fg: '#1C1C1E' },
+    quiet: isDark ? { bg: '#38383A', fg: '#C8C8C8' } : { bg: '#5E5E60', fg: '#E5E5E5' },
+    paper: isDark ? { bg: '#36332E', fg: '#C0B9A8' } : { bg: '#F4EEDF', fg: '#3C3B37' },
+    bold: isDark ? { bg: '#151515', fg: '#FFFFFF' } : { bg: '#FFFFFF', fg: '#000000' },
+    calm: isDark ? { bg: '#4A4032', fg: '#D4C4B0' } : { bg: '#EADDC8', fg: '#4A3A2A' },
+    focus: isDark ? { bg: '#000000', fg: '#8A8A8C' } : { bg: '#FFFFFF', fg: '#000000' },
   };
 
   document.querySelectorAll('.theme-btn').forEach(btn => {
@@ -411,10 +411,10 @@ function _createThemeModal() {
   const overlay = document.createElement('div');
   overlay.className = 'theme-modal-overlay';
   overlay.id = 'themeModal';
-  
+
   // Inline SVG for icons
   const iconDecrease = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:2px"><polyline points="4 7 4 4 20 4 20 7"></polyline><line x1="9" y1="20" x2="15" y2="20"></line><line x1="12" y1="4" x2="12" y2="20"></line></svg>+`;
-  
+
   const t = MENU_TEXTS[document.documentElement.lang === 'ja' ? 'ja' : 'pt'];
 
   // Icons used
@@ -425,7 +425,7 @@ function _createThemeModal() {
   const iconCharSpacing = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v18"></path><path d="M16 3v18"></path><path d="M4 12h16"></path></svg>`;
   const iconWordSpacing = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h16"></path><path d="M4 15h16"></path></svg>`;
   const iconMargins = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><path d="M9 3v18"></path><path d="M15 3v18"></path></svg>`;
-  
+
   // Icons
   const iconLineHeight = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4h6"/><path d="M11 12h6"/><path d="M11 20h6"/><path d="M3 8l3-4 3 4"/><path d="M3 16l3 4 3-4"/></svg>`;
   const iconCharSpacingSvg = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 20l-4-4 4-4"/><path d="M17 20l4-4-4-4"/><path d="M3 16h18"/><path d="M10 4l2 8 2-8"/></svg>`;
@@ -541,11 +541,11 @@ function _createThemeModal() {
       </div>
     </div>
   `;
-  
+
   overlay.addEventListener('click', (e) => {
     if (e.target.id === 'themeModal') closeThemeModal();
   });
-  
+
   document.body.appendChild(overlay);
 }
 
@@ -701,7 +701,7 @@ let searchTimeout = null;
 
 async function getSearchIndex() {
   if (searchIndex && searchIndex.length > 0 && !isFetchingIndex) return searchIndex;
-  
+
   if (isFetchingIndex) {
     while (isFetchingIndex) {
       await new Promise(r => setTimeout(r, 200));
@@ -712,7 +712,7 @@ async function getSearchIndex() {
   isFetchingIndex = true;
   const resultsEl = document.getElementById('searchResults');
   const currentLang = localStorage.getItem('site_lang') || 'pt';
-  
+
   const updateLoadingMsg = (msg) => {
     if (resultsEl) resultsEl.innerHTML = `<li class="search-loading">${msg}</li>`;
   };
@@ -722,15 +722,15 @@ async function getSearchIndex() {
 
   const basePath = window.location.pathname.includes('/shumeic') ? '../' : './';
   const allVolumes = ['shumeic1', 'shumeic2', 'shumeic3', 'shumeic4'];
-  
+
   // Detect current volume to load it first (lazy loading)
   const pathMatch = window.location.pathname.match(/shumeic(\d)/);
   const urlParams = new URLSearchParams(window.location.search);
   const volParam = urlParams.get('vol') || urlParams.get('v');
   let currentVol = pathMatch ? `shumeic${pathMatch[1]}` : (volParam || null);
-  
+
   // Prioritize current volume first, then load the rest
-  const prioritized = currentVol 
+  const prioritized = currentVol
     ? [currentVol, ...allVolumes.filter(v => v !== currentVol)]
     : allVolumes;
 
@@ -743,12 +743,12 @@ async function getSearchIndex() {
         if (!res.ok) throw new Error(`Falha ao carregar ${vol}`);
         const json = await res.json();
         searchIndex = searchIndex.concat(json);
-        
-        const progressMsg = currentLang === 'ja' 
+
+        const progressMsg = currentLang === 'ja'
           ? `インデックス読み込み中 (${i + 1}/${prioritized.length})...`
           : `Carregando índice (${i + 1}/${prioritized.length})...`;
         updateLoadingMsg(progressMsg);
-        
+
         // After loading the first volume, allow search to start
         if (i === 0) {
           isFetchingIndex = false;
@@ -757,7 +757,7 @@ async function getSearchIndex() {
         console.warn(`Search index ${vol} failed:`, e);
       }
     }
-    
+
     if (searchIndex.length === 0) {
       throw new Error("Nenhum dado de pesquisa encontrado.");
     }
@@ -801,7 +801,7 @@ window.openSearch = function () {
       input.focus();
       const clearBtn = document.getElementById('searchClear');
       if (clearBtn) clearBtn.style.display = input.value.trim() ? 'flex' : 'none';
-      
+
       // If we have a query but no rendered results (e.g., after page reload),
       // re-trigger the search to generate results with correct onclick handlers
       const resultsEl = document.getElementById('searchResults');
@@ -1493,10 +1493,10 @@ window.saveAllOffline = async function () {
   if (!('serviceWorker' in navigator) || !('caches' in window)) return;
   // Use a constant for consistency with sw.js
   const CACHE_NAME = 'shumei-pwa-v13';
-  
+
   if (localStorage.getItem('offline_saved_all') === 'true') {
-     // Optional: allow re-sync or just return
-     // return; 
+    // Optional: allow re-sync or just return
+    // return; 
   }
 
   const label = document.getElementById('offlineSaveLabel');
@@ -1526,7 +1526,7 @@ window.saveAllOffline = async function () {
 
     // Build the full list of URLs to cache
     let allUrls = [...coreUrls];
-    
+
     // Add volume indexes and navigation JSONs
     for (const vol of volumes) {
       allUrls.push(`${basePath}site_data/${vol}_nav.json`);
@@ -1542,9 +1542,9 @@ window.saveAllOffline = async function () {
       try {
         const navRes = await fetch(`${basePath}site_data/${vol}_nav.json`);
         if (navRes.ok) {
-           const navData = await navRes.json();
-           const files = Array.isArray(navData) ? navData : (navData.topics || []);
-           files.forEach(f => topicFiles.push(`${basePath}site_data/${vol}/${f}.json`));
+          const navData = await navRes.json();
+          const files = Array.isArray(navData) ? navData : (navData.topics || []);
+          files.forEach(f => topicFiles.push(`${basePath}site_data/${vol}/${f}.json`));
         }
         // Also cache the search index
         topicFiles.push(`${basePath}site_data/search_index_${vol}.json`);
@@ -1552,7 +1552,7 @@ window.saveAllOffline = async function () {
         console.warn(`Error discovery topics for ${vol}:`, e);
       }
     }
-    
+
     allUrls = allUrls.concat(topicFiles);
     // Remove duplicates
     allUrls = [...new Set(allUrls)];
@@ -1635,10 +1635,10 @@ window.saveAllOffline = async function () {
 
     localStorage.setItem('offline_saved_all', 'true');
     if (label) label.textContent = currentLang === 'ja' ? '✓ オフライン保存済み' : '✓ Salvo offline';
-    
+
     // Refresh the page or notify SW?
     if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-       navigator.serviceWorker.controller.postMessage({ type: 'OFFLINE_READY' });
+      navigator.serviceWorker.controller.postMessage({ type: 'OFFLINE_READY' });
     }
 
   } catch (e) {
